@@ -1,13 +1,12 @@
 import scrapy
 from scrapy.selector import Selector
-from scrapy import optional_features
-optional_features.remove('boto')
-
-# scrapy runspider ndbSpider.py > result.txt
+# from scrapy import optional_features
+# optional_features.remove('boto')
+# command to run: scrapy runspider ndbSpider.py > result.txt
 
 class ndbSpider(scrapy.Spider):
-    name = 'blogspider'
-    max = 500
+    name = 'nal.usda.spider'
+    max = 1000
     offset = max
     next_pag = 0
     start_urls = ['https://ndb.nal.usda.gov/ndb/search/list?format=&count=&max=%s&offset=0&order=asc' % max]
