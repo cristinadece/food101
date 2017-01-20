@@ -29,6 +29,10 @@ with open('ids.txt', 'r') as f:
         except:
             pass
 
+
+print "number of ids to craw.", len(lst_id)
+time.sleep(5)
+
 # dowload food
 for id in lst_id:
     r = requests.get(
