@@ -23,8 +23,11 @@ sleep_time = 60 # in minutes
 # load ids
 with open('ids.txt', 'r') as f:
     for line in f:
-        id_dic = ast.literal_eval(line)
-        lst_id.append(id_dic["id"])
+        try:
+            id_dic = ast.literal_eval(line)
+            lst_id.append(id_dic["id"])
+        except:
+            pass
 
 # dowload food
 for id in lst_id:
