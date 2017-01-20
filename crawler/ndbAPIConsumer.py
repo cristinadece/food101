@@ -10,13 +10,14 @@ lst_api_key = ["twNtcNSu4kf27gWr464iyWp33XJ59wA8JXPivzYE",  # vinicezarml@gmail.
             "JnPFPBtJQmH8vbl9F6ibxym1XLvEkfAfL2pw0EHT", # chiara.renso@isti.cnr.it
             "ivK2ae81d9E7JfYISsJTxqTCBcNQvaVdTVwJTE8U", # rensochiara@gmail.com
             "eaJeZ0CH6gR7GoxTnKvVDqY2Qjhz0dRExJa4TrUW", # viniciuscezarml@gmail.com
+            "GfW1x8VGMm0cdjdptGpJPEnWCTMjG112HhHampyL" # "vinicius.monteirodelira@isti.cnr.it"
             ]
 
 # control variable
 idx_api = 0
 count_by_key = 0
 count_general = 0
-max_call_by_key = 3
+max_call_by_key = 950
 sleep_time = 60 # in minutes
 
 # load ids
@@ -36,7 +37,7 @@ for id in lst_id:
     count_by_key = count_by_key + 1
     count_general = count_general + 1
 
-    if count_general % 2 == 0:
+    if count_general % 100 == 0:
         print "total downloaded", count_general, "total by key", count_by_key
 
     if count_by_key % max_call_by_key == 0:
