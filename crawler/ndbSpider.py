@@ -3,6 +3,8 @@ from scrapy.selector import Selector
 from scrapy import optional_features
 optional_features.remove('boto')
 
+# scrapy runspider ndbSpider.py > result.txt
+
 class ndbSpider(scrapy.Spider):
     name = 'blogspider'
     max = 500
