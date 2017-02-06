@@ -9,19 +9,15 @@ from twitter.Tweet import Tweet
 
 
 def loadHashtags():
-    htDict = defaultdict(list)
+    htList = list()
     with open("../filter/kw.txt") as f:
         for line in f:
-            htType = line.split(":")[0]
-            hashtagsString = line.split(":")[1].replace("\n", "")
-            hashtags = hashtagsString.replace("\'", "").replace(" ", "").split(",")
-            htDict[htType].extend(hashtags)
-            htDict["All"].extend(hashtags)
-    return htDict
+            ht = line.replace("\n", "")
+            htList.append(ht)
+    return htList
 
 
 def filterRelevance(allHtList, tweet):
-    tweetDict = dict()
     tweetText = tweet["text"]
 
     if any(token in allHtList for token in tweetText):
@@ -39,19 +35,19 @@ if __name__ == '__main__':
     logger = logging.getLogger("filterFoodKW.py")
     logging.basicConfig(level=logging.DEBUG, format="%(asctime)s;%(levelname)s;%(message)s")
 
-    if len(sys.argv) != 5:
+    if len(sys.argv) != 3:
         print "You need to pass the following 4 params: <jsonTweetsFile> <filteredTweetsFile>"
         sys.exit(-1)
     inputFile = sys.argv[1]
     outputRelevant = codecs.open(sys.argv[2], "w", "utf-8")
 
-    htDict = loadHashtags()
-    print htDict
+    htList = loadHashtags()
+    print htList
     tweetsAsDict = Tweet.getTweetAsDictionary(inputFile)
 
     i = 0
     for tweet in tweetsAsDict:
-        if filterRelevance(htDict,tweet) is not None:
+        if filterRelevance(htList,tweet) is not None:
             dumpDictValuesToFile(tweet,outputRelevant)
 
     outputRelevant.close()
