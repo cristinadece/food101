@@ -20,10 +20,11 @@ def loadHashtags():
 def filterRelevance(allHtList, tweet):
     tweetText = tweet["text"]
 
-    if any(token in allHtList for token in tweetText):
-        return tweet
-    else:
-        return None
+    for ht in allHtList:
+	if ht in tweetText:
+            return tweet
+    
+    return None
 
 
 def dumpDictValuesToFile(dict, file):
@@ -42,7 +43,6 @@ if __name__ == '__main__':
     outputRelevant = codecs.open(sys.argv[2], "w", "utf-8")
 
     htList = loadHashtags()
-    print htList
     tweetsAsDict = Tweet.getTweetAsDictionary(inputFile)
 
     i = 0
