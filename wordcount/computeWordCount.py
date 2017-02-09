@@ -6,7 +6,7 @@ import operator
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from twitter.Tweet import Tweet
-from util import ngrams
+from tokenizer import ngrams
 import logging
 import argparse
 
@@ -82,7 +82,7 @@ if __name__ == '__main__':
 
     tweetsAsTokens = Tweet.getTweetAsTweetTextTokensNoGZ(inputFileDir)
 
-    sorted_wordcount = wordcountPlain(tweetsAsTokens, False, 2)
+    sorted_wordcount = wordcountPlain(tweetsAsTokens, False, 4)
     # printTSV(sorted_wordcount, output)
     # printJson(sorted_wordcount, output)
     printUTF8(sorted_wordcount, outputFile)
