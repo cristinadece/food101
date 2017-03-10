@@ -22,7 +22,7 @@ def loadHashtags():
     :return: a list of hashtags
     """
     htList = list()
-    with open("../filter/kw.txt") as f:
+    with open("../resources/kw.txt") as f:
         for line in f:
             ht = line.replace("\n", "")
             htList.append(ht)
