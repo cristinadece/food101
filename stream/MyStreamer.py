@@ -11,7 +11,6 @@ StreamBBTwitter : MyStreamer
 import json
 import os
 from datetime import date
-
 import uuid as uuid
 from twython import TwythonStreamer
 

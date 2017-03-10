@@ -7,17 +7,10 @@ StreamBBTwitter : StreamListener
 
 https://apps.twitter.com/app/13516461   - StreamFood
 
-# !!!!
-# Each account may create only one standing connection to the public endpoints, and connecting to a public stream more
-# than once with the same account credentials will cause the oldest connection to be disconnected.
-#
-# Clients which make excessive connection attempts (both successful and unsuccessful) run the risk of having their IP
-# automatically banned.
-
 Consider changing method from GET to POST, as explained here: https://dev.twitter.com/streaming/reference/post/statuses/filter
 
-
 '''
+
 import logging
 #import oauth2 as oauth
 import time
