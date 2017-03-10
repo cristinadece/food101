@@ -13,19 +13,20 @@ import os
 from datetime import date
 import uuid as uuid
 from twython import TwythonStreamer
+import gzip
 
 currentDate = date.today()
 DUMP_DIR = '/data/tweets/food-tweets'
 
 #check if file exists
-file_name = DUMP_DIR + "/food-tweets-" + str(currentDate) + ".json"
+file_name = DUMP_DIR + "/food-tweets-" + str(currentDate) + ".json.gz"
 
 if os.path.isfile(file_name):
     uuid = str(uuid.uuid1())
-    new_file_name = DUMP_DIR + "/food-tweets-" + str(currentDate) + "-" + uuid + ".json"
-    currentFile = open(new_file_name, "w")
+    new_file_name = DUMP_DIR + "/food-tweets-" + str(currentDate) + "-" + uuid + ".json.gz"
+    currentFile = gzip.open(new_file_name, "wb")
 else:
-    currentFile = open(file_name, "w")
+    currentFile = gzip.open(file_name, "wb")
 
 
 class MyStreamer(TwythonStreamer):
@@ -39,7 +40,7 @@ class MyStreamer(TwythonStreamer):
         else:
             currentFile.close()
             currentDate = date.today()
-            currentFile = open(DUMP_DIR + "/food-tweets-" + str(currentDate) + ".json", "w")
+            currentFile = gzip.open(DUMP_DIR + "/food-tweets-" + str(currentDate) + ".json.gz", "wb")
             currentFile.write(json.dumps(data)+'\n')
 
     def on_error(self, status_code, data):
