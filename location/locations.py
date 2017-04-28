@@ -39,24 +39,40 @@ class Cities:
         citiesIndex = defaultdict(list)
         citiesInfo = defaultdict(tuple)
         for line in codecs.open(filename, "r", "utf-8"):
+
+            # first split into columns
             locationData = line.split("\t")
+            geonameid = int(locationData[0])
             name = locationData[1].lower()
             asciiname = locationData[2]
-            alternatenames = locationData[3]  ## this is a list or string?
+            alternatenames = locationData[3]
             latitude = float(locationData[4])
             longitude = float(locationData[5])
             countrycode = locationData[8]
             population = int(locationData[14])
             timezone = locationData[17]
-            #if (name not in stopwords) and (population > 50000):
-            #todo : the key may repeat itself!!!! we need to fix this with another key!!!
+
+            # put names in the Index
+            # usually one entry in the list, but when duplicates, we have more geonameid in the list
             if name not in stopwords:
                 if ascii:
-                    citiesDict[asciiname.lower()].append(tuple([name, asciiname, longitude, latitude, countrycode, population, timezone]))
+                    citiesIndex[asciiname.lower()].append(geonameid)
                 else:
-                    citiesDict[name.lower()].append(tuple([name, asciiname, longitude, latitude, countrycode, population, timezone]))
-        print "All cities: ", len(citiesDict)
-        return citiesDict
+                    citiesIndex[name.lower()].append(geonameid)
+            alt_names = alternatenames.split(",")
+            for alt_name in alt_names:
+                citiesIndex[alt_name.lower()].append(geonameid)
+
+            # put city info in the Info dictionary
+            if ascii:
+                citiesInfo[geonameid] = tuple([name, asciiname, longitude, latitude, countrycode, population, timezone])
+            else:
+                citiesInfo[geonameid] = tuple([name, asciiname, longitude, latitude, countrycode, population, timezone])
+
+
+        print "All cities with all name: ", len(citiesIndex)
+        print "All cities unique geonameid:  ", len(citiesInfo)
+        return citiesIndex, citiesInfo
 
 
 class Countries:
