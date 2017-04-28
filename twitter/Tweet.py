@@ -88,7 +88,7 @@ class Tweet:
                         tweet = json.loads(line)
                     except:
                         print "Couldn't parse tweet: ", line[:200]
-                    yield tweet
+                    yield tweet, fname
         else:
             print "Opening file: ", path
             for line in gzip.open(path):
