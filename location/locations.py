@@ -79,8 +79,54 @@ class Countries:
     def __init__(self):
         pass
 
-    def findAlternateNames(self):
-        pass
+    @staticmethod
+    def loadAlternateNames(geonameidList, countriesIndex, filename="./location/alternateNames.txt", dump=False):
+        """
+        This adds alternate names to countries and places them in the 
+        :param geonameidList: the geonameids list of the countries in our dictionary; alternateName.txt file contains a
+        lot of other alternate names, so we fil ter just the ones referring to countries
+        :param countriesIndex: the alternateName to geonameid index , keeping al synonims but pointing to the same instance
+        :param filename: which alernateNames file to lead; we have the initial one and a smaller version only for 
+        countries named <alternateNamesSmall.txt>
+        :param dump: if we should write to file a subsample of lines from filename
+        :return: 
+        """
+        i=0
+        if dump:
+            outputWriter = codecs.open("./alternateNamesSmall.txt", "w", "utf-8")
+        inpurReader = codecs.open(filename, "r", "utf-8")
+        for line in inpurReader:
+            i+=1
+            lineData = line.split("\t")
+            # print lineData
+            # break
+            geonameid = int(lineData[1])
+            if geonameid in geonameidList:
+                if dump:
+                    outputWriter.write(line)
+                countriesIndex[lineData[3].lower()] = geonameid
+            if i % 1000000 == 0:
+                print "Scanning file, line ", i
+        if dump:
+            outputWriter.close()
+        return countriesIndex
+
+    @staticmethod
+    def countryCodeDict(countryDict):
+        """
+        Maps the country code to country name
+        There are some duplicates for GB (UK) so we have less country codes in the initial country dictionary
+        :param countryDict: 
+        :return:
+        """
+        ccDict = dict()
+        for k, v in countryDict.items():
+            if len(v) != 5:
+                print "Attention", k, v
+            else:
+                ccDict[v[4]] = v[0]
+        print "Len of country code dict", len(ccDict)
+        return ccDict
 
     @staticmethod
     def loadFromFile(filename="./location/countryInfo.txt"):
@@ -90,45 +136,45 @@ class Countries:
         :param filename:
         :return:
         """
-        print "current dir: ", os.getcwd()
-        countriesDict = defaultdict(tuple)
-        print filename
+        # print "current dir: ", os.getcwd()
+        countriesIndex = defaultdict(list)
+        countriesInfo = defaultdict(tuple)
         for line in codecs.open(filename, "r", "utf-8"):
             if not line.startswith("#") and line != "\n":
+                # split the columns
                 countryData = line.split("\t")
                 name = countryData[4].lower()
                 capital = countryData[5]
                 population = countryData[7]
                 continent = countryData[8]
                 countryCode = countryData[0]
+                geonameid = int(countryData[16])
+
+                # put name in index
                 if (name not in stopwords):
-                    countriesDict[name.lower()] = tuple([name, capital, population, continent, countryCode])
-        countriesDict["uk"] = countriesDict["united kingdom"]
-        countriesDict["england"] = countriesDict["united kingdom"]
-        print "All countries: ", len(countriesDict)
-        return countriesDict
+                    countriesIndex[name.lower()].append(geonameid)
 
+                # put data in info dict
+                if (name not in stopwords): # see if keeping this condition
+                    countriesInfo[geonameid] = tuple([name, capital, population, continent, countryCode])
 
-    @staticmethod
-    def countryCodeDict(countryDict):
-        """
-        Maps the country code to country name
-        :param countryDict:
-        :return:
-        """
-        ccDict = dict()
-        for k, v in countryDict.items():
-            if len(v) != 5:
-                print "Attention", k, v
-            else:
-                ccDict[v[4]] = v[0]
-        return ccDict
+        # adding some synonims for UK
+        countriesIndex["uk"].append(countriesIndex["united kingdom"])
+        countriesIndex["england"].append(countriesIndex["united kingdom"])
+
+        # extend with alternatenames
+        countriesIndex = Countries.loadAlternateNames(countriesInfo.keys(), countriesIndex, filename="./alternateNamesSmall.txt", dump=False)
+
+        print "All countries with all names: ", len(countriesIndex)
+        print "All countries unique geonameid:  ", len(countriesInfo)
+        return countriesIndex, countriesInfo
 
 
 if __name__ == '__main__':
 
     # load cities and countries
-    # countries = locations.Countries.loadFromFile()
-    cities = Cities.loadFromFile(filename="./cities15000.txt")
+    citiesIndex, citiesInfo = Cities.loadFromFile(filename="./cities15000.txt")
+    countriesIndex, countriesInfo = Countries.loadFromFile(filename="./countryInfo.txt")
+
     # citiesAscii = locations.Cities.loadFromFile(ascii=True)
-    # ccDict = locations.Countries.countryCodeDict(countries)
+    ccDict = Countries.countryCodeDict(countriesInfo)
