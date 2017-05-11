@@ -7,7 +7,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 stopwords = ["dalai", "buy", "best", "deal", "obama", "clinton", "police", "goes", "reading", "born", "manage", "gay",
              "barry", "dinar", "sale", "march", "nice", "mary", "vladimir", "zug", "boom", "anna", "gap", "york", "bar",
-             "salt", "wedding", "of", "lincoln", "wa"]
+             "salt", "wedding", "of", "lincoln", "wa", "san", "jersey", "allen", "florida", "santa cruz", "springs",
+             "bay"]
 """
 http://download.geonames.org/export/dump/
 """
@@ -21,8 +22,9 @@ class Cities:
     def __init__(self):
         pass
 
+
     @staticmethod
-    def loadFromFile(filename="./location/cities15000.txt", ascii=False):
+    def loadFromFile(filename="./location/cities15000.txt", ascii=False, withSynonym=False):
         """
         This method load a dictionary of cities where the key is either the name or the asciiname.
         
@@ -46,7 +48,7 @@ class Cities:
             locationData = line.split("\t")
             geonameid = int(locationData[0])
             name = locationData[1].lower()
-            asciiname = locationData[2]
+            asciiname = locationData[2].lower()
             alternatenames = locationData[3]
             latitude = float(locationData[4])
             longitude = float(locationData[5])
@@ -58,12 +60,29 @@ class Cities:
             # usually one entry in the list, but when duplicates, we have more geonameid in the list
             if name not in stopwords:
                 if ascii:
-                    citiesIndex[asciiname.lower()].append(geonameid)
+                    cityName = asciiname
                 else:
-                    citiesIndex[name.lower()].append(geonameid)
-            alt_names = alternatenames.split(",")
-            for alt_name in alt_names:
-                citiesIndex[alt_name.lower()].append(geonameid)
+                    cityName = name
+
+                if len(citiesIndex[cityName]) != 0:
+                    # put biggest city first in the list
+                    existentCityGeonameid = citiesIndex[cityName][0]
+                    existentCityPopulation = citiesInfo[existentCityGeonameid][5]
+                    if population>existentCityPopulation:
+                        citiesIndex[cityName].insert(0,geonameid)
+                    else:
+                        citiesIndex[cityName].append(geonameid)
+                else: # means first entry
+                    citiesIndex[cityName].append(geonameid)
+            ###
+            citiesIndex["new york"].extend(citiesIndex["new york city"])
+            citiesIndex["nyc"].extend(citiesIndex["new york city"])
+            citiesIndex["roma"].extend(citiesIndex["rome"])
+            citiesIndex["milano"].extend(citiesIndex["milan"])
+            if withSynonym: #todo: this makes it so that the duplicates have same name and are in the list of geonameid
+                alt_names = alternatenames.split(",")
+                for alt_name in alt_names:
+                    citiesIndex[alt_name.lower()].append(geonameid)
 
             # put city info in the Info dictionary
             if ascii:
@@ -82,20 +101,16 @@ class Countries:
         pass
 
     @staticmethod
-    def loadAlternateNames(geonameidList, countriesIndex, filename="./location/alternateNames.txt", dump=False):
+    def loadAlternateNames(geonameidList, countriesIndex, filename="./location/alternateNamesSmall.txt"):
         """
         This adds alternate names to countries and places them in the 
         :param geonameidList: the geonameids list of the countries in our dictionary; alternateName.txt file contains a
-        lot of other alternate names, so we fil ter just the ones referring to countries
+        lot of other alternate names, so we filter just the ones referring to countries
         :param countriesIndex: the alternateName to geonameid index , keeping al synonims but pointing to the same instance
-        :param filename: which alernateNames file to lead; we have the initial one and a smaller version only for 
-        countries named <alternateNamesSmall.txt>
-        :param dump: if we should write to file a subsample of lines from filename
+        :param filename: a smaller version only for countries named <alternateNamesSmall.txt>
         :return: 
         """
         i=0
-        if dump:
-            outputWriter = codecs.open("./alternateNamesSmall.txt", "w", "utf-8")
         inpurReader = codecs.open(filename, "r", "utf-8")
         for line in inpurReader:
             i+=1
@@ -104,14 +119,11 @@ class Countries:
             # break
             geonameid = int(lineData[1])
             if geonameid in geonameidList:
-                if dump:
-                    outputWriter.write(line)
-                countriesIndex[lineData[3].lower()] = geonameid
+                countriesIndex[lineData[3].lower()].append(geonameid)
             if i % 1000000 == 0:
                 print "Scanning file, line ", i
-        if dump:
-            outputWriter.close()
         return countriesIndex
+
 
     @staticmethod
     def countryCodeDict(countryDict):
@@ -131,7 +143,7 @@ class Countries:
         return ccDict
 
     @staticmethod
-    def loadFromFile(filename="./location/countryInfo.txt"):
+    def loadFromFile(filename="./location/countryInfo.txt", withSynonym=True):
         """
         #ISO	ISO3	ISO-Numeric	fips	Country	Capital	Area(in sq km)	Population	Continent	tld	CurrencyCode
         CurrencyName	Phone	Postal Code Format	Postal Code Regex	Languages	geonameid	neighbours	EquivalentFipsCode
@@ -160,12 +172,13 @@ class Countries:
                 if (name not in stopwords): # see if keeping this condition
                     countriesInfo[geonameid] = tuple([name, capital, population, continent, countryCode])
 
-        # adding some synonims for UK
-        countriesIndex["uk"].append(countriesIndex["united kingdom"])
-        countriesIndex["england"].append(countriesIndex["united kingdom"])
+        # adding some synonyms for UK
+        countriesIndex["uk"].extend(countriesIndex["united kingdom"])
+        countriesIndex["england"].extend(countriesIndex["united kingdom"])
 
         # extend with alternatenames
-        countriesIndex = Countries.loadAlternateNames(countriesInfo.keys(), countriesIndex, filename="./alternateNamesSmall.txt")
+        if withSynonym:
+            countriesIndex = Countries.loadAlternateNames(countriesInfo.keys(), countriesIndex)
 
         print "All countries with all names: ", len(countriesIndex)
         print "All countries unique geonameid:  ", len(countriesInfo)
