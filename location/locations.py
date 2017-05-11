@@ -8,7 +8,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 stopwords = ["dalai", "buy", "best", "deal", "obama", "clinton", "police", "goes", "reading", "born", "manage", "gay",
              "barry", "dinar", "sale", "march", "nice", "mary", "vladimir", "zug", "boom", "anna", "gap", "york", "bar",
              "salt", "wedding", "of", "lincoln", "wa"]
-
+"""
+http://download.geonames.org/export/dump/
+"""
 
 class Cities:
     """
@@ -163,7 +165,7 @@ class Countries:
         countriesIndex["england"].append(countriesIndex["united kingdom"])
 
         # extend with alternatenames
-        countriesIndex = Countries.loadAlternateNames(countriesInfo.keys(), countriesIndex, filename="./alternateNamesSmall.txt", dump=False)
+        countriesIndex = Countries.loadAlternateNames(countriesInfo.keys(), countriesIndex, filename="./alternateNamesSmall.txt")
 
         print "All countries with all names: ", len(countriesIndex)
         print "All countries unique geonameid:  ", len(countriesInfo)
