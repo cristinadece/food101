@@ -1,25 +1,22 @@
 """
-
+Some utilities for finding city and country from the user_location field
 """
 # food101 : get_place_from_user_location
 # Created by muntean on 4/26/17
-import os
-import sys
 
-from location import locations
 from location.locations import Cities, Countries
 from tokenizer import twokenize, ngrams
 
 
 def getLocationsFromToken(token, citiesIndex, citiesInfo, countriesIndex, countriesInfo):
     """
-    
-    :param token: 
+    From a token, with the help of the dictionary tries to establish a city and/or country
+    :param token: a string
     :param citiesIndex: 
     :param citiesInfo: 
     :param countriesIndex: 
     :param countriesInfo: 
-    :return: 
+    :return: city, country
     """
     city = ""
     country = ""
@@ -33,7 +30,13 @@ def getLocationsFromToken(token, citiesIndex, citiesInfo, countriesIndex, countr
     return city, country
 
 
-def cleanLists(potentialCities, potentialCountries):
+def cleanSets(potentialCities, potentialCountries):
+    """
+    Cleans the lists of empty strings
+    :param potentialCities: 
+    :param potentialCountries: 
+    :return: potentialCities, potentialCountries
+    """
     if "" in potentialCities:
         potentialCities.remove("")
     if "" in potentialCountries:
@@ -41,17 +44,17 @@ def cleanLists(potentialCities, potentialCountries):
     return potentialCities, potentialCountries
 
 
-def inferCountryFromCity(citiesList, citiesIndex, citiesInfo, ccDict):
+def inferCountryFromCity(citiesSet, citiesIndex, citiesInfo, ccDict):
     """
-    This should be done by country code crossing
-    :param citiesList: 
-    :param cityDict: 
+    This infers the country for any given city, by looking into the adjacent dicts
+    :param citiesSet: a set of city names
+    :param citiesIndex:
+    :param citiesInfo:
     :param ccDict: 
-    :return: 
+    :return: potential_countries : a set fo countries derives from the list of cities
     """
-
     potential_countries = set()
-    for city in citiesList:
+    for city in citiesSet:
         geonameidCity = citiesIndex[city.lower()][0]  # TODO: this is tricky, we might have more cities with same name
         country_code = citiesInfo[geonameidCity][4]
         potential_countries.add(ccDict[country_code])
@@ -60,9 +63,14 @@ def inferCountryFromCity(citiesList, citiesIndex, citiesInfo, ccDict):
 
 def getUserLocation(locationField, citiesIndex, citiesInfo, countriesIndex, countriesInfo):
     """
-    THis field is an empty string
-    :param tweet:
-    :return:
+    Takes in input the user_location field and tries various tokenizations to derive 
+    potential cities and countries in the free text
+    :param locationField: the user_location field 
+    :param citiesIndex: 
+    :param citiesInfo: 
+    :param countriesIndex: 
+    :param countriesInfo: 
+    :return: cities, countries - 2 sets of potential cities and countries
     """
 
     potentialCities = set()
@@ -112,11 +120,18 @@ def getUserLocation(locationField, citiesIndex, citiesInfo, countriesIndex, coun
                 potentialCities.add(city)
                 potentialCountries.add(country)
 
-    cities, countries = cleanLists(potentialCities, potentialCountries)
+    cities, countries = cleanSets(potentialCities, potentialCountries)
     return cities, countries
 
 
 def getFinalUserLocation(user_cities, user_countries, inferred_countries):
+    """
+    This decides upon the final city and country of a user.
+    :param user_cities: 
+    :param user_countries: 
+    :param inferred_countries: 
+    :return: 2 strings: city, country
+    """
     city = ""
     country = ""
 
@@ -137,13 +152,10 @@ def getFinalUserLocation(user_cities, user_countries, inferred_countries):
     # but since we can't infer country we must dismiss city
     if len(city) > 0 and len(country) == 0:
         city = ""
-
     return city, country
 
 
-
 if __name__ == '__main__':
-
     pass
     # load cities and countries
     citiesIndex, citiesInfo = Cities.loadFromFile()

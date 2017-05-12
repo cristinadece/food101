@@ -24,19 +24,20 @@ class Cities:
 
 
     @staticmethod
-    def loadFromFile(filename="./location/cities15000.txt", ascii=False, withSynonym=False):
+    def loadFromFile(filename="./resources/cities15000.txt", ascii=False, withSynonym=False):
         """
         This method load a dictionary of cities where the key is either the name or the asciiname.
         
         :param filename: a table with city information from geonames dump:  cities15000.txt.
         :param ascii: True if we want the dictionary to have the asciinames as key, False otherwise.
+        :param withSynonym: This also loads the synonyms for city names and adds them to the first dictionary citiesIndex
         
-        :return: 2 dictionaries:
-            - a dictionary of lists, usually the length of a list is 1, but when the name of a city appears 
-        in different countries, then the list is bigger than 1. e.g Paris, France vs. Paris, Texas, USA.
+        :return: 2 dictionaries: citiesIndex, citiesInfo
+            - citiesIndex: a dictionary of lists, usually the length of a list is 1, but when the name of a city appears 
+            in different countries, then the list is bigger than 1. e.g Paris, France vs. Paris, Texas, USA.
                 k: name or alternatename
-                v: list of geonameid 
-            - a simple dictionary
+                v: list of geonameid - the biggest city is the first element of the list
+            - citiesInfo: a simple dictionary
                 k: geonameid
                 v: tuple with info
         """
@@ -74,7 +75,8 @@ class Cities:
                         citiesIndex[cityName].append(geonameid)
                 else: # means first entry
                     citiesIndex[cityName].append(geonameid)
-            ###
+
+            # adding syns
             citiesIndex["new york"].extend(citiesIndex["new york city"])
             citiesIndex["nyc"].extend(citiesIndex["new york city"])
             citiesIndex["roma"].extend(citiesIndex["rome"])
@@ -101,22 +103,22 @@ class Countries:
         pass
 
     @staticmethod
-    def loadAlternateNames(geonameidList, countriesIndex, filename="./location/alternateNamesSmall.txt"):
+    def loadAlternateNames(geonameidList, countriesIndex, filename="./resources/alternateNamesSmall.txt"):
         """
         This adds alternate names to countries and places them in the 
         :param geonameidList: the geonameids list of the countries in our dictionary; alternateName.txt file contains a
         lot of other alternate names, so we filter just the ones referring to countries
+        
         :param countriesIndex: the alternateName to geonameid index , keeping al synonims but pointing to the same instance
         :param filename: a smaller version only for countries named <alternateNamesSmall.txt>
-        :return: 
+        
+        :return: the countryIndex passed as argument enriched with new country alternate names
         """
         i=0
         inpurReader = codecs.open(filename, "r", "utf-8")
         for line in inpurReader:
             i+=1
             lineData = line.split("\t")
-            # print lineData
-            # break
             geonameid = int(lineData[1])
             if geonameid in geonameidList:
                 countriesIndex[lineData[3].lower()].append(geonameid)
@@ -126,15 +128,17 @@ class Countries:
 
 
     @staticmethod
-    def countryCodeDict(countryDict):
+    def countryCodeDict(countriesInfo):
         """
         Maps the country code to country name
         There are some duplicates for GB (UK) so we have less country codes in the initial country dictionary
-        :param countryDict: 
-        :return:
+        
+        :param countriesInfo: a dictionary with geonameid and info tuple about a country
+        
+        :return: a dictionary of country code pointing to country name 
         """
         ccDict = dict()
-        for k, v in countryDict.items():
+        for k, v in countriesInfo.items():
             if len(v) != 5:
                 print "Attention", k, v
             else:
@@ -142,13 +146,23 @@ class Countries:
         print "Len of country code dict", len(ccDict)
         return ccDict
 
+
     @staticmethod
-    def loadFromFile(filename="./location/countryInfo.txt", withSynonym=True):
+    def loadFromFile(filename="./resources/countryInfo.txt", withSynonym=True):
         """
         #ISO	ISO3	ISO-Numeric	fips	Country	Capital	Area(in sq km)	Population	Continent	tld	CurrencyCode
         CurrencyName	Phone	Postal Code Format	Postal Code Regex	Languages	geonameid	neighbours	EquivalentFipsCode
-        :param filename:
-        :return:
+        
+        :param filename: usually countryInfo.txt resource file with all countries in the world
+        :param withSynonym: specifies whether to load alternate names for countries or just keep the official name
+        
+        :return: 2 dictionaries: countriesIndex, countriesInfo
+            - countriesIndex: a dictionary of lists, usually the length of a list is 1
+                k: name or alternatename
+                v: list of geonameid
+            - countriesInfo: a simple dictionary
+                k: geonameid
+                v: tuple with info
         """
         # print "current dir: ", os.getcwd()
         countriesIndex = defaultdict(list)
@@ -188,8 +202,8 @@ class Countries:
 if __name__ == '__main__':
 
     # load cities and countries
-    citiesIndex, citiesInfo = Cities.loadFromFile(filename="./cities15000.txt")
-    countriesIndex, countriesInfo = Countries.loadFromFile(filename="./countryInfo.txt")
+    citiesIndex, citiesInfo = Cities.loadFromFile(filename="../resources/cities15000.txt")
+    countriesIndex, countriesInfo = Countries.loadFromFile(filename="../resources/countryInfo.txt")
 
     # citiesAscii = locations.Cities.loadFromFile(ascii=True)
     ccDict = Countries.countryCodeDict(countriesInfo)
