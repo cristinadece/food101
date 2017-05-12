@@ -8,7 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 stopwords = ["dalai", "buy", "best", "deal", "obama", "clinton", "police", "goes", "reading", "born", "manage", "gay",
              "barry", "dinar", "sale", "march", "nice", "mary", "vladimir", "zug", "boom", "anna", "gap", "york", "bar",
              "salt", "wedding", "of", "lincoln", "wa", "san", "jersey", "allen", "florida", "santa cruz", "springs",
-             "bay"]
+             "bay", "island"]
 """
 http://download.geonames.org/export/dump/
 """

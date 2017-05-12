@@ -116,6 +116,32 @@ def getUserLocation(locationField, citiesIndex, citiesInfo, countriesIndex, coun
     return cities, countries
 
 
+def getFinalUserLocation(user_cities, user_countries, inferred_countries):
+    city = ""
+    country = ""
+
+    if len(user_cities) == 1:
+        city = next(iter(user_cities))
+
+    if len(user_countries) == 1 and len(inferred_countries) == 1:
+        if next(iter(user_countries))== next(iter(inferred_countries)):
+            country = next(iter(user_countries))
+
+    if len(user_countries) == 1 and len(inferred_countries) == 0:
+        country = next(iter(user_countries))
+
+    if len(user_countries) == 0 and len(inferred_countries) == 1:
+        country = next(iter(inferred_countries))
+
+    # this means we have a city and ambiguous country tagging,
+    # but since we can't infer country we must dismiss city
+    if len(city) > 0 and len(country) == 0:
+        city = ""
+
+    return city, country
+
+
+
 if __name__ == '__main__':
 
     pass
