@@ -76,6 +76,9 @@ def getUserLocation(locationField, citiesIndex, citiesInfo, countriesIndex, coun
     potentialCities = set()
     potentialCountries = set()
 
+    if (locationField == "") or (locationField is None):
+        return potentialCities, potentialCountries
+
     # 1. split by / - the only char that is not in the tokenizer!
     if "/" in locationField:
         locArray = locationField.split("/")
