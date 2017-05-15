@@ -155,6 +155,35 @@ def getFinalUserLocation(user_cities, user_countries, inferred_countries):
     return city, country
 
 
+
+def getLocationData(tweet):
+    """
+    These can always have None values; e.g no coordinates, no city, no user location
+    :param tweet:
+    :return:
+    """
+    if tweet["coordinates"] is not None:
+        tweet_coords = tweet['coordinates']['coordinates']  # returns a list [longitude, latitude]
+    else:
+        tweet_coords = None
+
+    if tweet["place"] is not None:
+        if tweet["place"]["place_type"] == "city":
+            tweet_place_city = tweet["place"]["name"]  # if place type == city
+            tweet_place_country = tweet["place"]["country"]
+            tweet_place_country_code = tweet["place"]["country_code"]
+        else:
+            tweet_place_city = None
+            tweet_place_country = tweet["place"]["country"]
+            tweet_place_country_code = tweet["place"]["country_code"]
+    else:
+        tweet_place_city = None
+        tweet_place_country = None
+        tweet_place_country_code = None
+
+    return tweet_coords, tweet_place_city, tweet_place_country, tweet_place_country_code
+
+
 if __name__ == '__main__':
     pass
     # load cities and countries
