@@ -96,7 +96,7 @@ def getUserLocation(locationField, citiesIndex, citiesInfo, countriesIndex, coun
                 potentialCities.add(city)
                 potentialCountries.add(country)
 
-    if len(potentialCities)==0 and potentialCountries==0:
+    if len(potentialCities)==0 and len(potentialCountries)==0:
         # 2. tokenize with util and get unigrams, bigrams and trigrams - to lower
         # unigrams
         tokenList = twokenize.tokenize(locationField.lower())
