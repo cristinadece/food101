@@ -153,7 +153,7 @@ def getFinalUserLocation(user_cities, user_countries, inferred_countries):
 
     # this means we have a city and ambiguous country tagging,
     # but since we can't infer country we must dismiss city
-    if len(city) > 0 and len(country) == 0:
+    if (city is not None) and (country is None):
         city = None
     return city, country
 
