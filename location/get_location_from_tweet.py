@@ -28,8 +28,8 @@ def getLocationsFromToken(token, citiesIndex, citiesInfo, countriesIndex, countr
         geonamesidCountry = countriesIndex[token][0]
         country = countriesInfo[geonamesidCountry][0]  # we take the name of the country from the tuple, elim. both UK and United K.
 
-    # if token in citiesIndex and token in countriesIndex: # todo: this never returns a city named after a country
-    #     city = ""
+    if token in citiesIndex and token in countriesIndex: # todo: this never returns a city named after a country
+        city = ""
 
     return city, country
 

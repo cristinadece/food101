@@ -192,7 +192,7 @@ class Countries:
 
         # extend with alternatenames
         if withSynonym:
-            countriesIndex = Countries.loadAlternateNames(countriesInfo.keys(), countriesIndex, filename="../resources/alternateNamesSmall.txt")
+            countriesIndex = Countries.loadAlternateNames(countriesInfo.keys(), countriesIndex, filename="./resources/alternateNamesSmall.txt")
 
         print "All countries with all names: ", len(countriesIndex)
         print "All countries unique geonameid:  ", len(countriesInfo)
