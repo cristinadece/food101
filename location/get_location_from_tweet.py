@@ -27,6 +27,10 @@ def getLocationsFromToken(token, citiesIndex, citiesInfo, countriesIndex, countr
     if countriesIndex[token]:
         geonamesidCountry = countriesIndex[token][0]
         country = countriesInfo[geonamesidCountry][0]  # we take the name of the country from the tuple, elim. both UK and United K.
+
+    if token in citiesIndex and token in countriesIndex: # todo: this never returns a city named after a country
+        city = ""
+
     return city, country
 
 
@@ -153,8 +157,9 @@ def getFinalUserLocation(user_cities, user_countries, inferred_countries):
 
     # this means we have a city and ambiguous country tagging,
     # but since we can't infer country we must dismiss city
-    if (city is not None) and (country is None):
-        city = None
+    # if (city is not None) and (country is None):
+    #     city = None
+    # this also eliminates a lot of ok options
     return city, country
 
 
