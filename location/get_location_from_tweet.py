@@ -152,7 +152,7 @@ def getFinalUserLocation(user_cities, user_countries, inferred_countries):
     if len(user_countries) == 1 and len(inferred_countries) == 0:
         country = next(iter(user_countries))
 
-    if len(user_countries) == 0 and len(inferred_countries) == 1:
+    if len(user_cities) == 1 and len(user_countries) == 0 and len(inferred_countries) == 1:
         country = next(iter(inferred_countries))
 
     # this means we have a city and ambiguous country tagging,
