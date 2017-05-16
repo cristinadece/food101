@@ -28,8 +28,8 @@ def getLocationsFromToken(token, citiesIndex, citiesInfo, countriesIndex, countr
         geonamesidCountry = countriesIndex[token][0]
         country = countriesInfo[geonamesidCountry][0]  # we take the name of the country from the tuple, elim. both UK and United K.
 
-    if token in citiesIndex and token in countriesIndex: # todo: this never returns a city named after a country
-        city = ""
+    # if token in citiesIndex and token in countriesIndex: # todo: this never returns a city named after a country
+    #     city = ""
 
     return city, country
 
@@ -197,8 +197,11 @@ def getLocationData(tweet):
 if __name__ == '__main__':
     pass
     # load cities and countries
-    citiesIndex, citiesInfo = Cities.loadFromFile()
-    countriesIndex, countriesInfo = Countries.loadFromFile()
+    citiesIndex, citiesInfo = Cities.loadFromFile('../resources/cities15000.txt')
+    countriesIndex, countriesInfo = Countries.loadFromFile('../resources/cities15000.txt')
 
     # citiesAscii = locations.Cities.loadFromFile(ascii=True)
     ccDict = Countries.countryCodeDict(countriesInfo)
+    cities, countries = getUserLocation("Seattle, WA", citiesIndex, citiesInfo, countriesIndex, countriesInfo)
+    print cities, countries
+
