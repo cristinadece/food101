@@ -21,5 +21,6 @@
     - Connect Stream to Stream Index - INSIEME
 
     - Connect Stream index to CartoDB - VINICIUS
-    
+
+-----    
 ## 
