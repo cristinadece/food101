@@ -21,7 +21,8 @@ def getLocationsFromToken(token, citiesIndex, citiesInfo, countriesIndex, countr
     city = ""
     country = ""
 
-    if citiesIndex[token] and len(citiesIndex[token])==1: #TODO: this condition is because we have more cities with same name
+    #if citiesIndex[token] and len(citiesIndex[token])==1: #TODO: this condition is because we have more cities with same name
+    if citiesIndex[token]:
         geonamesidCity = citiesIndex[token][0]
         city = citiesInfo[geonamesidCity][0]
     if countriesIndex[token]:
@@ -155,6 +156,9 @@ def getFinalUserLocation(user_cities, user_countries, inferred_countries):
     if len(user_cities) == 1 and len(user_countries) == 0 and len(inferred_countries) == 1:
         country = next(iter(inferred_countries))
 
+    if len(user_countries) > 0 and len(inferred_countries) == 1:
+        country = next(iter(inferred_countries))
+
     # this means we have a city and ambiguous country tagging,
     # but since we can't infer country we must dismiss city
     # if (city is not None) and (country is None):
@@ -202,6 +206,6 @@ if __name__ == '__main__':
 
     # citiesAscii = locations.Cities.loadFromFile(ascii=True)
     ccDict = Countries.countryCodeDict(countriesInfo)
-    cities, countries = getUserLocation("San Juan, PR", citiesIndex, citiesInfo, countriesIndex, countriesInfo)
+    cities, countries = getUserLocation("Austin, TX", citiesIndex, citiesInfo, countriesIndex, countriesInfo)
     print cities, countries
 
