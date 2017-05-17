@@ -191,7 +191,7 @@ def getLocationData(tweet):
 
     user_location = tweet['user']['location']
 
-    return tweet_coords, tweet_place_city, tweet_place_country, tweet_place_country_code, user_location
+    return tweet_coords, tweet_place_city.lower(), tweet_place_country.lower(), tweet_place_country_code, user_location
 
 
 if __name__ == '__main__':

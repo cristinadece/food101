@@ -48,8 +48,8 @@ class Cities:
             # first split into columns
             locationData = line.split("\t")
             geonameid = int(locationData[0])
-            name = locationData[1] #.lower()
-            asciiname = locationData[2] #.lower()
+            name = locationData[1].lower()
+            asciiname = locationData[2].lower()
             alternatenames = locationData[3]
             latitude = float(locationData[4])
             longitude = float(locationData[5])
@@ -171,7 +171,7 @@ class Countries:
             if not line.startswith("#") and line != "\n":
                 # split the columns
                 countryData = line.split("\t")
-                name = countryData[4] #.lower()
+                name = countryData[4].lower()
                 capital = countryData[5]
                 population = countryData[7]
                 continent = countryData[8]
