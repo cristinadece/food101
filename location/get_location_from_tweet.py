@@ -202,6 +202,6 @@ if __name__ == '__main__':
 
     # citiesAscii = locations.Cities.loadFromFile(ascii=True)
     ccDict = Countries.countryCodeDict(countriesInfo)
-    cities, countries = getUserLocation("Seattle, WA", citiesIndex, citiesInfo, countriesIndex, countriesInfo)
+    cities, countries = getUserLocation("San Juan, PR", citiesIndex, citiesInfo, countriesIndex, countriesInfo)
     print cities, countries
 
