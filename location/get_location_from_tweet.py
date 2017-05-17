@@ -21,8 +21,8 @@ def getLocationsFromToken(token, citiesIndex, citiesInfo, countriesIndex, countr
     city = ""
     country = ""
 
-    #if citiesIndex[token] and len(citiesIndex[token])==1: #TODO: this condition is because we have more cities with same name
-    if citiesIndex[token]:
+    if citiesIndex[token] and len(citiesIndex[token])==1: #TODO: this condition is because we have more cities with same name
+    #if citiesIndex[token]:
         geonamesidCity = citiesIndex[token][0]
         city = citiesInfo[geonamesidCity][0]
     if countriesIndex[token]:
