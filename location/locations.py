@@ -48,7 +48,7 @@ class Cities:
             # first split into columns
             locationData = line.split("\t")
             geonameid = int(locationData[0])
-            name = locationData[1].lower()
+            name = locationData[1] #.lower()
             asciiname = locationData[2] #.lower()
             alternatenames = locationData[3]
             latitude = float(locationData[4])
