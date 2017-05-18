@@ -3,6 +3,8 @@
 """
 # food101 : preprocess_tweet.py
 # Created by muntean on 5/15/17
+import random
+
 
 def get_media_url(tweet):
     if "media" in tweet["entities"]:
