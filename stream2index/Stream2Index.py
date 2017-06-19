@@ -34,22 +34,17 @@ def isValid(enriched_tweet):
 
 class Stream2Index(TwythonStreamer):
 
-    def __init__(self):
-        self.es = Elasticsearch(['localhost', 'otherhost'],
+    es = Elasticsearch(['localhost', 'otherhost'],
                            http_auth=('elastic', 'changeme'),
                            port=9200
                            )
-        print "Index up!"
 
 
     def on_success(self, data):
-        global currentDate, currentFile
-
-        tweet = json.loads(data)
-        enriched_tweet = enrich_tweet(tweet)
+        enriched_tweet = enrich_tweet(data)
         if isValid(enriched_tweet):
-            tweet_snippet = get_tweet_snippet(tweet)
-            self.es.index(index='stream', doc_type='tweet_snippet', id=tweet_snippet["id"], body=tweet_snippet)
+            tweet_snippet = get_tweet_snippet(enriched_tweet)
+            es.index(index='stream', doc_type='tweet_snippet', id=tweet_snippet["id"], body=tweet_snippet)
             print "Indexed tweet: ", tweet["id"]
 
     def on_error(self, status_code):

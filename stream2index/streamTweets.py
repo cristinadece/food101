@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 '''
 StreamBBTwitter : StreamListener
 @euthor: Cristina Muntean (cristina.muntean@isti.cnr.it)
@@ -18,10 +19,10 @@ from twython import TwythonRateLimitError
 from Stream2Index import Stream2Index
 
 #### PUT CONFIG HERE
-CONSUMER_KEY = ''
-CONSUMER_SECRET = ''
-ACCESS_TOKEN = ''
-ACCESS_TOKEN_SECRET = ''
+CONSUMER_KEY = 'JzAQ0Y2GbBg900GENP444u24K'
+CONSUMER_SECRET = '5Mu6TnLR2oC7G9Z87egRzJU2X8vV3mL17qI5jBkL75g3wuLi5c'
+ACCESS_TOKEN = '308456550-i6JR7eJo8H0VfV1X0Ujg06YhL9rJOFD3Pgey3zbi'
+ACCESS_TOKEN_SECRET = 'J2rY8MCjkDblQpI3LPCXtG7v6nNO7K3YOOZbTASUGiRni'
 
 # Minimal time accepted between two Rate Limit Errors
 TOO_SOON = 10
@@ -38,14 +39,14 @@ def getKeywordsList():
     :return: a string a keywords separated by comma
     """
     htList = list()
-    with open("../resources/kw.txt") as f:
+    with open("./resources/kw.txt") as f:
         for line in f:
             ht = line.replace("\n", "")
             htList.append(ht)
 
 
     htCategoryList = list()
-    with open("../resources/categories.txt") as g:
+    with open("./resources/categories.txt") as g:
         for line in g:
             ht = "#" + line.lower().replace("\r\n", "").replace(" ", "")
             htCategoryList.append(ht)
