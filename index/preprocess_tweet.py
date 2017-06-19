@@ -11,6 +11,8 @@ from location.get_location_from_tweet import getUserLocation, inferCountryFromCi
 from location.locations import Cities, Countries
 
 ### SHOULD I DO THID here?
+from twitter import Tweet
+
 citiesIndex, citiesInfo = Cities.loadFromFile()
 countriesIndex, countriesInfo = Countries.loadFromFile()
 ccDict = Countries.countryCodeDict(countriesInfo)
@@ -67,8 +69,30 @@ def get_day_as_int(tweet):
     day = int(time.strftime('%Y%m%d', time.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y')))
     return day
 
-def get_tweet_text_category(tweet):
-    pass
+
+def loadCartegoryList():
+    """
+
+    :return:
+    """
+    htCategoryList = list()
+    with open("./resources/categories.txt") as g:
+        for line in g:
+            ht = "#" + line.lower().replace("\r\n", "").replace(" ", "")
+            htCategoryList.append(ht)
+    return htCategoryList
+
+
+def get_tweet_text_category(tweet, categoryList):
+    """
+
+    :param tweet:
+    :param categoryList:
+    :return:
+    """
+    tweetTextTokens = Tweet.tokenizeTweetText(tweet["text"])
+    categ = [token for token in tweetTextTokens if token in categoryList]
+    return categ[0]  #todo, make some tests
 
 
 def enrich_tweet(tweet):
