@@ -34,18 +34,22 @@ def isValid(enriched_tweet):
 
 class Stream2Index(TwythonStreamer):
 
-    es = Elasticsearch(['localhost', 'otherhost'],
-                           http_auth=('elastic', 'changeme'),
-                           port=9200
-                           )
+    def __init__(self, CONSUMER_KEY, CONSUMER_SECRET,
+                 ACCESS_TOKEN, ACCESS_TOKEN_SECRET):
+        super(Stream2Index, self).__init__(app_key=CONSUMER_KEY, app_secret=CONSUMER_SECRET, oauth_token=ACCESS_TOKEN,
+                                           oauth_token_secret=ACCESS_TOKEN_SECRET, retry_in=3600)
 
+        self.es = Elasticsearch(['localhost', 'otherhost'],
+                                http_auth=('elastic', 'changeme'),
+                                port=9200
+                                )
 
     def on_success(self, data):
         enriched_tweet = enrich_tweet(data)
         if isValid(enriched_tweet):
             tweet_snippet = get_tweet_snippet(enriched_tweet)
-            es.index(index='stream', doc_type='tweet_snippet', id=tweet_snippet["id"], body=tweet_snippet)
-            print "Indexed tweet: ", tweet["id"]
+            self.es.index(index='stream', doc_type='tweet_snippet', id=tweet_snippet["id"], body=tweet_snippet)
+            print "Indexed tweet: ", enriched_tweet["id"]
 
     def on_error(self, status_code):
         print status_code

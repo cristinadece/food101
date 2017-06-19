@@ -65,11 +65,9 @@ def log(msg, id=None):
 
 def filter():
     start = time.time()
-
     htString = getKeywordsList()
+    stream = Stream2Index(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-    stream = Stream2Index(CONSUMER_KEY, CONSUMER_SECRET,
-                        ACCESS_TOKEN, ACCESS_TOKEN_SECRET, retry_in=3600)  # retry_in - n seconds
     try:
         # FILTER
         # stream.statuses.filter(track='#IF2016', locations=PISA)
