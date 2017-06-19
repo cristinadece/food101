@@ -39,6 +39,7 @@ class Stream2Index(TwythonStreamer):
                            http_auth=('elastic', 'changeme'),
                            port=9200
                            )
+        print "Index up!"
 
 
     def on_success(self, data):
@@ -49,6 +50,7 @@ class Stream2Index(TwythonStreamer):
         if isValid(enriched_tweet):
             tweet_snippet = get_tweet_snippet(tweet)
             self.es.index(index='stream', doc_type='tweet_snippet', id=tweet_snippet["id"], body=tweet_snippet)
+            print "Indexed tweet: ", tweet["id"]
 
     def on_error(self, status_code):
         print status_code
