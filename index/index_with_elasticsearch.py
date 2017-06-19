@@ -10,7 +10,7 @@ import os
 import time
 import requests
 import argparse
-from index.preprocess_tweet import get_media_url, get_food_category
+from index.preprocess_tweet import get_media_url, get_image_category
 from twitter.Tweet import Tweet
 from location.get_location_from_tweet import *
 
@@ -61,7 +61,7 @@ def index_from_path(es, path):
             continue
 
         # 2. has food category?
-        if get_food_category(tweet) is not None:
+        if get_image_category(tweet) is not None:
             hasCategory = True
             countCategory += 1
         else:
@@ -94,7 +94,7 @@ def index_from_path(es, path):
         if hasImg and hasCategory and hasCountry:
             tweet_dict = dict()
             tweet_dict["day"] = day
-            tweet_dict["img_category"] = get_food_category(tweet)
+            tweet_dict["img_category"] = get_image_category(tweet)
             tweet_dict["city"] = city
             tweet_dict["country"] = country
             tweet_dict["tweet_body"] = tweet
