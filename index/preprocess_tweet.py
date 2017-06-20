@@ -132,16 +132,20 @@ def enrich_tweet_stream(tweet):
     tweet["img_category"] = img_category
 
     # longitude first, then latitude
+    # longitude first, then latitude
     if tweet["coordinates"] is not None:
         tweet["coordinates"] = tweet['coordinates']['coordinates']  # returns a list [longitude, latitude]
     else:
         tweet["coordinates"] = None
 
     if tweet["place"] is not None:
-        if tweet["place"]["bounding_box"]:
+        if "bounding_box" in tweet["place"].keys():
             tweet["bounding_box"] = tweet["place"]["bounding_box"]
         else:
             tweet["bounding_box"] = None
+    else:
+        tweet["bounding_box"] = None
+    return tweet
 
 
 def get_tweet_snippet(tweet):

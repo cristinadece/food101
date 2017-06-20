@@ -8,7 +8,7 @@ StreamBBTwitter : MyStreamer
 
 '''
 
-import json
+
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch
 from index.preprocess_tweet import enrich_tweet_stream, get_tweet_snippet
