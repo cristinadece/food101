@@ -11,11 +11,8 @@ https://apps.twitter.com/app/13516461   - StreamFood
 Consider changing method from GET to POST, as explained here: https://dev.twitter.com/streaming/reference/post/statuses/filter
 
 '''
-import os
-os.chdir("/home/foodmap/food101/")
+
 import logging
-#import oauth2 as oauth
-import os
 import time
 from twython import TwythonRateLimitError
 from Stream2Index import Stream2Index

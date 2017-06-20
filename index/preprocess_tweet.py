@@ -6,9 +6,7 @@
 import json
 import random
 import time
-
 import requests
-
 from location.get_location_from_tweet import getUserLocation, inferCountryFromCity, getLocationData, \
     getFinalUserLocation
 from location.locations import Cities, Countries
