@@ -11,7 +11,7 @@ from location.get_location_from_tweet import getUserLocation, inferCountryFromCi
 from location.locations import Cities, Countries
 
 ### SHOULD I DO THID here?
-from twitter import Tweet
+from twitter.Tweet import Tweet
 
 citiesIndex, citiesInfo = Cities.loadFromFile()
 countriesIndex, countriesInfo = Countries.loadFromFile()
@@ -92,7 +92,7 @@ def get_tweet_text_category(tweet, categoryList):
     """
     tweetTextTokens = Tweet.tokenizeTweetText(tweet["text"])
     categ = [token for token in tweetTextTokens if token in categoryList]
-    return categ[0]  #todo, make some tests
+    return categ  #todo, make some tests
 
 
 def enrich_tweet(tweet):
