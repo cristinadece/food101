@@ -12,7 +12,7 @@ import os
 os.chdir("/home/foodmap/food101/")
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch
-from index.preprocess_tweet import enrich_tweet_stream, get_tweet_snippet
+from index import preprocess_tweet
 
 
 def isValid(enriched_tweet):
@@ -46,9 +46,9 @@ class Stream2Index(TwythonStreamer):
                                 )
 
     def on_success(self, data):
-        enriched_tweet = enrich_tweet_stream(data)
+        enriched_tweet = preprocess_tweet.enrich_tweet_stream(data)
         if isValid(enriched_tweet):
-            tweet_snippet = get_tweet_snippet(enriched_tweet)
+            tweet_snippet = preprocess_tweet.get_tweet_snippet(enriched_tweet)
             self.es.index(index='stream', doc_type='tweet_snippet', id=tweet_snippet["id"], body=tweet_snippet)
             print "Indexed tweet: ", enriched_tweet["id"]
 
