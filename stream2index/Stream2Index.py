@@ -7,6 +7,8 @@ StreamBBTwitter : MyStreamer
  or here: http://www.kalisch.biz/2013/10/harvesting-twitter-with-python/
 
 '''
+import os
+os.chdir("/home/foodmap/food101/")
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch
 from index import preprocess_tweet
