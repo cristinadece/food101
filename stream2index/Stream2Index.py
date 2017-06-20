@@ -10,11 +10,11 @@ StreamBBTwitter : MyStreamer
 import os
 
 import sys
-
+sys.path.append("/home/foodmap/food101/")
 os.chdir("/home/foodmap/food101/")
+print os.getcwd()
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch
-print sys.path
 from index import preprocess_tweet
 
 
