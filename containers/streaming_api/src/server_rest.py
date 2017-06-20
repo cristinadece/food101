@@ -25,9 +25,6 @@ class Sync (Resource):
 api.add_resource(Status, '/status')
 api.add_resource(Sync, '/sync')
 
-# api.add_resource(Basmatize, '/basmatize/<string:app_id>')
-# api.add_resource(Deploy, '/deploy/<string:app_id>')
-
 if __name__ == '__main__':
     print "Start Sync Api"
     app.run(host='0.0.0.0', port=5000, debug=True)

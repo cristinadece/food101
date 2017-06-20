@@ -1,1 +1,1 @@
-docker build -t streaming_api .
+docker build  --no-cache -t streaming_api .
