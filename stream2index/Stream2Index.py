@@ -8,11 +8,10 @@ StreamBBTwitter : MyStreamer
 
 '''
 
-
-from twython import TwythonStreamer
-from elasticsearch import Elasticsearch
 import os
 os.chdir("/home/foodmap/food101/")
+from twython import TwythonStreamer
+from elasticsearch import Elasticsearch
 from index.preprocess_tweet import enrich_tweet_stream, get_tweet_snippet
 
 

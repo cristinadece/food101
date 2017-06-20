@@ -11,7 +11,8 @@ https://apps.twitter.com/app/13516461   - StreamFood
 Consider changing method from GET to POST, as explained here: https://dev.twitter.com/streaming/reference/post/statuses/filter
 
 '''
-
+import os
+os.chdir("/home/foodmap/food101/")
 import logging
 #import oauth2 as oauth
 import os
@@ -56,12 +57,6 @@ def getKeywordsList():
     return htString
 
 
-def setup():
-    print "current dir: ", os.getcwd()
-    os.chdir("/home/foodmap/food101/")
-    print "current dir: ", os.getcwd()
-
-
 def log(msg, id=None):
     if id is not None:
         logger.info('%s: %s' % (id, msg))
@@ -70,10 +65,7 @@ def log(msg, id=None):
 
 
 def filter():
-
-
     start = time.time()
-    setup()
     htString = getKeywordsList()
     stream = Stream2Index(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
