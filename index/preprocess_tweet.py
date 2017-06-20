@@ -3,8 +3,11 @@
 """
 # food101 : preprocess_tweet.py
 # Created by muntean on 5/15/17
+import json
 import random
 import time
+
+import requests
 
 from location.get_location_from_tweet import getUserLocation, inferCountryFromCity, getLocationData, \
     getFinalUserLocation
@@ -56,8 +59,14 @@ def get_image_category(img_url):
     :param img_url:
     :return:
     """
-    categ_list = ["Pizza", "Pasta", "Sushi", None]
-    return random.choice(categ_list)
+    request_string = 'http://test.tripbuilder.isti.cnr.it:8080/FoodRecognition/services/IRServices/recognizeByURL?imgURL='
+    res = requests.get(request_string + img_url)
+    candidates = json.loads(res.text)["guessed"]
+    if len(candidates) != 0:
+        category = candidates[0]["label"]
+    else:
+        category = None
+    return category
 
 
 def get_day_as_int(tweet):
@@ -95,7 +104,7 @@ def get_tweet_text_category(tweet, categoryList):
     return categ  #todo, make some tests
 
 
-def enrich_tweet(tweet):
+def enrich_tweet_trend(tweet):
     """
 
     :param tweet:
@@ -111,6 +120,30 @@ def enrich_tweet(tweet):
     return tweet
 
 
+def enrich_tweet_stream(tweet):
+    """
+
+    :param tweet:
+    :return:
+    """
+    media_url = get_media_url(tweet)
+    tweet["media_url"] = media_url
+    img_category = get_image_category(media_url)
+    tweet["img_category"] = img_category
+
+    # longitude first, then latitude
+    if tweet["coordinates"] is not None:
+        tweet["coordinates"] = tweet['coordinates']['coordinates']  # returns a list [longitude, latitude]
+    else:
+        tweet["coordinates"] = None
+
+    if tweet["place"] is not None:
+        if tweet["place"]["bounding_box"]:
+            tweet["bounding_box"] = tweet["place"]["bounding_box"]
+        else:
+            tweet["bounding_box"] = None
+
+
 def get_tweet_snippet(tweet):
     """
     Reduce tweet to a snippet!
@@ -122,10 +155,11 @@ def get_tweet_snippet(tweet):
     stream_dict["day"] = get_day_as_int(tweet)
     stream_dict["media_url"] = tweet["media_url"]
     stream_dict["img_category"] = tweet["img_category"]
-    stream_dict["city"] = tweet["city"]
-    stream_dict["country"] = tweet["country"]
     stream_dict["text"] = tweet["text"]
-    stream_dict["created_at"] = tweet["created_at"]
+    stream_dict["created_at"] = tweet["created_at"]  # put this as datetime!!!!
+    # ts = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(tweet['created_at'],'%a %b %d %H:%M:%S +0000 %Y'))
     stream_dict["username"] = tweet["user"]["screen_name"]
+    stream_dict["coordinates"] = tweet["coordinates"]
+    stream_dict["bounding_box"] = tweet["bounding_box"]
     return stream_dict
 

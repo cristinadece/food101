@@ -11,22 +11,22 @@ StreamBBTwitter : MyStreamer
 import json
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch
-from index.preprocess_tweet import enrich_tweet, get_tweet_snippet
+from index.preprocess_tweet import enrich_tweet_stream, get_tweet_snippet
 
 
 def isValid(enriched_tweet):
     hasImg = False
     hasCategory = False
-    hasCountry = False
+    hasPlace = False
 
     if enriched_tweet["media_url"] is not None:
         hasImg = True
     if enriched_tweet["img_category"] is not None:
         hasCategory = True
-    if enriched_tweet["country"] is not None:
-        hasCountry = True
+    if (enriched_tweet["coordinates"] is not None) or (enriched_tweet["bounding_box"] is not None):
+        hasPlace = True
 
-    if hasImg and hasCategory and hasCountry:
+    if hasImg and hasCategory and hasPlace:
         return True
     else:
         return False
@@ -45,7 +45,7 @@ class Stream2Index(TwythonStreamer):
                                 )
 
     def on_success(self, data):
-        enriched_tweet = enrich_tweet(data)
+        enriched_tweet = enrich_tweet_stream(data)
         if isValid(enriched_tweet):
             tweet_snippet = get_tweet_snippet(enriched_tweet)
             self.es.index(index='stream', doc_type='tweet_snippet', id=tweet_snippet["id"], body=tweet_snippet)

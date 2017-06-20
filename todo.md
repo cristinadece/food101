@@ -17,7 +17,8 @@
         class and location
         
     - Push last months to Trend Index - CRIS
-    
+        - indice mensile!
+        
     - Connect Stream to Stream Index - INSIEME
 
     - Connect Stream index to CartoDB - VINICIUS
