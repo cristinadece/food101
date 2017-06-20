@@ -14,6 +14,7 @@ Consider changing method from GET to POST, as explained here: https://dev.twitte
 
 import logging
 #import oauth2 as oauth
+import os
 import time
 from twython import TwythonRateLimitError
 from Stream2Index import Stream2Index
@@ -55,6 +56,11 @@ def getKeywordsList():
     return htString
 
 
+def setup():
+    print "current dir: ", os.getcwd()
+    os.chdir("/home/foodmap/food101/")
+    print "current dir: ", os.getcwd()
+
 
 def log(msg, id=None):
     if id is not None:
@@ -64,7 +70,10 @@ def log(msg, id=None):
 
 
 def filter():
+
+
     start = time.time()
+    setup()
     htString = getKeywordsList()
     stream = Stream2Index(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
