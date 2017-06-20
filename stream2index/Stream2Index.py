@@ -11,6 +11,7 @@ StreamBBTwitter : MyStreamer
 
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch
+os.chdir("/home/foodmap/food101/")
 from index.preprocess_tweet import enrich_tweet_stream, get_tweet_snippet
 
 
