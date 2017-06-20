@@ -129,8 +129,11 @@ def enrich_tweet_stream(tweet):
     """
     media_url = get_media_url(tweet)
     tweet["media_url"] = media_url
-    img_category = get_image_category(media_url)
-    tweet["img_category"] = img_category
+    if media_url is not None:
+        img_category = get_image_category(media_url)
+        tweet["img_category"] = img_category
+    else:
+        tweet["img_category"] = None
 
     # longitude first, then latitude
     # longitude first, then latitude
