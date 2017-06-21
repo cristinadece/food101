@@ -59,7 +59,11 @@ def get_image_category(img_url):
     """
     request_string = 'http://test.tripbuilder.isti.cnr.it:8080/FoodRecognition/services/IRServices/recognizeByURL?imgURL='
     res = requests.get(request_string + img_url)
-    candidates = json.loads(res.text)["guessed"]
+    try:
+        candidates = json.loads(res.text)["guessed"]
+    except:
+        print "Error! Couldn't parse json ", res.text
+        return None
     if len(candidates) != 0:
         category = candidates[0]["label"]
     else:
