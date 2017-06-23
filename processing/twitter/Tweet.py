@@ -2,13 +2,9 @@
 import gzip
 import json
 import os
-from tokenizer import twokenize
+from processing.tokenizer import twokenize
 
-#stopwords=open('../resources/stop-word-list.txt', 'r').read().decode('utf-8').split('\r\n')
-
-dir = os.path.dirname(__file__)
-stopwordsFile = os.path.join(dir, '../resources/stop-word-list.txt')
-stopwords = open(stopwordsFile, 'r').read().decode('utf-8').split('\r\n')
+stopwords = open('./resources/stop-word-list.txt', 'r').read().decode('utf-8').split('\r\n')
 
 __author__ = 'cris'
 
@@ -66,23 +62,3 @@ class Tweet:
                 except:
                     print "Couldn't parse tweet: ", line[:200]
                 yield tweet
-
-
-if __name__ == '__main__':
-    #print stopwords
-
-    j = 0
-    for i in Tweet.getTweetAsDictionary("../../../english-tweets/english-tweets-20150901.json.part.gz"):
-
-        j += 1
-
-        if i['place']!=None:
-            print i["place"]
-
-        if i['coordinates']!=None:
-            print i['coordinates']["coordinates"]
-
-        if j % 1000 == 0:
-            break
-
-

@@ -8,17 +8,21 @@ StreamBBTwitter : MyStreamer
 
 '''
 import os
-
 import sys
 sys.path.append("/home/foodmap/food101/")
 os.chdir("/home/foodmap/food101/")
 print os.getcwd()
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch
-from index import preprocess_tweet
+from processing import preprocess_tweet
 
 
 def isValid(enriched_tweet):
+    """
+
+    :param enriched_tweet:
+    :return:
+    """
     hasImg = False
     hasCategory = False
     hasPlace = False
@@ -37,7 +41,10 @@ def isValid(enriched_tweet):
 
 
 class Stream2Index(TwythonStreamer):
+    """
 
+
+    """
     def __init__(self, CONSUMER_KEY, CONSUMER_SECRET,
                  ACCESS_TOKEN, ACCESS_TOKEN_SECRET):
         super(Stream2Index, self).__init__(app_key=CONSUMER_KEY, app_secret=CONSUMER_SECRET, oauth_token=ACCESS_TOKEN,

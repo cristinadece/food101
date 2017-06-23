@@ -5,25 +5,32 @@ local-twitter
 @date: 23/06/16
 """
 
-from elasticsearch import Elasticsearch
-import os
-import time
-import requests
 import argparse
-from index.preprocess_tweet import get_media_url, get_image_category
-from twitter.Tweet import Tweet
-from location.get_location_from_tweet import *
+import os
+import requests
+from elasticsearch import Elasticsearch
+from processing.preprocess_tweet import process_tweet
+from processing.twitter.Tweet import Tweet
 
-
-parser = argparse.ArgumentParser(description='Import a dataset in light-svm format.')
-parser.add_argument('-i', '--input', type=str, help='the input file')
+parser = argparse.ArgumentParser(description='Index tweets in trend index.')
+parser.add_argument('-f', '--inputFile', type=str, help='the input file')
+parser.add_argument('-i', '--indexName', type=str, help='the input file')
 
 
 def check_server_up():
+    """
+
+    :return:
+    """
     res = requests.get('http://foodmap.isti.cnr.it:9200', auth=('elastic', 'changeme'))
     print(res.content)
 
+
 def setup():
+    """
+
+    :return:
+    """
     es = Elasticsearch(['localhost', 'otherhost'],
                        http_auth=('elastic', 'changeme'),
                        port=9200
@@ -32,91 +39,59 @@ def setup():
     print "current dir: ", os.getcwd()
     os.chdir("/home/foodmap/food101/")
     print "current dir: ", os.getcwd()
-
     return es
 
-def index_from_path(es, path):
 
-    citiesIndex, citiesInfo = Cities.loadFromFile()
-    countriesIndex, countriesInfo = Countries.loadFromFile()
-    ccDict = Countries.countryCodeDict(countriesInfo)
+def index_from_path(es, inputFile, indexName):
+    """
 
+    :param es:
+    :param inputFile:
+    :return:
+    """
     tweetsAsDict = Tweet.getTweetAsDictionary(inputFile)
     i = 0
-    countImg = 0
-    countCategory = 0
-    countPlace = 0
-
+    numIndex = 0
     for tweet in tweetsAsDict:
         i += 1
-        hasImg = False
-        hasCategory = False
-        hasCountry = False
+        if i % 10000 ==0:
+            print "Processed tweets: ", i
+            print "Indexed tweets: ", numIndex
 
-        # 1. has photo?
-        if get_media_url(tweet) is not None:
-            hasImg = True
-            countImg += 1
-        else:
+        new_tweet = process_tweet(tweet, forStream=False)
+        if new_tweet is None:
             continue
+        new_tweet_id = new_tweet["id"]
 
-        # 2. has food category?
-        if get_image_category(tweet) is not None:
-            hasCategory = True
-            countCategory += 1
+        # check len of img_categ
+        if len(new_tweet["img_categories"]) != 0:
+            new_tweet["img_category"] = new_tweet["img_categories"][0]["label"]
+            new_tweet["img_category_score"] = new_tweet["img_categories"][0]["score"]
         else:
-            continue
+            new_tweet["img_category"] = None
+            new_tweet["img_category_score"] = 0.0
 
-        # 3. has location? we need city and country; record 2 separate fields
-        ## 3.1. check for place
-        tweet_coords, tweet_place_city, tweet_place_country, tweet_place_country_code, user_loc = getLocationData(tweet)
-        ## 3.2. check for user location
-        if (tweet_place_country is None):
-            user_cities, user_countries = getUserLocation(user_loc, citiesIndex, citiesInfo, countriesIndex,
-                                                          countriesInfo)
-            inferred_countries = inferCountryFromCity(user_cities, citiesIndex, citiesInfo, ccDict)
-            city, country = getFinalUserLocation(user_cities, user_countries, inferred_countries)
+
+
+        # check len of text_categ
+        if len(new_tweet["text_categories"]) != 0:
+            for cat in new_tweet["text_categories"]:
+                new_tweet["text_category"] = cat
+
+                # split index per month
+                es.index(index=indexName, doc_type='tweet', id=new_tweet_id, body=new_tweet)
+                numIndex += 1
         else:
-            city = tweet_place_city
-            country = tweet_place_country
-
-        if (tweet_place_country is not None) or (country is not None):
-            hasCountry = True
-            countPlace += 1
-
-        # 4. extract date.day as int
-        day = int(time.strftime('%Y%m%d', time.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y')))
-
-        # 5. extract tweet_id as long!
-        tweet_id = tweet["id"]
-
-        # SEE if CONDITIONS are met -> add to index
-        if hasImg and hasCategory and hasCountry:
-            tweet_dict = dict()
-            tweet_dict["day"] = day
-            tweet_dict["img_category"] = get_image_category(tweet)
-            tweet_dict["city"] = city
-            tweet_dict["country"] = country
-            tweet_dict["tweet_body"] = tweet
-
-            es.index(index='trends', doc_type='tweet', id=tweet_id, body=tweet_dict)
-
+            new_tweet["text_category"] = None
+            # split index per month
+            es.index(index=indexName, doc_type='tweet', id=new_tweet_id, body=new_tweet)
+            numIndex += 1
     print "Total relevant tweets in a day: ", i
-    print "Tweets with media", countImg
-    print "Tweets with category", countCategory
-    print "Tweets with place", countPlace
-
-
-def query_tweet_text(es, query):
-    es.search(index="trends", body={"query": {"match": {'tweet_body.text': 'lasagna'}}})
-
-
-def query_by_tweet_id(es, tweet_id):
-    es.get(index='trends', doc_type='tweet', id=855919564705673216)
 
 
 if __name__ == '__main__':
     args = parser.parse_args()
-
-    inputFile = "/home/foodmap/food-tweets-2017-04-23.json.gz"
-    index_from_path(inputFile)
+    print args
+    inputFile = args.f
+    indexName = args.i
+    index_from_path(inputFile, indexName)

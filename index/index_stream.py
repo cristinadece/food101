@@ -11,7 +11,10 @@ https://apps.twitter.com/app/13516461   - StreamFood
 Consider changing method from GET to POST, as explained here: https://dev.twitter.com/streaming/reference/post/statuses/filter
 
 '''
+
 import os
+from processing.load_keyword_dicts import getStreamFilterKeywords
+
 os.chdir("/home/foodmap/food101/")
 import logging
 import time
@@ -33,28 +36,6 @@ logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def getKeywordsList():
-    """
-    from the kw.txt and from categories.txt - with some processing to it
-    :return: a string a keywords separated by comma
-    """
-    htList = list()
-    with open("./resources/kw.txt") as f:
-        for line in f:
-            ht = line.replace("\n", "")
-            htList.append(ht)
-
-
-    htCategoryList = list()
-    with open("./resources/categories.txt") as g:
-        for line in g:
-            ht = "#" + line.lower().replace("\r\n", "").replace(" ", "")
-            htCategoryList.append(ht)
-
-    htString = ",".join(htList) + "," + ",".join(htCategoryList)
-    return htString
-
-
 def log(msg, id=None):
     if id is not None:
         logger.info('%s: %s' % (id, msg))
@@ -64,7 +45,7 @@ def log(msg, id=None):
 
 def filter():
     start = time.time()
-    htString = getKeywordsList()
+    htString = getStreamFilterKeywords()
     stream = Stream2Index(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
     try:
@@ -83,9 +64,5 @@ def filter():
             time.sleep(60)
 
 
-def main():
-    filter()
-
-
 if __name__ == '__main__':
-    main()
+    filter()

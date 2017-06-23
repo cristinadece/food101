@@ -1,9 +1,8 @@
 import codecs
-import os
 from collections import defaultdict
-import sys
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 stopwords = ["dalai", "buy", "best", "deal", "obama", "clinton", "police", "goes", "reading", "born", "manage", "gay",
              "barry", "dinar", "sale", "march", "nice", "mary", "vladimir", "zug", "boom", "anna", "gap", "york", "bar",
@@ -202,8 +201,8 @@ class Countries:
 if __name__ == '__main__':
 
     # load cities and countries
-    citiesIndex, citiesInfo = Cities.loadFromFile(filename="../resources/cities15000.txt")
-    countriesIndex, countriesInfo = Countries.loadFromFile(filename="../resources/countryInfo.txt")
+    citiesIndex, citiesInfo = Cities.loadFromFile(filename="./processing/resources/cities15000.txt")
+    countriesIndex, countriesInfo = Countries.loadFromFile(filename="./processing/resources/countryInfo.txt")
 
     # citiesAscii = locations.Cities.loadFromFile(ascii=True)
     ccDict = Countries.countryCodeDict(countriesInfo)

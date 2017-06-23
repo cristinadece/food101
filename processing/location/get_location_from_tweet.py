@@ -3,9 +3,7 @@ Some utilities for finding city and country from the user_location field
 """
 # food101 : get_place_from_user_location
 # Created by muntean on 4/26/17
-
-from location.locations import Cities, Countries
-from tokenizer import twokenize, ngrams
+from processing.tokenizer import twokenize, ngrams
 
 
 def getLocationsFromToken(token, citiesIndex, citiesInfo, countriesIndex, countriesInfo):
@@ -198,14 +196,5 @@ def getLocationData(tweet):
     return tweet_coords, tweet_place_city, tweet_place_country, tweet_place_country_code, user_location
 
 
-if __name__ == '__main__':
-    pass
-    # load cities and countries
-    citiesIndex, citiesInfo = Cities.loadFromFile('../resources/cities15000.txt')
-    countriesIndex, countriesInfo = Countries.loadFromFile('../resources/cities15000.txt')
 
-    # citiesAscii = locations.Cities.loadFromFile(ascii=True)
-    ccDict = Countries.countryCodeDict(countriesInfo)
-    cities, countries = getUserLocation("Austin, TX", citiesIndex, citiesInfo, countriesIndex, countriesInfo)
-    print cities, countries
 

@@ -9,8 +9,10 @@ statistical learning with in-the-loop human evaluation :)
 
 __author__="brendan o'connor (anyall.org)"
 
-import re,sys
+import re
+import sys
 import emoticons
+
 mycompile = lambda pat:  re.compile(pat,  re.UNICODE)
 def regex_or(*items):
   r = '|'.join(items)
