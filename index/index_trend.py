@@ -7,7 +7,9 @@ local-twitter
 
 import argparse
 import os
+import sys
 os.chdir("/home/foodmap/food101/")
+sys.path.append(os.getcwd())
 import requests
 from elasticsearch import Elasticsearch
 from processing.preprocess_tweet import process_tweet
@@ -62,7 +64,7 @@ def index_from_path(es, inputFile, indexName):
         new_tweet_id = new_tweet["id"]
 
         # check len of img_categ
-        if len(new_tweet["img_categories"]) != 0:
+	if new_tweet["img_categories"] is not None and len(new_tweet["img_categories"])>0:
             new_tweet["img_category"] = new_tweet["img_categories"][0]["label"]
             new_tweet["img_category_score"] = new_tweet["img_categories"][0]["score"]
         else:
@@ -77,19 +79,19 @@ def index_from_path(es, inputFile, indexName):
                 new_tweet["text_category"] = cat
 
                 # split index per month
-                es.index(index=indexName, doc_type='tweet', id=new_tweet_id, body=new_tweet)
+                es.index(index=indexName, doc_type='tweet', id=i, body=new_tweet)
                 numIndex += 1
         else:
             new_tweet["text_category"] = None
             # split index per month
-            es.index(index=indexName, doc_type='tweet', id=new_tweet_id, body=new_tweet)
+            es.index(index=indexName, doc_type='tweet', id=i, body=new_tweet)
             numIndex += 1
-    print "Total relevant tweets in a day: ", i
 
 
 if __name__ == '__main__':
     args = parser.parse_args()
     print args
-    inputFile = args.f
-    indexName = args.i
-    index_from_path(inputFile, indexName)
+    inputFile = args.inputFile
+    indexName = args.indexName
+    es = setup()
+    index_from_path(es, inputFile, indexName)

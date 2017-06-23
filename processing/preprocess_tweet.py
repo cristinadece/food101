@@ -109,7 +109,7 @@ def process_tweet(tweet, forStream=True):
     # PLACE COORDS LOCATION
     city, country, tweet_coords = get_location(tweet)
     new_tweet["coords"] = tweet_coords
-    if "place" in tweet:
+    if tweet["place"] is not None:
         if "bounding_box" in tweet["place"].keys():
             new_tweet["bounding_box"] = tweet["place"]["bounding_box"]
         else:
@@ -145,7 +145,7 @@ def process_tweet(tweet, forStream=True):
     text_categories = get_tweet_text_category(tweet, categoryDict)
     new_tweet["text_categories"] = text_categories
 
-    if len(img_categories) == 0 and len(text_categories) == 0:
+    if new_tweet["img_categories"] is None and len(new_tweet["text_categories"]) == 0:
         return None
 
     # DAY, DATE
@@ -156,5 +156,5 @@ def process_tweet(tweet, forStream=True):
     # INITIAL TWEET
     new_tweet["tweet_body"] = tweet
 
-    return tweet
+    return new_tweet
 
