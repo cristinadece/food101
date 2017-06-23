@@ -7,6 +7,7 @@ local-twitter
 
 import argparse
 import os
+os.chdir("/home/foodmap/food101/")
 import requests
 from elasticsearch import Elasticsearch
 from processing.preprocess_tweet import process_tweet
@@ -36,9 +37,6 @@ def setup():
                        port=9200
                        )
 
-    print "current dir: ", os.getcwd()
-    os.chdir("/home/foodmap/food101/")
-    print "current dir: ", os.getcwd()
     return es
 
 
