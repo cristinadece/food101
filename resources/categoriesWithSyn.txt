@@ -1,200 +1,148 @@
-Apple pie,Apple pie
-
-Baby back ribs,Baby back ribs
-
-Baklava,Baklava
-
-Beef carpaccio,Beef carpaccio
-
-Beef tartare,Beef tartare
-
-Beet salad,Beet salad
-
-Beignets,Beignets
-
-Bibimbap,Bibimbap
-
-Bread pudding,Bread pudding
-
-Breakfast burrito,Breakfast burrito
-
-Bruschetta,Bruschetta
-
-Caesar salad,Caesar salad
-
-Cannoli,Cannoli
-
-Caprese salad,Caprese salad
-
-Carrot cake,Carrot cake
-
-Ceviche,Ceviche
-
-Cheesecake,Cheesecake
-
-Cheese plate,Cheese plate
-
-Chicken curry,Chicken curry
-
-Chicken quesadilla,Chicken quesadilla
-
-Chicken wings,Chicken wings
-
-Chocolate cake,Chocolate cake
-
-Chocolate mousse,Chocolate mousse
-
-Churros,Churros
-
-Clam chowder,Clam chowder
-
-Club sandwich,Club sandwich
-
-Crab cakes,Crab cakes
-
-Creme brulee,Creme brulee
-
-Croque madame,Croque madame
-
-Cup cakes,Cup cakes
-
-Deviled eggs,Deviled eggs
-
-Donuts,Donuts
-
-Dumplings,Dumplings
-
-Edamame,Edamame
-
-Eggs benedict,Eggs benedict
-
-Escargots,Escargots
-
-Falafel,Falafel
-
-Filet mignon,Filet mignon
-
-Fish and chips,Fish and chips
-
-Foie gras,Foie gras
-
-French fries,French fries
-
-French onion soup,French onion soup
-
-French toast,French toast
-
-Fried calamari,Fried calamari
-
-Fried rice,Fried rice
-
-Frozen yogurt,Frozen yogurt
-
-Garlic bread,Garlic bread
-
-Gnocchi,Gnocchi
-
-Greek salad,Greek salad
-
-Grilled cheese sandwich,Grilled cheese sandwich
-
-Grilled salmon,Grilled salmon
-
-Guacamole,Guacamole
-
-Gyoza,Gyoza
-
-Hamburger,Hamburger
-
-Hot and sour soup,Hot and sour soup
-
-Hot dog,Hot dog
-
-Huevos rancheros,Huevos rancheros
-
-Hummus,Hummus
-
-Ice cream,Ice cream
-
-Lasagna,Lasagna
-
-Lobster bisque,Lobster bisque
-
-Lobster roll sandwich,Lobster roll sandwich
-
-Macaroni and cheese,Macaroni and cheese
-
-Macarons,Macarons
-
-Miso soup,Miso soup
-
-Mussels,Mussels
-
-Nachos,Nachos
-
-Omelette,Omelette
-
-Onion rings,Onion rings
-
-Oysters,Oysters
-
-Pad thai,Pad thai
-
-Paella,Paella
-
-Pancakes,Pancakes
-
-Panna cotta,Panna cotta
-
-Peking duck,Peking duck
-
-Pho,Pho
-
-Pizza,Pizza
-
-Pork chop,Pork chop
-
-Poutine,Poutine
-
-Prime rib,Prime rib""
-Pulled pork sandwich,Pulled pork sandwich
-
-Ramen,Ramen
-
-Ravioli,Ravioli
-
-Red velvet cake,Red velvet cake
-
-Risotto,Risotto
-
-Samosa,Samosa
-
-Sashimi,Sashimi
-
-Scallops,Scallops
-
-Seaweed salad,Seaweed salad
-
-Shrimp and grits,Shrimp and grits
-
-Spaghetti bolognese,Spaghetti bolognese
-
-Spaghetti carbonara,Spaghetti carbonara
-
-Spring rolls,Spring rolls
-
-Steak,Steak
-
-Strawberry shortcake,Strawberry shortcake
-
-Sushi,Sushi
-
-Tacos,Tacos
-
-Takoyaki,Takoyaki
-
-Tiramisu,Tiramisu
-
-Tuna tartare,Tuna tartare
-
-Waffles,Waffles
+Apple pie, Apple pie
+Apple tart, Apple pie
+Ribs, Baby back ribs
+Baby back ribs, Baby back ribs
+Baklava, Baklava
+Beef carpaccio, Beef carpaccio
+Beef tartare, Beef tartare
+Beet salad, Beet salad
+Beet salads, Beet salad
+Beignets, Beignets
+Bibimbap, Bibimbap
+Bread pudding, Bread pudding
+Burrito, Breakfast burrito
+Breakfast burrito, Breakfast burrito
+Bruschetta, Bruschetta
+Caesar salad, Caesar salad
+Cannoli, Cannoli
+Caprese salad, Caprese salad
+Carrot cake, Carrot cake
+Ceviche, Ceviche
+Cheesecake, Cheesecake
+Cheese plate, Cheese plate
+Cheese plates, Cheese plate
+Chicken curry, Chicken curry
+Chicken quesadilla, Chicken quesadilla
+Chicken wings, Chicken wings
+Chocolate cakes,  Chocolate cake
+Chocolate cake,  Chocolate cake
+Chocolate moussecake, Chocolate mousse
+Chocolate mousse, Chocolate mousse
+Churros, Churros
+Clam chowder, Clam chowder
+Clamchowder, Clam chowder
+Club sandwich, Club sandwich
+Crab cakes, Crab cakes
+Crab cake, Crab cakes
+Creme brulee, Creme brulee
+Creme brûlée, Creme brulee
+Croque madame, Croque madame
+Cup cakes, Cup cakes
+Cupcakes, Cup cakes
+Deviled eggs, Deviled eggs
+Deviled egg, Deviled eggs
+Donuts, Donuts
+Dumplings, Dumplings
+Dumpling, Dumplings
+Edamame, Edamame
+Eggs benedict, Eggs benedict
+Escargots, Escargots
+Falafel, Falafel
+Filet mignon, Filet mignon
+Filetmignon, Filet mignon
+Filet, Filet mignon
+Fish and chips, Fish and chips
+Foie gras, Foie gras
+French fries, French fries
+French onion soup, French onion soup
+French soup, French onion soup
+Onion soup,French onion soup
+French toast, French toast
+Fried calamari, Fried calamari
+Fried rice, Fried rice
+Friedrice, Fried rice
+Frozen yogurt, Frozen yogurt
+Frozenyogurt, Frozen yogurt
+Garlic bread, Garlic bread
+Garlicbread, Garlic bread
+Gnocchi, Gnocchi
+Greek salad, Greek salad
+Grilled cheese sandwich, Grilled cheese sandwich
+Grilled sandwich, Grilled cheese sandwich
+Grilled salmon, Grilled salmon
+Grilledsalmon, Grilled salmon
+Guacamole, Guacamole
+Gyoza, Gyoza
+Hamburger, Hamburger
+Hot and sour soup, Hot and sour soup
+Hotandsoursoup, Hot and sour soup
+Hot dog, Hot dog
+Hotdog, Hot dog
+Huevos rancheros, Huevos rancheros
+Huevosrancheros, Huevos rancheros
+Huevorancheros, Huevos rancheros
+Huevoranchero, Huevos rancheros
+Hummus, Hummus
+Ice cream, Ice cream
+Gelato, Ice cream
+Icecream, Ice cream
+Lasagna, Lasagna
+Lasagna Bolognese, Lasagna
+Lobster bisque, Lobster bisque
+Lobsterbisque, Lobster bisque
+Lobster soup, Lobster bisque
+Lobster roll sandwich, Lobster roll sandwich
+Lobster roll, Lobster roll sandwich
+Macaroni and cheese, Macaroni and cheese
+Macaroniandcheese, Macaroni and cheese
+cheesemacaroni, Macaroni and cheese
+Macarons, Macarons
+Macaron, Macarons
+Macarones, Macarons
+Miso soup, Miso soup
+Mussels, Mussels
+Nachos, Nachos
+Omelette, Omelette
+Onion rings, Onion rings
+Onion ring,Onion rings
+Oysters, Oysters
+Oyster, Oysters
+Pad thai, Pad thai
+Paella, Paella
+Pancakes, Pancakes
+Pancake, Pancakes
+Panna cotta, Panna cotta
+Pannacotta, Panna cotta
+Peking duck, Peking duck
+Pho, Pho
+Pizza, Pizza
+Pork chop, Pork chop
+Poutine, Poutine
+Prime rib, Prime rib
+Primerib, Prime rib
+Pulled pork sandwich, Pulled pork sandwich
+Ramen, Ramen
+Ravioli, Ravioli
+Red velvet cake, Red velvet cake
+Redvelvetcake, Red velvet cake
+Risotto, Risotto
+Samosa, samosa
+Sashimi, Sashimi
+Scallops, Scallops
+Scallop, Scallops
+Seaweed salad, Seaweed salad
+Seaweedsalad, Seaweed salad
+Shrimp and grits, Shrimp and grits
+Shrimpandgrits, Shrimp and grits
+Spaghetti bolognese, Spaghetti bolognese
+Spaghetti carbonara, Spaghetti carbonara
+Spring rolls, Spring rolls
+Steak, Steak
+Strawberry shortcake, Strawberry shortcake
+Sushi, Sushi
+Tacos, Tacos
+Takoyaki, Takoyaki
+Tiramisu, Tiramisu
+Tuna tartare, Tuna Tartare
+Waffles, Waffeln
+Waffel, Waffeln
