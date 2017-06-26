@@ -12,12 +12,10 @@ def loadCategoryDict():
     # with open("./resources/categoriesWithSyn.txt") as g:
     with open("./resources/categoriesWithSyn.txt") as g:
         for line in g:
-            # syn, categ = line.lower().replace("\r\n", "").split(",")
-            # ht = "#" + syn.replace(" ", "")
-            # categoryDict[syn] = categ
-            # categoryDict[ht] = categ
-            cat = line.lower().replace("\r\n", "")
-            categoryDict[cat] = cat
+            syn, categ = line.lower().replace("\r\n", "").split(",")
+            ht = "#" + syn.replace(" ", "")
+            categoryDict[syn] = categ
+            categoryDict[ht] = categ
     return categoryDict
 
 

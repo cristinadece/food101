@@ -8,6 +8,7 @@ local-twitter
 import argparse
 import os
 import sys
+
 os.chdir("/home/foodmap/food101/")
 sys.path.append(os.getcwd())
 import requests
@@ -54,7 +55,7 @@ def index_from_path(es, inputFile, indexName):
     numIndex = 0
     for tweet in tweetsAsDict:
         i += 1
-        if i % 10000 ==0:
+        if i % 10000 == 0:
             print "Processed tweets: ", i
             print "Indexed tweets: ", numIndex
 
@@ -64,14 +65,12 @@ def index_from_path(es, inputFile, indexName):
         new_tweet_id = new_tweet["id"]
 
         # check len of img_categ
-	if new_tweet["img_categories"] is not None and len(new_tweet["img_categories"])>0:
+        if new_tweet["img_categories"] is not None and len(new_tweet["img_categories"]) > 0:
             new_tweet["img_category"] = new_tweet["img_categories"][0]["label"]
             new_tweet["img_category_score"] = new_tweet["img_categories"][0]["score"]
         else:
             new_tweet["img_category"] = None
             new_tweet["img_category_score"] = 0.0
-
-
 
         # check len of text_categ
         if len(new_tweet["text_categories"]) != 0:
