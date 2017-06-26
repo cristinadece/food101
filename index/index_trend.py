@@ -18,7 +18,7 @@ from processing.twitter.Tweet import Tweet
 
 parser = argparse.ArgumentParser(description='Index tweets in trend index.')
 parser.add_argument('-f', '--inputFile', type=str, help='the input file')
-parser.add_argument('-i', '--indexName', type=str, help='the input file')
+parser.add_argument('-i', '--indexName', type=str, help='the index name')
 
 
 def check_server_up():
@@ -62,7 +62,7 @@ def index_from_path(es, inputFile, indexName):
         new_tweet = process_tweet(tweet, forStream=False)
         if new_tweet is None:
             continue
-        new_tweet_id = new_tweet["id"]
+        # new_tweet_id = new_tweet["id"]
 
         # check len of img_categ
         if new_tweet["img_categories"] is not None and len(new_tweet["img_categories"]) > 0:
@@ -74,16 +74,21 @@ def index_from_path(es, inputFile, indexName):
 
         # check len of text_categ
         if len(new_tweet["text_categories"]) != 0:
+	    print new_tweet["text_categories"]
             for cat in new_tweet["text_categories"]:
                 new_tweet["text_category"] = cat
+		print new_tweet.keys()
+		print "Multiple text categories",numIndex
 
                 # split index per month
-                es.index(index=indexName, doc_type='tweet', id=i, body=new_tweet)
+                es.index(index=indexName, doc_type='tweet', id=numIndex, body=new_tweet)
                 numIndex += 1
         else:
             new_tweet["text_category"] = None
             # split index per month
-            es.index(index=indexName, doc_type='tweet', id=i, body=new_tweet)
+	    print new_tweet.keys()
+	    print numIndex
+            es.index(index=indexName, doc_type='tweet', id=numIndex, body=new_tweet)
             numIndex += 1
 
 

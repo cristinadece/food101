@@ -101,7 +101,7 @@ def process_tweet(tweet, forStream=True):
     """
 
     new_tweet = dict()
-    new_tweet["id"] = tweet["id"]
+    # new_tweet["id"] = tweet["id"]
     new_tweet["text"] = tweet["text"]
     new_tweet["username"] = tweet["user"]["screen_name"]
 
