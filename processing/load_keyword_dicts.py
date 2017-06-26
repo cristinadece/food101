@@ -1,6 +1,7 @@
 """
 Loaders for kw dictionaries and list
 """
+import codecs
 
 
 def loadCategoryDict():
@@ -10,7 +11,7 @@ def loadCategoryDict():
     """
     categoryDict = dict()
     # with open("./resources/categoriesWithSyn.txt") as g:
-    with open("./resources/categoriesWithSyn.txt") as g:
+    with codecs.open("./resources/categoriesWithSyn.txt") as g:
         for line in g:
             syn, categ = line.lower().replace("\r\n", "").split(",")
             ht = "#" + syn.replace(" ", "")
