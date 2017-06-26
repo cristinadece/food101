@@ -74,11 +74,11 @@ def index_from_path(es, inputFile, indexName):
 
         # check len of text_categ
         if len(new_tweet["text_categories"]) != 0:
-	    print new_tweet["text_categories"]
+            print new_tweet["text_categories"]
             for cat in new_tweet["text_categories"]:
                 new_tweet["text_category"] = cat
-		print new_tweet.keys()
-		print "Multiple text categories",numIndex
+                print new_tweet.keys()
+                print "Multiple text categories", numIndex
 
                 # split index per month
                 es.index(index=indexName, doc_type='tweet', id=numIndex, body=new_tweet)
@@ -86,8 +86,8 @@ def index_from_path(es, inputFile, indexName):
         else:
             new_tweet["text_category"] = None
             # split index per month
-	    print new_tweet.keys()
-	    print numIndex
+            print new_tweet.keys()
+            print numIndex
             es.index(index=indexName, doc_type='tweet', id=numIndex, body=new_tweet)
             numIndex += 1
 
