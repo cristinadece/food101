@@ -88,7 +88,7 @@ def get_tweet_text_category(tweet, categoryDict):
     :return:
     """
     categoryList = categoryDict.keys()
-    categ = [categoryDict[token] for token in categoryList if token in tweet["text"]]
+    categ = set([categoryDict[token] for token in categoryList if token in tweet["text"]])
     return categ
 
 
