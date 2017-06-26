@@ -56,7 +56,7 @@ Foie gras, Foie gras
 French fries, French fries
 French onion soup, French onion soup
 French soup, French onion soup
-Onion soup,French onion soup
+Onion soup, French onion soup
 French toast, French toast
 Fried calamari, Fried calamari
 Fried rice, Fried rice
@@ -104,7 +104,7 @@ Mussels, Mussels
 Nachos, Nachos
 Omelette, Omelette
 Onion rings, Onion rings
-Onion ring,Onion rings
+Onion ring, Onion rings
 Oysters, Oysters
 Oyster, Oysters
 Pad thai, Pad thai
@@ -126,7 +126,7 @@ Ravioli, Ravioli
 Red velvet cake, Red velvet cake
 Redvelvetcake, Red velvet cake
 Risotto, Risotto
-Samosa, samosa
+Samosa, Samosa
 Sashimi, Sashimi
 Scallops, Scallops
 Scallop, Scallops
@@ -144,5 +144,5 @@ Tacos, Tacos
 Takoyaki, Takoyaki
 Tiramisu, Tiramisu
 Tuna tartare, Tuna Tartare
-Waffles, Waffeln
-Waffel, Waffeln
+Waffles, Waffels
+Waffel, Waffels
