@@ -143,7 +143,7 @@ def process_tweet(tweet, forStream=True):
 
     # TEXT
     text_categories = get_tweet_text_category(tweet, categoryDict)
-    new_tweet["text_categories"] = text_categories
+    new_tweet["text_categories"] = list(text_categories)
 
     if new_tweet["img_categories"] is None and len(new_tweet["text_categories"]) == 0:
         return None
