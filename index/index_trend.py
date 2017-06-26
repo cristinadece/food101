@@ -76,7 +76,6 @@ def index_from_path(es, inputFile, indexName):
 
         # check len of text_categ
         if len(new_tweet["text_categories"]) != 0:
-            print new_tweet["text_categories"]
             for cat in new_tweet["text_categories"]:
                 new_tweet["text_category"] = cat
                 # split index per month
@@ -89,6 +88,8 @@ def index_from_path(es, inputFile, indexName):
             es.index(index=indexName, doc_type='tweet', id=numIndex, body=new_tweet)
             numIndex += 1
 
+    print "Processed tweets: ", i
+    print "Indexed tweets: ", numIndex
     print "Num tweets with img cat", countImgCat
     print "Num tweets with text cat", countTextCat
 
