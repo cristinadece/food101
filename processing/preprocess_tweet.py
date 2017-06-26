@@ -101,10 +101,15 @@ def process_tweet(tweet, forStream=True):
     """
 
     new_tweet = dict()
-    # new_tweet["id"] = tweet["id"]
+    new_tweet["id"] = tweet["id"]
+    new_tweet["id_str"] = tweet["id_str"]
+    new_tweet["timestamp_ms"] = tweet["timestamp_ms"]
     new_tweet["text"] = tweet["text"]
     new_tweet["username"] = tweet["user"]["screen_name"]
-
+    new_tweet["lang"] = tweet["lang"]
+    # these can be removed!
+    new_tweet["entities"] = tweet["entities"]
+    new_tweet["user"] = tweet["user"]
 
     # PLACE COORDS LOCATION
     city, country, tweet_coords = get_location(tweet)
@@ -135,7 +140,7 @@ def process_tweet(tweet, forStream=True):
         # img_categories = get_image_categories(media_url)
         img_categories = []
         new_tweet["img_categories"] = img_categories
-        new_tweet["img_flag"] = True
+        new_tweet["img_flag"] = False  # todo when we use the classifier we must change this to True
     else:
         new_tweet["img_categories"] = None
         new_tweet["img_flag"] = True
@@ -152,8 +157,5 @@ def process_tweet(tweet, forStream=True):
     new_tweet["created_at_datetime"] = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
     new_tweet["created_at_day"] = get_day_as_int(tweet)
 
-
-    # INITIAL TWEET
-    # new_tweet["tweet_body"] = tweet
     return new_tweet
 
