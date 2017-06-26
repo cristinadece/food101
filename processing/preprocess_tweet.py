@@ -154,7 +154,6 @@ def process_tweet(tweet, forStream=True):
 
 
     # INITIAL TWEET
-    new_tweet["tweet_body"] = tweet
-
+    # new_tweet["tweet_body"] = tweet
     return new_tweet
 
