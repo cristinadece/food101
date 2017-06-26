@@ -108,8 +108,8 @@ def process_tweet(tweet, forStream=True):
     new_tweet["username"] = tweet["user"]["screen_name"]
     new_tweet["lang"] = tweet["lang"]
     # these can be removed!
-    new_tweet["entities"] = tweet["entities"]
-    new_tweet["user"] = tweet["user"]
+    # new_tweet["entities"] = tweet["entities"]
+    # new_tweet["user"] = tweet["user"]
 
     # PLACE COORDS LOCATION
     city, country, tweet_coords = get_location(tweet)
