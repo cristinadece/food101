@@ -142,6 +142,7 @@ class Countries:
                 print "Attention", k, v
             else:
                 ccDict[v[4]] = v[0]
+        ccDict["JE"] = "jersey"
         print "Len of country code dict", len(ccDict)
         return ccDict
 
