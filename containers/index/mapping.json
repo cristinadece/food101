@@ -3,14 +3,18 @@
         "index" : {
             "number_of_shards" : 5,
             "number_of_replicas" : 1
-        }
+        },
+    "index.mapper.dynamic":false
   },
   "mappings": {
     "tweet": {
       "dynamic": false,
       "properties": {
         "bounding_box": {
-          "type": "geo_shape"
+          "type": "geo_shape",
+          "tree": "quadtree",
+          "precision": "1m",
+          "coerce": true
         },
         "city": {
           "type": "text",
