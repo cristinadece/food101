@@ -7,6 +7,7 @@ StreamBBTwitter : MyStreamer
  or here: http://www.kalisch.biz/2013/10/harvesting-twitter-with-python/
 
 '''
+import json
 import os
 import sys
 os.chdir("/home/foodmap/food101/")
@@ -31,7 +32,8 @@ class Stream2Index(TwythonStreamer):
                                 http_auth=('elastic', 'changeme'),
                                 port=9200
                                 )
-        self.es.indices.create("stream")
+        mapping = json.load(open("./containers/index/mapping.json"))
+        self.es.indices.create("stream", ignore=400, body=mapping)
 
     def on_success(self, data):
         new_tweet = process_tweet(data, forStream=True)
