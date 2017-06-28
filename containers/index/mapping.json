@@ -1,0 +1,129 @@
+{
+  mappings: {
+    tweet: {
+      properties: {
+        bounding_box: {
+          properties: {
+            coordinates: {
+              type: "float"
+            },
+            type: {
+              type: "text",
+              fields: {
+                keyword: {
+                  type: "keyword",
+                  ignore_above: 256
+                }
+              }
+            }
+          }
+        },
+        city: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        coords: {
+          type: "float"
+        },
+        country: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        created_at_datetime: {
+          type: "date"
+        },
+        created_at_day: {
+          type: "long"
+        },
+        hashtags: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        id: {
+          type: "long"
+        },
+        id_str: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        img_flag: {
+          type: "boolean"
+        },
+        lang: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        media_url: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        text: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        text_categories: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        timestamp_ms: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        },
+        username: {
+          type: "text",
+          fields: {
+            keyword: {
+              type: "keyword",
+              ignore_above: 256
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,7 +10,6 @@ def loadCategoryDict():
     :return:
     """
     categoryDict = dict()
-    # with open("./resources/categoriesWithSyn.txt") as g:
     with codecs.open("./resources/categoriesWithSyn.txt", "r", "utf-8") as g:
         for line in g:
             syn, categ = line.lower().replace("\r\n", "").split(",")
