@@ -137,10 +137,10 @@ def process_tweet(tweet, forStream=True):
     new_tweet["media_url"] = media_url
     new_tweet["img_flag"] = False
     if media_url is not None:
-        # img_categories = get_image_categories(media_url)
-        img_categories = []
+        img_categories = get_image_categories(media_url)
+        # img_categories = []
         new_tweet["img_categories"] = img_categories
-        new_tweet["img_flag"] = False  # todo when we use the classifier we must change this to True
+        new_tweet["img_flag"] = True  # todo when we use the classifier we must change this to True
     else:
         new_tweet["img_categories"] = None
         new_tweet["img_flag"] = True

@@ -33,7 +33,7 @@ class Stream2Index(TwythonStreamer):
                                 port=9200
                                 )
         mapping = json.load(open("./containers/index/mapping.json"))
-        self.es.indices.create("stream", ignore=400, body=mapping)
+        print self.es.indices.create("stream", ignore=400, body=mapping)
 
     def on_success(self, data):
         new_tweet = process_tweet(data, forStream=True)
