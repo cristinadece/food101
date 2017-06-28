@@ -66,7 +66,10 @@ def process_tweet(tweet):
     :return:
     """
     s = ""
-    s += tweet["id_str"]
+    if "id_str" in tweet:
+	s += tweet["id_str"]
+    else:
+	return None
     # PLACE COORDS LOCATION
     city, country, tweet_coords = get_location(tweet)
 
@@ -90,21 +93,27 @@ if __name__ == '__main__':
 
 
     i = 0
+    nonvalid = 0
     nocountry = 0
     noimg = 0
+    withCountryAndImg = 0
     tweetsAsDict = Tweet.getTweetAsDictionary(inputFile)
 
     with open(outputFile, "w") as f:
         for tweet in tweetsAsDict:
             i += 1
             line = process_tweet(tweet)
-            if line in "nocountry":
+	    if line is None:
+		nonvalid += 1
+            elif line in "nocountry":
                 nocountry += 1
             elif line in "noimg":
                 noimg += 1
             else:
+		withCountryAndImg += 1 
                 f.write(line)
 
     print "Total tweet: ", i
     print "Tweets without country: ", nocountry
-    print "tweets with count but without img: ", noimg
+    print "Tweets with country but without img: ", noimg
+    print "Tweets with contry and img", withCountryAndImg
