@@ -8,7 +8,6 @@ local-twitter
 import argparse
 import os
 import sys
-
 os.chdir("/home/foodmap/food101/")
 sys.path.append(os.getcwd())
 import requests
@@ -39,7 +38,6 @@ def setup():
                        http_auth=('elastic', 'changeme'),
                        port=9200
                        )
-
     return es
 
 
@@ -53,8 +51,6 @@ def index_from_path(es, inputFile, indexName):
     tweetsAsDict = Tweet.getTweetAsDictionary(inputFile)
     i = 0
     numIndex = 0
-    countImgCat = 0
-    countTextCat = 0
     for tweet in tweetsAsDict:
         i += 1
         if i % 10000 == 0:
@@ -65,33 +61,12 @@ def index_from_path(es, inputFile, indexName):
         if new_tweet is None:
             continue
 
-        # check len of img_categ
-        if new_tweet["img_categories"] is not None and len(new_tweet["img_categories"]) > 0:
-            new_tweet["img_category"] = new_tweet["img_categories"][0]["label"]
-            new_tweet["img_category_score"] = new_tweet["img_categories"][0]["score"]
-            countImgCat += 1
-        else:
-            new_tweet["img_category"] = None
-            new_tweet["img_category_score"] = 0.0
-
-        # check len of text_categ
-        if len(new_tweet["text_categories"]) != 0:
-            for cat in new_tweet["text_categories"]:
-                new_tweet["text_category"] = cat
-                # split index per month
-                es.index(index=indexName, doc_type='tweet', id=numIndex, body=new_tweet)
-                numIndex += 1
-                countTextCat += 1
-        else:
-            new_tweet["text_category"] = None
-            # split index per month
-            es.index(index=indexName, doc_type='tweet', id=numIndex, body=new_tweet)
-            numIndex += 1
+        es.index(index=indexName, doc_type='tweet', id=new_tweet["id"], body=new_tweet)
+        numIndex += 1
 
     print "Processed tweets: ", i
     print "Indexed tweets: ", numIndex
-    print "Num tweets with img cat", countImgCat
-    print "Num tweets with text cat", countTextCat
+
 
 if __name__ == '__main__':
     args = parser.parse_args()

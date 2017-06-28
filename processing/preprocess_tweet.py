@@ -11,7 +11,7 @@ from processing.load_keyword_dicts import loadCategoryDict
 from processing.location.locations import Cities, Countries
 from processing.location.get_location_from_tweet import getUserLocation, inferCountryFromCity, getLocationData, \
     getFinalUserLocation
-
+from processing.twitter.Tweet import Tweet
 
 citiesIndex, citiesInfo = Cities.loadFromFile()
 countriesIndex, countriesInfo = Countries.loadFromFile()
@@ -107,9 +107,8 @@ def process_tweet(tweet, forStream=True):
     new_tweet["text"] = tweet["text"]
     new_tweet["username"] = tweet["user"]["screen_name"]
     new_tweet["lang"] = tweet["lang"]
-    # these can be removed!
-    # new_tweet["entities"] = tweet["entities"]
-    # new_tweet["user"] = tweet["user"]
+    new_tweet["hashtags"] = Tweet.getHashtags(tweet["text"])
+
 
     # PLACE COORDS LOCATION
     city, country, tweet_coords = get_location(tweet)
@@ -150,7 +149,8 @@ def process_tweet(tweet, forStream=True):
     text_categories = get_tweet_text_category(tweet, categoryDict)
     new_tweet["text_categories"] = list(text_categories)
 
-    if new_tweet["img_categories"] is None and len(new_tweet["text_categories"]) == 0:
+    hasNoImgCateg = (new_tweet["img_categories"] is None) or (len(new_tweet["img_categories"]) == 0)
+    if hasNoImgCateg and len(new_tweet["text_categories"]) == 0:
         return None
 
     # DAY, DATE

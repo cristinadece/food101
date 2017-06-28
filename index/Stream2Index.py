@@ -2,42 +2,21 @@
 '''
 StreamBBTwitter : MyStreamer
 @euthor: Cristina Muntean (cristina.muntean@isti.cnr.it)
-@date: 9/22/16
+@date: 28/06/17
 -----------------------------
  or here: http://www.kalisch.biz/2013/10/harvesting-twitter-with-python/
 
 '''
 import os
 import sys
-sys.path.append("/home/foodmap/food101/")
+
+from processing.preprocess_tweet import process_tweet
+
 os.chdir("/home/foodmap/food101/")
+sys.path.append(os.getcwd())
 print os.getcwd()
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch
-from processing import preprocess_tweet
-
-
-def isValid(enriched_tweet):
-    """
-
-    :param enriched_tweet:
-    :return:
-    """
-    hasImg = False
-    hasCategory = False
-    hasPlace = False
-
-    if enriched_tweet["media_url"] is not None:
-        hasImg = True
-    if enriched_tweet["img_category"] is not None:
-        hasCategory = True
-    if (enriched_tweet["coordinates"] is not None) or (enriched_tweet["bounding_box"] is not None):
-        hasPlace = True
-
-    if hasImg and hasCategory and hasPlace:
-        return True
-    else:
-        return False
 
 
 class Stream2Index(TwythonStreamer):
@@ -56,11 +35,10 @@ class Stream2Index(TwythonStreamer):
                                 )
 
     def on_success(self, data):
-        enriched_tweet = preprocess_tweet.enrich_tweet_stream(data)
-        if isValid(enriched_tweet):
-            tweet_snippet = preprocess_tweet.get_tweet_snippet(enriched_tweet)
-            self.es.index(index='stream', doc_type='tweet_snippet', id=tweet_snippet["id"], body=tweet_snippet)
-            print "Indexed tweet: ", enriched_tweet["id"]
+        new_tweet = process_tweet(data, forStream=True)
+        if new_tweet is not None:
+            self.es.index(index='stream', doc_type='tweet', id=new_tweet["id"], body=new_tweet)
+            print "Indexed tweet: ", new_tweet["id"]
 
     def on_error(self, status_code):
         print status_code
