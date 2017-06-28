@@ -9,14 +9,12 @@ StreamBBTwitter : MyStreamer
 '''
 import os
 import sys
-
-from processing.preprocess_tweet import process_tweet
-
 os.chdir("/home/foodmap/food101/")
 sys.path.append(os.getcwd())
 print os.getcwd()
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch
+from processing.preprocess_tweet import process_tweet
 
 
 class Stream2Index(TwythonStreamer):
@@ -33,6 +31,7 @@ class Stream2Index(TwythonStreamer):
                                 http_auth=('elastic', 'changeme'),
                                 port=9200
                                 )
+        self.es.indices.create("stream")
 
     def on_success(self, data):
         new_tweet = process_tweet(data, forStream=True)

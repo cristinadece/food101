@@ -14,13 +14,14 @@ Consider changing method from GET to POST, as explained here: https://dev.twitte
 
 import os
 import sys
-from processing.load_keyword_dicts import getStreamFilterKeywords
 os.chdir("/home/foodmap/food101/")
 sys.path.append(os.getcwd())
 import logging
 import time
 from twython import TwythonRateLimitError
-from Stream2Index import Stream2Index
+from processing.load_keyword_dicts import getStreamFilterKeywords
+from index.Stream2Index import Stream2Index
+
 
 #### PUT CONFIG HERE
 CONSUMER_KEY = 'JzAQ0Y2GbBg900GENP444u24K'
