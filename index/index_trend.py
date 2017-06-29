@@ -9,12 +9,9 @@ import argparse
 import json
 import os
 import sys
-
 import time
-
 os.chdir("/home/foodmap/food101/")
 sys.path.append(os.getcwd())
-import requests
 from elasticsearch import Elasticsearch, RequestError
 from processing.preprocess_tweet import process_tweet
 from processing.twitter.Tweet import Tweet
@@ -36,8 +33,8 @@ def setup(indexName):
                             port=9200,
                             timeout=30
                             )
-    mapping = json.load(open("./containers/index/mapping.json"))
-    print es.indices.create(indexName, ignore=400, body=mapping)
+    # mapping = json.load(open("./containers/index/mapping.json"))
+    print es.indices.create(indexName, ignore=400) #, body=mapping)
     return es
 
 
@@ -76,7 +73,7 @@ def index_from_path(es, inputFile, indexName):
     numIndex = 0
     for tweet in tweetsAsDict:
         i += 1
-        if i % 10000 == 0:
+        if i % 1000 == 0:
             print "Processed tweets: ", i
             print "Indexed tweets: ", numIndex
 

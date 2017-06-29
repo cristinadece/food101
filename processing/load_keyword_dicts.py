@@ -14,8 +14,8 @@ def loadCategoryDict():
         for line in g:
             syn, categ = line.lower().replace("\r\n", "").split(",")
             ht = "#" + syn.replace(" ", "")
-            categoryDict[syn] = categ
-            categoryDict[ht] = categ
+            categoryDict[syn] = categ.strip()
+            categoryDict[ht] = categ.strip()
     return categoryDict
 
 
