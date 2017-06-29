@@ -179,19 +179,19 @@ def getLocationData(tweet):
 
     if tweet["place"] is not None:
         if tweet["place"]["place_type"] == "city":
-            tweet_place_city = tweet["place"]["name"]  # if place type == city
-            tweet_place_country = tweet["place"]["country"]
+            tweet_place_city = tweet["place"]["name"].lower()  # if place type == city
+            tweet_place_country = tweet["place"]["country"].lower()
             tweet_place_country_code = tweet["place"]["country_code"]
         else:
             tweet_place_city = None
-            tweet_place_country = tweet["place"]["country"]
+            tweet_place_country = tweet["place"]["country"].lower()
             tweet_place_country_code = tweet["place"]["country_code"]
     else:
         tweet_place_city = None
         tweet_place_country = None
         tweet_place_country_code = None
 
-    user_location = tweet['user']['location']
+    user_location = tweet['user']['location'].lower()
 
     return tweet_coords, tweet_place_city, tweet_place_country, tweet_place_country_code, user_location
 
