@@ -102,6 +102,8 @@ def process_tweet(tweet, forStream=True):
     """
 
     new_tweet = dict()
+    if "id" not in tweet:
+        return None
     new_tweet["id"] = tweet["id"]
     new_tweet["id_str"] = tweet["id_str"]
     new_tweet["timestamp_ms"] = tweet["timestamp_ms"]
