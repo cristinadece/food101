@@ -1,4 +1,5 @@
 while true;
 do
-python ./stream2index/streamTweets.py && break;
+python ./index/index_stream.py && break;
+sleep 1m
 done
