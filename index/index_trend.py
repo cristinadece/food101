@@ -33,7 +33,8 @@ def setup(indexName):
     """
     es = Elasticsearch(['localhost'],  # 146.48.82.85
                             http_auth=('elastic', 'changeme'),
-                            port=9200
+                            port=9200,
+                            timeout=30
                             )
     mapping = json.load(open("./containers/index/mapping.json"))
     print es.indices.create(indexName, ignore=400, body=mapping)
@@ -59,6 +60,17 @@ def index_from_path(es, inputFile, indexName):
     'Connection reset by peer'))) caused by: ProtocolError(('Connection aborted.',
     error(104, 'Connection reset by peer')))
     """
+
+    # es = Elasticsearch()
+    #
+    # def bulk_index():
+    #     actions = doc_generator()
+    #     res = bulk(es, actions, index='test', doc_type='test',
+    #                expand_action_callback=expand_action,
+    #                chunk_size=100000, timeout=30)
+    #     print 'res: ', res
+
+
     tweetsAsDict = Tweet.getTweetAsDictionary(inputFile)
     i = 0
     numIndex = 0
@@ -73,7 +85,8 @@ def index_from_path(es, inputFile, indexName):
             continue
 
         try:
-            es.index(index=indexName, doc_type='tweet', id=new_tweet["id"], body=new_tweet)
+            # added request_timeout to avoid elasticsearch.exceptions.ConnectionTimeout
+            es.index(index=indexName, doc_type='tweet', id=new_tweet["id"], body=new_tweet, request_timeout=30)
             numIndex += 1
             print "Indexed tweet: ", new_tweet["id"]
         except RequestError as e:

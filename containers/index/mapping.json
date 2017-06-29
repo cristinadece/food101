@@ -4,7 +4,11 @@
             "number_of_shards" : 5,
             "number_of_replicas" : 1
         },
-    "index.mapper.dynamic":false
+    "index.mapper.dynamic":false,
+//    "index.store.type": "mmapfs",
+//    "indices.memory.index_buffer_size": 30%,
+//    "index.translog.flush_threshold_ops": 50000,
+//    "refresh_interval": 60s
   },
   "mappings": {
     "tweet": {
