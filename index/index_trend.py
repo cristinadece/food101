@@ -88,7 +88,7 @@ def index_from_path(es, inputFile, indexName):
             # added request_timeout to avoid elasticsearch.exceptions.ConnectionTimeout
             es.index(index=indexName, doc_type='tweet', id=new_tweet["id"], body=new_tweet, request_timeout=30)
             numIndex += 1
-            print "Indexed tweet: ", new_tweet["id"]
+            # print "Indexed tweet: ", new_tweet["id"]
         except RequestError as e:
             print "Couldn't index tweet id: ", new_tweet["id"]
             print e.status_code, e.message
