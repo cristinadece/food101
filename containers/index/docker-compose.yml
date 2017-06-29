@@ -6,7 +6,7 @@ services:
     environment:
       - cluster.name=foodmap-cluster
       - bootstrap.memory_lock=true
-#      - "ES_JAVA_OPTS=-Xms16g -Xmx16g"
+#      - "ES_JAVA_OPTS=-Xmx16G"
     ulimits:
       memlock:
         soft: -1
