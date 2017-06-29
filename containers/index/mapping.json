@@ -14,7 +14,8 @@
           "type": "geo_shape",
           "tree": "quadtree",
           "precision": "1m",
-          "coerce": true
+          "coerce": true,
+          "ignore_malformed": true
         },
         "city": {
           "type": "text",

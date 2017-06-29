@@ -9,10 +9,13 @@ import argparse
 import json
 import os
 import sys
+
+import time
+
 os.chdir("/home/foodmap/food101/")
 sys.path.append(os.getcwd())
 import requests
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, RequestError
 from processing.preprocess_tweet import process_tweet
 from processing.twitter.Tweet import Tweet
 
@@ -39,10 +42,22 @@ def setup(indexName):
 
 def index_from_path(es, inputFile, indexName):
     """
+    We index tweet from file
 
-    :param es:
-    :param inputFile:
+    :param es: the ES instance
+    :param inputFile: the .gz file to read and index from
     :return:
+
+    Possible errors:
+    - elasticsearch.exceptions.RequestError: TransportError(400, u'mapper_parsing_exception',
+    u'failed to parse [bounding_box]')
+
+    - elasticsearch.exceptions.ConnectionTimeout: ConnectionTimeout caused by -
+    ReadTimeoutError(HTTPConnectionPool(host=u'localhost', port=9200): Read timed out. (read timeout=10))
+
+    - elasticsearch.exceptions.ConnectionError: ConnectionError(('Connection aborted.', error(104,
+    'Connection reset by peer'))) caused by: ProtocolError(('Connection aborted.',
+    error(104, 'Connection reset by peer')))
     """
     tweetsAsDict = Tweet.getTweetAsDictionary(inputFile)
     i = 0
@@ -57,8 +72,14 @@ def index_from_path(es, inputFile, indexName):
         if new_tweet is None:
             continue
 
-        es.index(index=indexName, doc_type='tweet', id=new_tweet["id"], body=new_tweet)
-        numIndex += 1
+        try:
+            es.index(index=indexName, doc_type='tweet', id=new_tweet["id"], body=new_tweet)
+            numIndex += 1
+            print "Indexed tweet: ", new_tweet["id"]
+        except RequestError as e:
+            print "Couldn't index tweet id: ", new_tweet["id"]
+            print e.status_code, e.message
+            time.sleep(60)
 
     print "Processed tweets: ", i
     print "Indexed tweets: ", numIndex
