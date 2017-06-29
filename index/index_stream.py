@@ -52,7 +52,6 @@ def filter():
 
     try:
         # FILTER
-        # stream.statuses.filter(track='#IF2016', locations=PISA)
         stream.statuses.filter(track=htString)
     except TwythonRateLimitError as e:
         # If this error is received after only few calls (10 seconds of calls) wait just a minute

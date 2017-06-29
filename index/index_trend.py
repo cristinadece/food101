@@ -6,6 +6,7 @@ local-twitter
 """
 
 import argparse
+import json
 import os
 import sys
 os.chdir("/home/foodmap/food101/")
@@ -20,24 +21,19 @@ parser.add_argument('-f', '--inputFile', type=str, help='the input file')
 parser.add_argument('-i', '--indexName', type=str, help='the index name')
 
 
-def check_server_up():
-    """
 
+def setup(indexName):
+    """
+    Create the index in case it doesn't exist.
+    If it exists then we ignore the error message : status 400
     :return:
     """
-    res = requests.get('http://foodmap.isti.cnr.it:9200', auth=('elastic', 'changeme'))
-    print(res.content)
-
-
-def setup():
-    """
-
-    :return:
-    """
-    es = Elasticsearch(['localhost', 'otherhost'],
-                       http_auth=('elastic', 'changeme'),
-                       port=9200
-                       )
+    es = Elasticsearch(['localhost'],  # 146.48.82.85
+                            http_auth=('elastic', 'changeme'),
+                            port=9200
+                            )
+    mapping = json.load(open("./containers/index/mapping.json"))
+    print es.indices.create(indexName, ignore=400, body=mapping)
     return es
 
 
@@ -73,5 +69,5 @@ if __name__ == '__main__':
     print args
     inputFile = args.inputFile
     indexName = args.indexName
-    es = setup()
+    es = setup(indexName)
     index_from_path(es, inputFile, indexName)

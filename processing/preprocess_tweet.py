@@ -112,6 +112,11 @@ def process_tweet(tweet, forStream=True):
 
 
     # PLACE COORDS LOCATION
+    """
+    In GeoJSON, and therefore Elasticsearch, the correct coordinate order is longitude, latitude (X, Y) within 
+    coordinate arrays. This differs from many Geospatial APIs (e.g., Google Maps) that generally use the colloquial 
+    latitude, longitude (Y, X).
+    """
     city, country, tweet_coords = get_location(tweet)
     new_tweet["coords"] = tweet_coords
     if tweet["place"] is not None:
@@ -137,10 +142,16 @@ def process_tweet(tweet, forStream=True):
     new_tweet["media_url"] = media_url
     new_tweet["img_flag"] = False
     if media_url is not None:
-        img_categories = get_image_categories(media_url)
-        # img_categories = []
-        new_tweet["img_categories"] = img_categories
-        new_tweet["img_flag"] = True  # todo when we use the classifier we must change this to True
+        # WE NEED TO CLASSIFY for stream
+        if forStream == True:
+            img_categories = get_image_categories(media_url)
+            new_tweet["img_categories"] = img_categories
+            new_tweet["img_flag"] = True
+        # THIS IS THE TREND INDEX, we do batch img classif
+        else:
+            img_categories = []
+            new_tweet["img_categories"] = img_categories
+            new_tweet["img_flag"] = False  # todo when we use the classifier we must change this to True
     else:
         new_tweet["img_categories"] = None
         new_tweet["img_flag"] = True
