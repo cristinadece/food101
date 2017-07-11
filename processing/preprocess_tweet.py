@@ -66,6 +66,8 @@ def get_location(tweet):
     else:
         city = tweet_place_city
         country = tweet_place_country
+        #### TODO Vinicius
+        ## Use coord and BB to detect country
 
     return city, country, tweet_coords
 
@@ -78,6 +80,15 @@ def get_day_as_int(tweet):
     """
     day = int(time.strftime('%Y%m%d', time.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y')))
     return day
+
+def get_month_as_int(tweet):
+    """
+    Gtes the day from the created_at field as and int. e.g. 20170605
+    :param tweet:
+    :return:
+    """
+    month = int(time.strftime('%Y%m', time.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y')))
+    return month
 
 
 def get_tweet_text_category(tweet, categoryDict):
@@ -170,6 +181,7 @@ def process_tweet(tweet, forStream=True):
     # DAY, DATE
     new_tweet["created_at_datetime"] = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
     new_tweet["created_at_day"] = get_day_as_int(tweet)
+    new_tweet["created_at_month"] = get_day_as_int(tweet)
 
     return new_tweet
 
