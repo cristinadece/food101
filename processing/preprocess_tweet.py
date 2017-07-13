@@ -19,6 +19,8 @@ ccDict = Countries.countryCodeDict(countriesInfo)
 categoryDict = loadCategoryDict()
 
 
+
+
 def get_media_url(tweet):
     """
     Checks if the tweets has media file attached
@@ -104,6 +106,27 @@ def get_tweet_text_category(tweet, categoryDict):
     return categ
 
 
+def get_img_class_from_file(tweet, tweetImgCategoryDict):
+    """
+
+    :param tweet:
+    :param tweetImgCategoryDict:
+    :return:
+    """
+    result = list()
+    catDict = dict()
+
+    info = tweetImgCategoryDict[tweet["id"]]
+    catDict["score"] = info[1]
+    catDict["label"] = info[0]
+    result.append(catDict)
+
+    tweet["img_flag"] = True
+    tweet["img_categories"] = result
+
+    return tweet
+
+
 def process_tweet(tweet, forStream=True):
     """
 
@@ -185,3 +208,20 @@ def process_tweet(tweet, forStream=True):
 
     return new_tweet
 
+
+
+
+# {u'_score': 1.0, u'_type': u'tweet', u'_id': u'840207017071529985', u'_source': {u'username': u'FairhavenTours',
+#  u'lang': u'en', u'text_categories': [u'ice cream'], u'city': u'fairhaven', u'text': u'Ice Cream is coming to Pink Bonnet.
+# #Fairhaven #Bakery #IceCream https://t.co/dXKtTBVnbR', u'img_categories': None, u'hashtags': [u'#fairhaven',
+# u'#bakery', u'#icecream'], u'img_flag': True, u'timestamp_ms': u'1489155937818', u'bounding_box': None, u'coords': None,
+#  u'id_str': u'840207017071529985', u'country': u'united states', u'id': 840207017071529985, u'created_at_day': 20170310,
+#  u'created_at_datetime': u'2017-03-10T14:25:37', u'media_url': None}, u'_index': u'trend'}
+
+# {u'_score': 1.0, u'_type': u'tweet', u'_id': u'840207241076699136', u'_source': {u'username': u'recipesprep',
+# u'lang': u'en', u'text_categories': [u'cheesecake'], u'city': None, u'text': u'#Food #Pastry-Bites #food
+# https://t.co/wNqtCpuvDH #Amazing #Strawberry #Cheesecake Pastry Bites https://t.co/rfQ7bOKCaB', u'img_categories': [],
+# u'hashtags': [u'#food', u'#pastry-bites', u'#food', u'#amazing', u'#strawberry', u'#cheesecake'], u'img_flag': False,
+# u'timestamp_ms': u'1489155991225', u'bounding_box': None, u'coords': None, u'id_str': u'840207241076699136',
+# u'country': u'canada', u'id': 840207241076699136, u'created_at_day': 20170310, u'created_at_datetime': u'2017-03-10T14:26:31',
+# u'media_url': u'http://pbs.twimg.com/media/C6kECFvWkAA3JH5.jpg'}, u'_index': u'trend'}

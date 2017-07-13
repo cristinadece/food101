@@ -10,14 +10,18 @@ import json
 import os
 import sys
 import time
+
+from processing.load_keyword_dicts import loadCategoryDict
+
 os.chdir("/home/foodmap/food101/")
 sys.path.append(os.getcwd())
 from elasticsearch import Elasticsearch, RequestError
-from processing.preprocess_tweet import process_tweet
+from processing.preprocess_tweet import process_tweet, get_img_class_from_file
 from processing.twitter.Tweet import Tweet
 
 parser = argparse.ArgumentParser(description='Index tweets in trend index.')
 parser.add_argument('-f', '--inputFile', type=str, help='the input file')
+parser.add_argument('-img', '--imageClassFile', nargs='?', type=str, help='the input file for the tweet 2 image class')
 parser.add_argument('-i', '--indexName', type=str, help='the index name')
 
 
@@ -38,7 +42,7 @@ def setup(indexName):
     return es
 
 
-def index_from_path(es, inputFile, indexName):
+def index_from_path(es, inputFile, indexName, imgCatFile=None):
     """
     We index tweet from file
 
@@ -67,6 +71,9 @@ def index_from_path(es, inputFile, indexName):
     #                chunk_size=100000, timeout=30)
     #     print 'res: ', res
 
+    if imgCatFile is not None:
+        tweetImgCategoryDict = loadCategoryDict(imgCatFile)
+
 
     tweetsAsDict = Tweet.getTweetAsDictionary(inputFile)
     i = 0
@@ -82,6 +89,10 @@ def index_from_path(es, inputFile, indexName):
             continue
 
         try:
+            # add img category from file
+            if (imgCatFile is not None) and (new_tweet["img_flag"] is False) and (new_tweet["media_url"] is not None):
+                new_tweet = get_img_class_from_file(new_tweet, tweetImgCategoryDict)
+
             # added request_timeout to avoid elasticsearch.exceptions.ConnectionTimeout
             es.index(index=indexName, doc_type='tweet', id=new_tweet["id"], body=new_tweet, request_timeout=30)
             numIndex += 1
@@ -99,6 +110,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print args
     inputFile = args.inputFile
+    imgCatFile = args.imageClassFile
     indexName = args.indexName
     es = setup(indexName)
-    index_from_path(es, inputFile, indexName)
+    index_from_path(es, inputFile, indexName, imgCatFile)
+
