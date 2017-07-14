@@ -92,7 +92,7 @@ def get_month_as_int(tweet):
     :param tweet:
     :return:
     """
-    month = int(time.strftime('%Y%m', time.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y')))
+    month = int(time.strftime('%Y%m', time.strptime(tweet['created_at'], '%a %b %d %H:%M:%S +0000 %Y'))+"01")
     return month
 
 
@@ -207,7 +207,7 @@ def process_tweet(tweet, forStream=True):
     # DAY, DATE
     new_tweet["created_at_datetime"] = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S +0000 %Y')
     new_tweet["created_at_day"] = get_day_as_int(tweet)
-    new_tweet["created_at_month"] = get_day_as_int(tweet)
+    new_tweet["created_at_month"] = get_month_as_int(tweet)
 
     return new_tweet
 
