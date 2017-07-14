@@ -10,7 +10,7 @@ from datetime import datetime
 from processing.load_keyword_dicts import loadCategoryDict
 from processing.location.locations import Cities, Countries
 from processing.location.get_location_from_tweet import getUserLocation, inferCountryFromCity, getLocationData, \
-    getFinalUserLocation, inferCountryByGeolocation
+    getFinalUserLocation, inferCountryByGeolocation, hasGeoInformation
 from processing.twitter.Tweet import Tweet
 
 citiesIndex, citiesInfo = Cities.loadFromFile()
@@ -61,8 +61,11 @@ def get_location(tweet):
     :return:
     """
     tweet_coords, tweet_place_city, tweet_place_country, tweet_place_country_code, user_loc = getLocationData(tweet)
-
-    if (tweet_place_country is None):
+    country = None
+    city = None
+    
+    if not hasGeoInformation(tweet):
+        # user_loc = getUserLocationProfile(tweet)
         user_cities, user_countries = getUserLocation(user_loc, citiesIndex, citiesInfo, countriesIndex, countriesInfo)
         inferred_countries = inferCountryFromCity(user_cities, citiesIndex, citiesInfo, ccDict)
         city, country = getFinalUserLocation(user_cities, user_countries, inferred_countries)
@@ -148,6 +151,9 @@ def process_tweet(tweet, forStream=True):
     new_tweet["username"] = tweet["user"]["screen_name"]
     new_tweet["lang"] = tweet["lang"]
     new_tweet["hashtags"] = Tweet.getHashtags(tweet["text"])
+
+    # print new_tweet['text']
+    # print tweet["entities"]["media"][0]["media_url"]
 
 
     # PLACE COORDS LOCATION
