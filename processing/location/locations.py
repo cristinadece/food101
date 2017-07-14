@@ -1,4 +1,6 @@
 import codecs
+import json
+from shapely.geometry import mapping, shape
 from collections import defaultdict
 
 
@@ -198,6 +200,13 @@ class Countries:
         print "All countries unique geonameid:  ", len(countriesInfo)
         return countriesIndex, countriesInfo
 
+    @staticmethod
+    def loadGeoJsonCountries(filename="./resources/geoshapes/world_borders.geojson"):
+        # check also with countries.geo.json
+        geojs_countries = []
+        with open(filename, 'r') as f:
+            geojs_countries = json.load(f)
+        return geojs_countries
 
 if __name__ == '__main__':
 

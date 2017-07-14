@@ -4,6 +4,7 @@ Some utilities for finding city and country from the user_location field
 # food101 : get_place_from_user_location
 # Created by muntean on 4/26/17
 from processing.tokenizer import twokenize, ngrams
+from shapely.geometry import shape
 
 
 def getLocationsFromToken(token, citiesIndex, citiesInfo, countriesIndex, countriesInfo):
@@ -197,4 +198,25 @@ def getLocationData(tweet):
 
 
 
+def inferCountryByGeolocation(tweet, countries_geojson):
+
+    ### geo either the coordinates or the bb of the place
+    geo_info_tweet = None
+    if tweet["coordinates"] is not None:
+        geo_info_tweet = shape(tweet["coordinates"])
+    elif tweet["place"] is not None:
+        geo_info_tweet = shape(tweet["place"]['bounding_box'])
+
+    ### search which contry matches countries_geojson
+    for feature in countries_geojson['features']:
+        geo_country = shape(feature['geometry'])
+
+        # returning the country that matches the intersection
+        if geo_country.intersects(geo_info_tweet):
+            ### for debugging
+            print "tweet place", tweet["place"]['country'], "country inffered", geo_country['properties']['name']
+            return geo_country['properties']['name']
+
+    # returning None if there is no country intersects the geo_info
+    return None
 

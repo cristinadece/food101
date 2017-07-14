@@ -10,13 +10,14 @@ from datetime import datetime
 from processing.load_keyword_dicts import loadCategoryDict
 from processing.location.locations import Cities, Countries
 from processing.location.get_location_from_tweet import getUserLocation, inferCountryFromCity, getLocationData, \
-    getFinalUserLocation
+    getFinalUserLocation, inferCountryByGeolocation
 from processing.twitter.Tweet import Tweet
 
 citiesIndex, citiesInfo = Cities.loadFromFile()
 countriesIndex, countriesInfo = Countries.loadFromFile()
 ccDict = Countries.countryCodeDict(countriesInfo)
 categoryDict = loadCategoryDict()
+countries_geojson = Countries.loadGeoJsonCountries()
 
 
 
@@ -66,10 +67,12 @@ def get_location(tweet):
         inferred_countries = inferCountryFromCity(user_cities, citiesIndex, citiesInfo, ccDict)
         city, country = getFinalUserLocation(user_cities, user_countries, inferred_countries)
     else:
-        city = tweet_place_city
-        country = tweet_place_country
+        # city = tweet_place_city
+        # country = tweet_place_country
         #### TODO Vinicius
         ## Use coord and BB to detect country
+        city = None
+        country = inferCountryByGeolocation(tweet, countries_geojson)
 
     return city, country, tweet_coords
 
