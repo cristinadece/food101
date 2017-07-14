@@ -61,7 +61,9 @@ def get_location(tweet):
     :return:
     """
     tweet_coords, tweet_place_city, tweet_place_country, tweet_place_country_code, user_loc = getLocationData(tweet)
-
+    country = None
+    city = None
+    
     if not hasGeoInformation(tweet):
         # user_loc = getUserLocationProfile(tweet)
         user_cities, user_countries = getUserLocation(user_loc, citiesIndex, citiesInfo, countriesIndex, countriesInfo)
@@ -149,6 +151,9 @@ def process_tweet(tweet, forStream=True):
     new_tweet["username"] = tweet["user"]["screen_name"]
     new_tweet["lang"] = tweet["lang"]
     new_tweet["hashtags"] = Tweet.getHashtags(tweet["text"])
+
+    # print new_tweet['text']
+    # print tweet["entities"]["media"][0]["media_url"]
 
 
     # PLACE COORDS LOCATION
