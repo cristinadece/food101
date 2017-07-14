@@ -166,6 +166,13 @@ def getFinalUserLocation(user_cities, user_countries, inferred_countries):
     return city, country
 
 
+def hasGeoInformation(tweet):
+    return tweet["coordinates"] is not None or tweet["place"] is not None
+
+
+# def getUserLocationProfile(tweet):
+#     return tweet['user']['location']
+
 
 def getLocationData(tweet):
     """

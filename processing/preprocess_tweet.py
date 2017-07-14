@@ -10,7 +10,7 @@ from datetime import datetime
 from processing.load_keyword_dicts import loadCategoryDict
 from processing.location.locations import Cities, Countries
 from processing.location.get_location_from_tweet import getUserLocation, inferCountryFromCity, getLocationData, \
-    getFinalUserLocation, inferCountryByGeolocation
+    getFinalUserLocation, inferCountryByGeolocation, hasGeoInformation, getUserLocationProfile
 from processing.twitter.Tweet import Tweet
 
 citiesIndex, citiesInfo = Cities.loadFromFile()
@@ -62,7 +62,8 @@ def get_location(tweet):
     """
     tweet_coords, tweet_place_city, tweet_place_country, tweet_place_country_code, user_loc = getLocationData(tweet)
 
-    if (tweet_place_country is None):
+    if not hasGeoInformation(tweet):
+        # user_loc = getUserLocationProfile(tweet)
         user_cities, user_countries = getUserLocation(user_loc, citiesIndex, citiesInfo, countriesIndex, countriesInfo)
         inferred_countries = inferCountryFromCity(user_cities, citiesIndex, citiesInfo, ccDict)
         city, country = getFinalUserLocation(user_cities, user_countries, inferred_countries)
