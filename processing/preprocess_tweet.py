@@ -122,10 +122,11 @@ def get_img_class_from_file(tweet, tweetImgCategoryDict):
     result = list()
     catDict = dict()
 
-    info = tweetImgCategoryDict[tweet["id"]]
-    catDict["score"] = info[1]
-    catDict["label"] = info[0]
-    result.append(catDict)
+    if tweet["id"] in tweetImgCategoryDict:
+        info = tweetImgCategoryDict[tweet["id"]]
+        catDict["score"] = info[1]
+        catDict["label"] = info[0]
+        result.append(catDict)
 
     tweet["img_flag"] = True
     tweet["img_categories"] = result
