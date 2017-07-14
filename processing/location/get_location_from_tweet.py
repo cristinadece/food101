@@ -211,7 +211,6 @@ def inferCountryByGeolocation(tweet, countries_geojson):
     if tweet["coordinates"] is not None:
         geo_info_tweet = shape(tweet["coordinates"])
     elif tweet["place"] is not None:
-        print "tweet place", tweet["place"]['country']
         geo_info_tweet = shape(tweet["place"]['bounding_box'])
 
     ### search which contry matches countries_geojson
@@ -220,8 +219,6 @@ def inferCountryByGeolocation(tweet, countries_geojson):
 
         # returning the country that matches the intersection
         if geo_country.intersects(geo_info_tweet):
-            ### for debugging
-            print "inferred country", feature['properties']['name']
             return str(feature['properties']['name']).lower()
 
     # returning None if there is no country intersects the geo_info
