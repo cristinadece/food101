@@ -10,7 +10,7 @@ from datetime import datetime
 from processing.load_keyword_dicts import loadCategoryDict
 from processing.location.locations import Cities, Countries
 from processing.location.get_location_from_tweet import getUserLocation, inferCountryFromCity, getLocationData, \
-    getFinalUserLocation, inferCountryByGeolocation, hasGeoInformation, getUserLocationProfile
+    getFinalUserLocation, inferCountryByGeolocation, hasGeoInformation
 from processing.twitter.Tweet import Tweet
 
 citiesIndex, citiesInfo = Cities.loadFromFile()
