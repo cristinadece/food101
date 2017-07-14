@@ -222,7 +222,7 @@ def inferCountryByGeolocation(tweet, countries_geojson):
         if geo_country.intersects(geo_info_tweet):
             ### for debugging
             print "inferred country", feature['properties']['name']
-            return feature['properties']['name']
+            return str(feature['properties']['name']).lower()
 
     # returning None if there is no country intersects the geo_info
     return None
