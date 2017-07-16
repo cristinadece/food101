@@ -11,13 +11,12 @@ import os
 import sys
 import time
 
-from processing.load_keyword_dicts import loadCategoryDict
-
 os.chdir("/home/foodmap/food101/")
 sys.path.append(os.getcwd())
 from elasticsearch import Elasticsearch, RequestError
 from processing.preprocess_tweet import process_tweet, get_img_class_from_file
 from processing.twitter.Tweet import Tweet
+from processing.load_tweet_img_category import loadImgCategoryDict
 
 parser = argparse.ArgumentParser(description='Index tweets in trend index.')
 parser.add_argument('-f', '--inputFile', type=str, help='the input file')
@@ -72,7 +71,7 @@ def index_from_path(es, inputFile, indexName, imgCatFile=None):
     #     print 'res: ', res
 
     if imgCatFile is not None:
-        tweetImgCategoryDict = loadCategoryDict(imgCatFile)
+        tweetImgCategoryDict = loadImgCategoryDict(imgCatFile)
 
 
     tweetsAsDict = Tweet.getTweetAsDictionary(inputFile)

@@ -4,7 +4,7 @@
 import codecs
 
 
-def loadCategoryDict(filename):
+def loadImgCategoryDict(filename):
     """
 
     :return:
@@ -19,6 +19,6 @@ def loadCategoryDict(filename):
     return tweetImgCategoryDict
 
 if __name__ == '__main__':
-    dik = loadCategoryDict("/Users/muntean/Downloads/twitter.report/twitter.03.report.tsv")
+    dik = loadImgCategoryDict("/Users/muntean/Downloads/twitter.report/twitter.03.report.tsv")
     print len(dik)
     print dik[840194355319209984]
