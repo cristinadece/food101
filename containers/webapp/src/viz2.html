@@ -5,6 +5,15 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-beta.2/leaflet.css">-->
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+
+    <link href="//cartodb-libs.global.ssl.fastly.net/cartodbui/assets/4.8.15/favicons/favicon.ico?1467884080" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <link href="//cartodb-libs.global.ssl.fastly.net/cartodbui/assets/4.8.15/stylesheets/public_editor3.css" media="all" rel="stylesheet" type="text/css">
+    <link href="//cartodb-libs.global.ssl.fastly.net/cartodbui/assets/4.8.15/stylesheets/deep_insights.css" media="all" rel="stylesheet" type="text/css">
+
+
     <style>
       html, body, #map {
         height: 100%;
@@ -13,7 +22,6 @@
       }
     </style>
 
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
   </head>
   <body>
     <div id="map"></div>
@@ -23,7 +31,9 @@
 
     <script>
       function main() {
-        cartodb.createVis('map', 'https://vinicezarml.carto.com/api/v2/viz/94adb204-f5f6-11e6-b58f-0ecd1babdde5/viz.json', {
+
+
+        cartodb.createVis('map', 'https://hpclab.carto.com/api/v2/viz/85c6dd73-18f0-4f26-b4ea-edfd3c5d9982/viz.json', {
             shareable: true,
             title: true,
             description: true,
@@ -38,8 +48,25 @@
           // setInteraction is disabled by default
           layers[1].setInteraction(true);
           layers[1].on('featureOver', function(e, latlng, pos, data) {
-            cartodb.log.log(e, latlng, pos, data);
+            // cartodb.log.log(e, latlng, pos, data);
+//            console.log(e)
+//            console.log(latlng)
+//            console.log(pos)
+//            console.log(data)
+            latlng = [-5.266007882805485, 41.1328125]
+
+            layers[1].trigger('featureClick', null, latlng, null, { cartodb_id: data.cartodb_id }, 0);
           });
+
+          layer_index = 0
+          //  function openInfowindow(layer_index, latlng, cartodb_id) {
+          //   layer[1].trigger('featureClick', null, latlng, null, { cartodb_id: cartodb_id }, layer_index);
+          // }
+
+          // layers[1].on('featureClick', function(e, latlng, pos, data) {
+          //   alert("Hey! You clicked " + data.cartodb_id);
+          // });
+
 
           // you can get the native map to work with it
           var map = vis.getNativeMap();
@@ -55,5 +82,12 @@
 
       window.onload = main;
     </script>
+
+
+
+  <script src="//cartodb-libs.global.ssl.fastly.net/cartodbui/assets/4.8.15/javascripts/common.js" type="text/javascript"></script>
+  <script src="//cartodb-libs.global.ssl.fastly.net/cartodbui/assets/4.8.15/javascripts/builder_embed_vendor.js" type="text/javascript"></script>
+  <script src="//cartodb-libs.global.ssl.fastly.net/cartodbui/assets/4.8.15/javascripts/builder_embed.js" type="text/javascript"></script>
+
   </body>
 </html>
