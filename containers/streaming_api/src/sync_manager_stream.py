@@ -62,7 +62,7 @@ def sync_carto_stream(first_sync, last_datetime):
         cur_tweet['text'] = cur_tweet['text'].encode('utf-8')
         cur_tweet['text'] = cur_tweet['text'].replace('\'', ' ')
         cur_tweet['has_img'] = True if cur_tweet['media_url'] is not None else False
-        cur_tweet['media_url'] = cur_tweet['media_url'] if cur_tweet['media_url'] is not None else 'https://www.google.com.br/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwiJpJKqsI7VAhVJchQKHcCEDWYQjRwIBw&url=http%3A%2F%2Fmarvel.wikia.com%2Fwiki%2FFile%3ANo_Image_Available.png&psig=AFQjCNExfxlp94HYHebE7UFSx1fsSCb4BQ&ust=1500314261878027'
+        cur_tweet['media_url'] = cur_tweet['media_url'] if cur_tweet['media_url'] is not None else 'http://www.cib.na.cnr.it/wp-content/uploads/2014/12/no-image.png'
         txt_cat = cur_tweet['text_categories']
         img_cat = cur_tweet['img_categories']
         cur_tweet['text_categories'] = ','.join(
