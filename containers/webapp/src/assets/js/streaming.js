@@ -5,18 +5,22 @@
 var streamTime = null
 
 $(document).ready(function () {
-    streamTime = setInterval(refreshStreaming, 90 * 1000);
+    streamTime = setInterval(refreshStreaming, 180 * 1000);
+    refreshStreaming ();
 });
 
-
 function refreshStreaming (){
-    // alert('update');
     $('#map').empty();
+    var height_screen = $(window).height();
+    $('#map').height(height_screen - 180);
     $('#map').append('<iframe width="100%" height="100%" frameborder="0" src="https://hpclab.carto.com/builder/0c64c066-609e-44ce-af6b-27edd1915df6/embed" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>')
-
 }
 
-function stopStreaming(){
+function stopRefresh(){
     clearInterval(streamTime);
 }
+
+$(window).bind('beforeunload', function(){
+    stopRefresh();
+});
 

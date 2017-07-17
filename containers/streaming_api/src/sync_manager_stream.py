@@ -40,7 +40,7 @@ def sync_carto_stream(first_sync, last_datetime):
         "query": {
             "range": {
                 "created_at_datetime": {
-                    "gte": "now-2h"
+                    "gte": "now-24h"
                 }
             }
         },
@@ -79,7 +79,7 @@ def sync_carto_stream(first_sync, last_datetime):
     if first_sync:
         sql_str = sql_str = "delete from tweets_stream"
     else:
-        sql_str = sql_str = "delete from tweets_stream where datetime < now() - interval '2 hour'"
+        sql_str = sql_str = "delete from tweets_stream where datetime < now() - interval '24 hour'"
     sql.send(sql_str)
     sql_str = ''
 
