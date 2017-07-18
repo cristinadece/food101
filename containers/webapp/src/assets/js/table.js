@@ -183,7 +183,8 @@ $(document).ready(function(){
 });
 
 function get_bycategory(){
-    url_link = 'http://localhost:5001/countriestrends'
+    // url_link = 'http://localhost:5001/countriestrends'
+    url_link = 'http://test.tripbuilder.isti.cnr.it:5001/countriestrends'
 
     category = $('#sel_category').val();
     analysis_type = $('#sel_analysis_type').val();
@@ -218,7 +219,8 @@ function get_bycategory(){
 
 
 function get_bycountry(){
-    url_link = 'http://localhost:5001/categoriestrends'
+    // url_link = 'http://localhost:5001/categoriestrends'
+    url_link = 'http://test.tripbuilder.isti.cnr.it:5001/categoriestrends'
 
     country = $('#sel_country').val();
     // alert(country);

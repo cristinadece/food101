@@ -219,7 +219,9 @@ $(document).ready(function(){
 
 
 function sync_carto() {
-    url_link = 'http://localhost:5001/cartodbview';
+    // url_link = 'http://localhost:5001/cartodbview';
+    url_link = 'http://test.tripbuilder.isti.cnr.it:5001/cartodbview';
+
     category = $('#sel_category').val();
     analysis_type = $('#sel_analysis_type').val();
     $('#img_loading').fadeIn();
