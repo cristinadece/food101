@@ -228,7 +228,7 @@ function get_bycountry(){
     $.ajax({
       type: "POST",
       url: url_link,
-      data: { country: country, dateBegin: '20170101', dateEnd: '20170601', analysis_type: 'trend' },
+      data: { country: country, dateBegin: '20170101', dateEnd: '20170601', analysis_type: analysis_type },
       success: function (result) {
           result = JSON.parse(result);
           results = result['results'];
