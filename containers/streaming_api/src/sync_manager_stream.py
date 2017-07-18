@@ -29,6 +29,7 @@ def centroid(points):
     centroid_y = sum(y_coords)/_len
     return [centroid_x, centroid_y]
 
+
 # push data into cartodb
 def sync_carto_stream(first_sync, last_datetime):
 
@@ -62,20 +63,37 @@ def sync_carto_stream(first_sync, last_datetime):
         cur_tweet['text'] = cur_tweet['text'].encode('utf-8')
         cur_tweet['text'] = cur_tweet['text'].replace('\'', ' ')
         cur_tweet['has_img'] = True if cur_tweet['media_url'] is not None else False
-        cur_tweet['media_url'] = cur_tweet['media_url'] if cur_tweet['media_url'] is not None else 'http://www.cib.na.cnr.it/wp-content/uploads/2014/12/no-image.png'
+        cur_tweet['media_url'] = cur_tweet['media_url'] if cur_tweet['media_url'] is not None else 'http://cofunction.com/fp-images/NoImage/img_not_available.png'
         txt_cat = cur_tweet['text_categories']
         img_cat = cur_tweet['img_categories']
+
         cur_tweet['text_categories'] = ','.join(
             map(lambda x: x.encode('utf-8'), txt_cat)) if txt_cat is not None else ''
-        cur_tweet['img_categories'] = ' - '.join(
-            map(lambda x: 'label: {0}, score: {1}'.format(x['label'].encode('utf-8'), x['score']),
-                img_cat)) if img_cat is not None and len(img_cat) > 0 else ''
+
+        # concating the results
+        # cur_tweet['img_categories'] = ' - '.join(
+        #     map(lambda x: 'label: {0}, score: {1}'.format(x['label'].encode('utf-8'), x['score']),
+        #         img_cat)) if img_cat is not None and len(img_cat) > 0 else ''
+
+        # taking only the first result
+        if img_cat is not None and len(img_cat) > 0:
+            if img_cat[0]['score'] < 7.0:
+                cur_tweet['result_classification'] = 'low confidence'
+            elif img_cat[0]['score'] >= 10.0:
+                cur_tweet['result_classification'] = 'high confidence'
+            else:
+                cur_tweet['result_classification'] = 'medium confidence'
+            cur_tweet['img_categories'] = 'label: {0}, score: {1}'.format(img_cat[0]['label'], img_cat[0]['score'])
+            # print img_cat[0]['label'], img_cat[0]['score'], cur_tweet['result_classification']
+        else:
+            cur_tweet['result_classification'] = 'text'
+
         cur_tweet['categories'] = cur_tweet['img_categories'] if img_cat is not None and len(img_cat) > 0 else cur_tweet['text_categories']
 
     # sql client instance
     sql = SQLClient(auth_client)
 
-    # clear table with old tweets
+    # delete the old tweets
     if first_sync:
         sql_str = sql_str = "delete from tweets_stream"
     else:
@@ -93,12 +111,12 @@ def sync_carto_stream(first_sync, last_datetime):
                 tweet['bounding_box']['coordinates'][0])
             the_geom = "ST_GeomFromText('POINT({lng} {lat})', 4326)".format(lng=coordinates[0], lat=coordinates[1])
 
-            insert_value = "{the_geom}, '{username}', '{img_category}', '{text_categories}', '{categories}', '{text}', {id}, '{media_url}', '{datetime}', {has_img}".format(
+            insert_value = "{the_geom}, '{username}', '{img_category}', '{text_categories}', '{categories}', '{text}', {id}, '{media_url}', '{datetime}', {has_img}, '{result_classification}'".format(
                 the_geom=the_geom, username=tweet['username'], img_category=str(tweet['img_categories']),
                 text_categories=str(tweet['text_categories']), categories=str(tweet['categories']), text=tweet['text'], id=tweet['id'],
-                media_url=tweet['media_url'], datetime=tweet['created_at_datetime'], has_img=tweet['has_img'])
+                media_url=tweet['media_url'], datetime=tweet['created_at_datetime'], has_img=tweet['has_img'], result_classification=tweet['result_classification'])
 
-            sql_insert = "insert into tweets_stream (the_geom, username, img_category, text_categories, categories, text, id, media_url, datetime, has_img) values ({insert_value});".format(
+            sql_insert = "insert into tweets_stream (the_geom, username, img_category, text_categories, categories, text, id, media_url, datetime, has_img, result_classification) values ({insert_value});".format(
                 insert_value=insert_value)
 
             # if syncing at the first time insert all the date

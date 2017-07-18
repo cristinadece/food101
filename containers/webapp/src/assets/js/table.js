@@ -186,8 +186,10 @@ function get_bycategory(){
     // url_link = 'http://localhost:5001/countriestrends'
     url_link = 'http://test.tripbuilder.isti.cnr.it:5001/countriestrends'
 
+
     category = $('#sel_category').val();
     analysis_type = $('#sel_analysis_type').val();
+    $('#lbl_value_bycategory').html(analysis_type);
 
     $.ajax({
       type: "POST",
@@ -204,8 +206,7 @@ function get_bycategory(){
               $('#tb_bycategory > tbody:last-child').append('<tr>' +
               '<td>' + idx + ' </td>' +
               '<td>' + country['country'] + '</td>' +
-              '<td>' + 'nan' + '</td>' +
-              '<td>' + parseFloat(country['value']).toFixed(4) + '</td>' +
+              '<td>' + parseFloat(country['value']).toFixed(2) + '</td>' +
               '</tr>');
               idx = idx + 1
 
@@ -234,12 +235,13 @@ function get_bycountry(){
           results = result['results'];
           idx = 1;
           $("#tb_bycountry > tbody").empty();
+          $('#lbl_value_bycountry').html(analysis_type);
+
           for (idx_category in results){
               category = results[idx_category];
               $('#tb_bycountry > tbody:last-child').append('<tr>' +
               '<td>' + idx + ' </td>' +
               '<td>' + category['category'] + '</td>' +
-              '<td>' + 'nan' + '</td>' +
               '<td>' + parseFloat(category['value']).toFixed(4) + '</td>' +
               '</tr>');
               idx = idx + 1

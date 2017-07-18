@@ -23,7 +23,7 @@ class Status (Resource):
 
 
 api.add_resource(Status, '/status')
-api.add_resource(Sync, '/sync')
+# api.add_resource(Sync, '/sync')
 
 if __name__ == '__main__':
     print "Start Sync Api"

@@ -110,13 +110,9 @@ for (var i = 0; i < categories.length; i++) {
     categories[i] = categories[i].trim().toLowerCase();
 }
 
-
 var layer_country = null;
 var layer_value = null;
-var streamTime = null
-
-
-
+var streamTime = null;
 
 function setLayer(lys){
   layer_country = lys.getSubLayer(0);
@@ -158,7 +154,7 @@ function main() {
   // }).addTo(map);
 
   L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-    maxZoom: 10,
+    maxZoom: 9,
     attribution: 'CartoDB base map, data from <a href="http://openstreetmap.org">OpenStreetMap</a>'
   }).addTo(map);
 
@@ -225,7 +221,7 @@ function sync_carto() {
     category = $('#sel_category').val();
     analysis_type = $('#sel_analysis_type').val();
     $('#img_loading').fadeIn();
-    streamTime = setInterval(refreshValueLayer, 5 * 1000);
+    streamTime = setInterval(refreshValueLayer, 6.5 * 1000);
 
     $.ajax({
       type: "POST",
