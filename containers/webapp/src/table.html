@@ -30,6 +30,8 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css" />
+
 
 </head>
 
@@ -46,7 +48,7 @@
 
                 <ul class="nav">
                     <li>
-                        <a href="dashboard.html">
+                        <a href="index.html">
                             <i class="pe-7s-world"></i>
                             <p>Global Trending</p>
                         </a>
@@ -85,75 +87,74 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                        <a class="navbar-brand" href="#">Global Trending</a>
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Trending Reports</a>
                     </div>
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav navbar-left">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret hidden-sm hidden-xs"></b>
-                                    <span class="notification hidden-sm hidden-xs">5</span>
-                                    <p class="hidden-lg hidden-md">
-                                        5 Notifications
-                                        <b class="caret"></b>
-                                    </p>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Notification 1</a></li>
-                                    <li><a href="#">Notification 2</a></li>
-                                    <li><a href="#">Notification 3</a></li>
-                                    <li><a href="#">Notification 4</a></li>
-                                    <li><a href="#">Another notification</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-search"></i>
-                                    <p class="hidden-lg hidden-md">Search</p>
-                                </a>
-                            </li>
-                        </ul>
+                    <!--<div class="collapse navbar-collapse">-->
+                        <!--<ul class="nav navbar-nav navbar-left">-->
+                            <!--<li class="dropdown">-->
+                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                                    <!--<i class="fa fa-globe"></i>-->
+                                    <!--<b class="caret hidden-sm hidden-xs"></b>-->
+                                    <!--<span class="notification hidden-sm hidden-xs">5</span>-->
+                                    <!--<p class="hidden-lg hidden-md">-->
+                                        <!--5 Notifications-->
+                                        <!--<b class="caret"></b>-->
+                                    <!--</p>-->
+                                <!--</a>-->
+                                <!--<ul class="dropdown-menu">-->
+                                    <!--<li><a href="#">Notification 1</a></li>-->
+                                    <!--<li><a href="#">Notification 2</a></li>-->
+                                    <!--<li><a href="#">Notification 3</a></li>-->
+                                    <!--<li><a href="#">Notification 4</a></li>-->
+                                    <!--<li><a href="#">Another notification</a></li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="">-->
+                                    <!--<i class="fa fa-search"></i>-->
+                                    <!--<p class="hidden-lg hidden-md">Search</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="">
-                                    <p>Account</p>
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <p>
-                                        Dropdown
-                                        <b class="caret"></b>
-                                    </p>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <p>Log out</p>
-                                </a>
-                            </li>
-                            <li class="separator hidden-lg hidden-md"></li>
-                        </ul>
-                    </div>
+                        <!--<ul class="nav navbar-nav navbar-right">-->
+                            <!--<li>-->
+                                <!--<a href="">-->
+                                    <!--<p>Account</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="dropdown">-->
+                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                                    <!--<p>-->
+                                        <!--Dropdown-->
+                                        <!--<b class="caret"></b>-->
+                                    <!--</p>-->
+                                <!--</a>-->
+                                <!--<ul class="dropdown-menu">-->
+                                    <!--<li><a href="#">Action</a></li>-->
+                                    <!--<li><a href="#">Another action</a></li>-->
+                                    <!--<li><a href="#">Something</a></li>-->
+                                    <!--<li><a href="#">Another action</a></li>-->
+                                    <!--<li><a href="#">Something</a></li>-->
+                                    <!--<li class="divider"></li>-->
+                                    <!--<li><a href="#">Separated link</a></li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<p>Log out</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="separator hidden-lg hidden-md"></li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
                 </div>
             </nav>
-
 
             <div class="content">
                 <div class="container-fluid">
@@ -161,68 +162,57 @@
                         <div class="col-md-12">
                             <div class="card">
                                  <div class="header">
-                                    <h5 class="title">Analysis Type: Trends <a href="#"> (change) </a>  </h5>                                    
+                                    <h4 class="title"> View Settings </h4>
+                                    <div style="margin-top: 10px">
+                                        Vizualization mode:
+                                        <select id="sel_view_mode" class="custom-select">
+                                            <option selected value="bycategory"> Ranking By Category </option>
+                                            <option value="bycountry"> Ranking By Country </option>
+                                            <option value="chart"> Line Chart </option>
+                                        </select>
+                                    </div>
+                                    <div style="margin-top: 10px">
+                                        Analysis Type:
+                                        <select id="sel_analysis_type" class="custom-select" style="margin-left: 35px">
+                                            <option selected value="frequency"> Frequency </option>
+                                            <option value="popularity"> Popularity </option>
+                                            <option value="trend">Trend </option>
+                                        </select>
+                                    </h5>
+                                    </div>
                                     <h5 class="category">Based on the last: <b> 12 months </b> <a href="#"> (change) </a> Trending Measure: <b> Monthly </b> <a href="#"> (change) </a> </h5>
-                                    <h5 class="category">Vizualization mode: <b> Tabular </b> <a href="#"> (change) </a> </h5>
+
                                 </div>
                                 <div class="content table-responsive table-full-width">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div id="div_bycountry" class="row">
                         <div class="col-md-12">
                             <div class="card">
                                  <div class="header">
                                     <h4 class="title">Food Trends by Country</h4>
-                                    <h5 class="category">Country: <b> Japan </b> <a href="#"> (change) </a> </h5>
-                                    <!--<h5 class="category">Based on the last: <b> 12 months </b> <a href="#"> (change) </a> Trending Measure: <b> Monthly </b> <a href="#"> (change) </a> </h5>-->
+                                    <!--<h5 class="category">Country: <b> Japan </b> <a href="#"> (change) </a> </h5>-->
+                                    Country:
+                                     <select id="sel_country" class="custom-select">
+                                      <option selected value="0">Select a country </option>
+                                    </select>
                                 </div>
+                                <!--<div>-->
+                                    <!--<div class="container">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
                                 <div class="content table-responsive table-full-width">
-                                    <table class="table table-hover table-striped">
+                                    <table id="tb_bycountry" class="table table-hover table-striped">
                                         <thead>
                                             <th>Rank</th>
                                             <th>Dish Category</th>
                                             <th>Tweets</th>
-                                            <th>Cur. % Trending</th>                                            
+                                            <th> <span id="lbl_value_table">Test</span> </th>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Cup Cakes</td>
-                                                <td>1.738</td>
-                                                <td>+30.55%</td>                                                
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Pad Thai</td>
-                                                <td>3.789</td>
-                                                <td>+15.15%</td>                                                
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Sashimi</td>
-                                                <td>6.142</td>
-                                                <td>+0.45%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Sushi</td>
-                                                <td>8.735</td>
-                                                <td>-1.45%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Steak</td>
-                                                <td>1.542</td>                                                
-                                                <td>-1.45%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Tuna Tartare</td>
-                                                <td>3.615</td>
-                                                <td>-3.55%</td>                                                
-                                            </tr>
                                         </tbody>
                                     </table>
 
@@ -230,59 +220,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div id="div_bycategory" class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="header">                                    
                                     <h4 class="title">Food Trends by Dish Category</h4>
-                                    <h5 class="category">Dish Category: <b> Sashimi </b> <a href="#"> (change) </a> </h5>
+                                    <!--<h5 class="category">Dish Category: <b> Sashimi </b> <a href="#"> (change) </a> </h5>-->
+                                    Category:
+                                    <select id="sel_category" class="custom-select">
+                                      <option selected>Select a category </option>
+                                    </select>
                                     <!--<h5 class="category">Based on the last: <b> 12 months </b> <a href="#"> (change) </a> Trending Measure: <b> Monthly </b> <a href="#"> (change) </a> </h5>-->
                                 </div>
                                 <div class="content table-responsive table-full-width">
-                                    <table class="table table-hover table-striped">
+                                    <table id="tb_bycategory" class="table table-hover table-striped">
                                         <thead>
                                             <th>Rank</th>
                                             <th>Dish Category</th>
                                             <th>Tweets</th>
-                                            <th>CUR. % Trending</th>                                            
+                                            <th>Regression</th>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Brazil</td>
-                                                <td>23.738</td>
-                                                <td>+18.55%</td>                                                
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Canada</td>
-                                                <td>15.568</td>
-                                                <td>+14.15%</td>                                                
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Italy</td>
-                                                <td>6.653</td>
-                                                <td>+10.45%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Germany</td>
-                                                <td>12.735</td>
-                                                <td>+9.45%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Australia</td>
-                                                <td>2.342</td>                                                
-                                                <td>+7.45%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>United States</td>
-                                                <td>10.030</td>
-                                                <td>+4.30%</td>                                                
-                                            </tr>
                                         </tbody>
                                     </table>
 
@@ -290,7 +248,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div id="div_chart" class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="header">                                    
@@ -335,30 +293,27 @@
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
+<script src="assets/js/table.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script>
-    // var myChart = new Chart()
-</script>
 
+<!--<script type="text/javascript">-->
+    <!--$(document).ready(function () {-->
 
-<script type="text/javascript">
-    $(document).ready(function () {
+        <!--demo.initChartist();-->
 
-        demo.initChartist();
+        <!--$.notify({-->
+            <!--icon: 'pe-7s-gift',-->
+            <!--message: "Welcome to <b>Food Map</b>."-->
 
-        $.notify({
-            icon: 'pe-7s-gift',
-            message: "Welcome to <b>Food Map</b>."
+        <!--}, {-->
+                <!--type: 'info',-->
+                <!--timer: 4000-->
+            <!--});-->
 
-        }, {
-                type: 'info',
-                timer: 4000
-            });
+    <!--});-->
 
-    });
-
-</script>
+<!--</script>-->
 
 </html>

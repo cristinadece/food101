@@ -30,6 +30,12 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="leaflet.css" />
+
 </head>
 <body>
 
@@ -72,13 +78,13 @@
                     </a>
                 </li>                          
                 <li>
-                    <a href="dashboard.html">
+                    <a href="#">
                         <i class="pe-7s-bell"></i>
                         <p>Notifications</p>
                     </a>
                 </li>
                 <li>
-                    <a href="dashboard.html">
+                    <a href="#">
                         <i class="pe-7s-user"></i>
                         <p>User Profile</p>
                     </a>
@@ -99,90 +105,50 @@
                     </button>
                     <a class="navbar-brand" href="#">Global Trending</a>
                 </div>
-                <!--<div class="collapse navbar-collapse">-->
-                    <!--<ul class="nav navbar-nav navbar-left">                        -->
-                        <!--<li class="dropdown">-->
-                              <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-                                    <!--<i class="fa fa-globe"></i>-->
-                                    <!--<b class="caret hidden-sm hidden-xs"></b>-->
-                                    <!--<span class="notification hidden-sm hidden-xs">5</span>-->
-									<!--<p class="hidden-lg hidden-md">-->
-										<!--5 Notifications-->
-										<!--<b class="caret"></b>-->
-									<!--</p>-->
-                              <!--</a>-->
-                              <!--<ul class="dropdown-menu">-->
-                                <!--<li><a href="#">Notification 1</a></li>-->
-                                <!--<li><a href="#">Notification 2</a></li>-->
-                                <!--<li><a href="#">Notification 3</a></li>-->
-                                <!--<li><a href="#">Notification 4</a></li>-->
-                                <!--<li><a href="#">Another notification</a></li>-->
-                              <!--</ul>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                           <!--<a href="">-->
-                                <!--<i class="fa fa-search"></i>-->
-								<!--<p class="hidden-lg hidden-md">Search</p>-->
-                            <!--</a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-
-                    <!--<ul class="nav navbar-nav navbar-right">-->
-                        <!--<li>-->
-                           <!--<a href="">-->
-                               <!--<p>Account</p>-->
-                            <!--</a>-->
-                        <!--</li>-->
-                        <!--<li class="dropdown">-->
-                              <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-                                    <!--<p>-->
-										<!--Dropdown-->
-										<!--<b class="caret"></b>-->
-									<!--</p>-->
-                              <!--</a>-->
-                              <!--<ul class="dropdown-menu">-->
-                                <!--<li><a href="#">Action</a></li>-->
-                                <!--<li><a href="#">Another action</a></li>-->
-                                <!--<li><a href="#">Something</a></li>-->
-                                <!--<li><a href="#">Another action</a></li>-->
-                                <!--<li><a href="#">Something</a></li>-->
-                                <!--<li class="divider"></li>-->
-                                <!--<li><a href="#">Separated link</a></li>-->
-                              <!--</ul>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="#">-->
-                                <!--<p>Log out</p>-->
-                            <!--</a>-->
-                        <!--</li>-->
-						<!--<li class="separator hidden-lg hidden-md"></li>-->
-                    <!--</ul>-->
-                <!--</div>-->
+                <div style="margin-top: 5px">
+                    Analysis Type:
+                    <select id="sel_analysis_type" class="custom-select" style="margin-left: 15px">
+                        <option selected value="frequency"> Frequency </option>
+                        <option value="popularity"> Popularity </option>
+                        <option value="trend">Trend </option>
+                    </select>
+                </div>
+                <div>
+                    Category:
+                    <select id="sel_category" class="custom-select" style="margin-left: 45px">
+                      <option selected>Select a category </option>
+                    </select>
+                </div>
             </div>
         </nav>
 
 
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h5 class="title"> Selected Category: <b> Lasagna Bolognese </b> <a href="#"> (change)</a></h5>
-                                <p class="category">Trends <a href="#"> (change)</a> based on the last 12 months. <a href="#"> (change)</a> </p>
-                            </div>
-                            <div class="content">
-                                <div id="map">
-                                    <!--<iframe width="100%" height="520" frameborder="0" src="https://vinicezarml.carto.com/viz/afdb941c-f5f4-11e6-96ac-0ee66e2c9693/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>-->
-                                    <!--<iframe width="100%" height="820px" frameborder="0" src="https://vinicezarml.carto.com/viz/376040ec-f36e-11e6-8bb6-0e05a8b3e3d7/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>                    
-                </div>                
-            </div>
+        <!--<div class="content">-->
+            <!--<div class="container-fluid">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-md-12">-->
+                        <!--<div class="card">-->
+                            <!--<div class="header">-->
+                                <!--<h4 class="title">  </h4>-->
+                                <!--<div>-->
+
+                                <!--</div>-->
+
+
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<div class="content">&ndash;&gt;-->
+                                <!--&lt;!&ndash;&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>                    -->
+                <!--</div>                -->
+            <!--</div>-->
+        <!--</div>-->
+        <div id="img_loading" style="display: none">
+            Refreshing map...  <img src="assets/img/loader_gezo.gif" height="25px">
         </div>
-       
+        <div id="map" style="height: 100%">
+        </div>
 
     </div>
 </div>
@@ -204,29 +170,36 @@
     <script src="assets/js/bootstrap-notify.js"></script>
 
     <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js"></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="assets/js/demo.js"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="  crossorigin="anonymous"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
-	<script type="text/javascript">
-    	$(document).ready(function(){
 
-        	demo.initChartist();
+    <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="assets/js/index.js"></script>
 
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "Welcome to <b>Food Map</b>."
+	<!--<script type="text/javascript">-->
+    	<!--$(document).ready(function(){-->
 
-            },{
-                type: 'info',
-                timer: 4000
-            });
+<!--//        	demo.initChartist();-->
+<!--//        	$.notify({-->
+<!--//            	icon: 'pe-7s-gift',-->
+<!--//            	message: "Welcome to <b>Food Map</b>."-->
+<!--//-->
+<!--//            },{-->
+<!--//                type: 'info',-->
+<!--//                timer: 4000-->
+<!--//            });-->
 
-    	});
-	</script>
+    	<!--});-->
+	<!--</script>-->
 
 </html>
