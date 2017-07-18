@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>How to add and remove widgets in a CartoDB dashboard</title>
+    <link rel="shortcut icon" href="//cartodb.com/assets/favicon.ico" />
+    <meta name=viewport content="width=device-width initial-scale=1">
+    <link rel="stylesheet" href="//libs.cartocdn.com/di.js/v0/themes/css/deep-insights.css" />
+    <script src="//libs.cartocdn.com/di.js/v0/deep-insights.uncompressed.js"></script>
+    <style type="text/css">
+      html, body {
+        position:relative;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div style="top: 40px;bottom: auto;position: absolute;z-index: 100;left: 105px;">
+        <button class="CDB-Button CDB-Button--primary CDB-Button--big" id="add">
+            <span class="CDB-Button-Text CDB-Text is-semibold CDB-Size-medium">Add Widget</span>
+        </button>
+        <button class="CDB-Button CDB-Button--primary CDB-Button--big" id="remove">
+            <span class="CDB-Button-Text CDB-Text is-semibold CDB-Size-medium">Remove Widget</span>
+        </button>
+    </div>
+
+    <div id="dashboard"></div>
+​
+    <script>
+      window.onload = function() {
+
+        // set vizJson
+        var vizJSON = "https://hpclab.carto.com/api/v3/viz/6e368ac0-36e2-4bb0-aca0-36daae5a2eea/viz.json";
+
+        // create dashboard
+        cartodb.deepInsights.createDashboard('#dashboard', vizJSON, {
+          no_cdn: false,
+          cartodb_logo: false
+        });
+// ,function(err,dashboard){
+//            // get map object
+//            var map = dashboard.getMap();
+//            console.log('gostoso!');
+//
+//            // set widget parameters
+////            var sum = {
+////                "type": "formula",
+////                "title": "Total Population",
+////                "column": "pop_max",
+////                "operation": "sum"
+////            };
+////
+////            var avg = {
+////                "type": "formula",
+////                "title": "Average Population",
+////                "column": "pop_max",
+////                "operation": "avg"
+////            };
+////
+////            var histo = {
+////                "type": "histogram",
+////                "title": "Population Histogram",
+////                "column": "pop_max",
+////                "bins": 10
+////            };
+////
+////            var city = {
+////                "type": "category",
+////                "title": "City Category",
+////                "column": "name"
+////            };
+////
+////            var country = {
+////                "type": "category",
+////                "title": "Country Category",
+////                "column": "adm0name"
+////            };
+//
+//            // add widgets to the dashboard
+//            /* var sumWidget = dashboard.createFormulaWidget(sum,map.getLayer(1));
+//            var avgWidget = dashboard.createFormulaWidget(avg,map.getLayer(1));
+//            var histoWidget = dashboard.createHistogramWidget(histo,map.getLayer(1));
+//            var countryWidget = dashboard.createCategoryWidget(country,map.getLayer(1)); */
+//
+//            // add & remove city widget
+//            cdb.$('#add').click(function() {
+//                var cityWidget = dashboard.createCategoryWidget(city,map.getLayer(1));
+//                cdb.$('#remove').click(function() {
+//                    cityWidget.remove();
+//                 });
+//            });
+//
+//        });
+      }
+    </script>
+
+  </body>
+</html>
