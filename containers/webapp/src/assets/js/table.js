@@ -223,7 +223,7 @@ function get_bycountry(){
     url_link = 'http://test.tripbuilder.isti.cnr.it:5001/categoriestrends'
 
     country = $('#sel_country').val();
-    // alert(country);
+    analysis_type = $('#sel_analysis_type').val();
 
     $.ajax({
       type: "POST",
