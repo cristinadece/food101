@@ -51,8 +51,7 @@ def sync_carto_stream(first_sync, last_datetime):
     }
 
     # executing the query
-    response = es.search(index="stream", doc_type='tweet', size=10000
-                         , body=query)
+    response = es.search(index="stream", doc_type='tweet', size=10000, body=query)
 
     # cleaning results
     tweets = [x['_source'] for x in response['hits']['hits']]
@@ -145,8 +144,12 @@ def sync_carto_stream(first_sync, last_datetime):
 
     return first_sync, last_datetime
 
+
+
+
+### main method
 if __name__ == '__main__':
-    print "Sync Manager Started"
+    print "Sync Streamming Manager Started"
     time_sync = 30      # in seconds
     first_sync = True
     last_datetime = None
