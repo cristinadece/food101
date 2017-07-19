@@ -4,6 +4,7 @@ from carto.sql import SQLClient
 from carto.exceptions import CartoException
 from elasticsearch import Elasticsearch
 import time
+import random
 import json
 
 
@@ -21,7 +22,7 @@ def get_es():
 
 
 # get the centroid of a bb
-def centroid(points):
+def point_centroid(points):
     x_coords = [p[0] for p in points]
     y_coords = [p[1] for p in points]
     _len = len(points)
@@ -29,6 +30,14 @@ def centroid(points):
     centroid_y = sum(y_coords)/_len
     return [centroid_x, centroid_y]
 
+
+def point_close_to_center(points):
+    random_point_bb = random.choice(points)
+    centroid = point_centroid(points)
+    w_deviation = random.uniform(0, 0.25)
+    point_x = centroid[0] + w_deviation * (random_point_bb[0] - centroid[0])
+    point_y = centroid[1] + w_deviation * (random_point_bb[1] - centroid[1])
+    return [point_x, point_y]
 
 # push data into cartodb
 def sync_carto_stream(first_sync, last_datetime):
@@ -106,7 +115,7 @@ def sync_carto_stream(first_sync, last_datetime):
     print 'inserting data...'
     for tweet in tweets:
         try:
-            coordinates = tweet['coords'] if tweet['coords'] is not None else centroid(
+            coordinates = tweet['coords'] if tweet['coords'] is not None else point_close_to_center(
                 tweet['bounding_box']['coordinates'][0])
             the_geom = "ST_GeomFromText('POINT({lng} {lat})', 4326)".format(lng=coordinates[0], lat=coordinates[1])
 
