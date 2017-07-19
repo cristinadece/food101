@@ -30,8 +30,12 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <!--<link rel="stylesheet" href="dist/themes/css/deep-insights.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="css/style.css">-->
 
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+
+    <!--<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />-->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
     <link rel="stylesheet" href="leaflet.css" />
@@ -105,23 +109,48 @@
                     </button>
                     <a class="navbar-brand" href="#">Global Trending</a>
                 </div>
-                <div style="margin-top: 5px">
-                    Analysis Type:
-                    <select id="sel_analysis_type" class="custom-select" style="margin-left: 15px">
-                        <option selected value="frequency"> Frequency </option>
-                        <option value="popularity"> Popularity </option>
-                        <option value="trend">Trend </option>
-                    </select>
-                </div>
-                <div>
-                    Category:
-                    <select id="sel_category" class="custom-select" style="margin-left: 45px">
-                      <option selected>Select a category </option>
-                    </select>
-                </div>
+
+                <!--<div style="margin-top: 5px">-->
+                    <!--Analysis Type:-->
+                    <!--<select id="sel_analysis_type" class="custom-select" style="margin-left: 15px">-->
+                        <!--<option selected value="frequency"> Frequency </option>-->
+                        <!--<option value="popularity"> Popularity </option>-->
+                        <!--<option value="trend">Trend </option>-->
+                    <!--</select>-->
+                <!--</div>-->
+                <!--<div>-->
+                    <!--Category:-->
+                    <!--<select id="sel_category" class="custom-select" style="margin-left: 45px">-->
+                      <!--<option value="0" selected>Select a category </option>-->
+                    <!--</select>-->
+                <!--</div>-->
             </div>
         </nav>
 
+        <div class="panel panel-default" style="background-color: whitesmoke">
+            <div class="panel-body">
+                <div class="row">
+          <div class="col-lg-6">
+            <div class="input-group">
+                Analysis Type:
+                <select id="sel_analysis_type" class="custom-select" style="margin-left: 15px">
+                    <option selected value="frequency"> Frequency </option>
+                    <option value="popularity"> Popularity </option>
+                    <option value="trend">Trend </option>
+                </select>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+          <div class="col-lg-6">
+            <div class="input-group">
+                Category:
+                <select id="sel_category" class="custom-select" style="margin-left: 45px">
+                  <option value="0" selected>Select a category </option>
+                </select>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+        </div>
+            </div>
+        </div>
 
         <!--<div class="content">-->
             <!--<div class="container-fluid">-->
@@ -147,7 +176,7 @@
         <div id="img_loading" style="display: none">
             Refreshing map...  <img src="assets/img/loader_gezo.gif" height="25px">
         </div>
-        <div id="map" style="height: 100%">
+        <div id="map" style="height: 100%; margin-top: -20px" >
         </div>
 
     </div>

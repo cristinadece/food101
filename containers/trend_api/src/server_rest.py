@@ -2,7 +2,7 @@ import json
 from flask import Flask, request
 from flask_restful import Resource, Api
 from es_trend_queries import get_categories_trends_filtered_by_country, get_countries_trends_filtered_by_category
-from carto_db_sync import sync_db_view
+from cartodb_trend_sync import sync_db_view
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -46,8 +46,9 @@ class CartoDBTrends(Resource):
         dateBegin = request.form['dateBegin']
         dateEnd = request.form['dateEnd']
         analysis_type = request.form['analysis_type']
+        session = request.form['session']
         lst_country = get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, analysis_type)
-        sync_db_view(category, lst_country)
+        sync_db_view(session, category, lst_country)
         return { "message": "ok" }
 
 

@@ -80,7 +80,7 @@ def get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, anal
                 country_trend[country] = np.nan
 
 
-    # build the dic for the json and also filter nan values
+    # build the dic as json and also filter nan values
     country_trend = [{'country': x, 'value': y} for x,y in country_trend.iteritems() if y is not None and not np.isnan(y)]
 
     # order the values

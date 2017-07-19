@@ -106,6 +106,16 @@ var categories = [
 ,'	Waffles	'
 ];
 
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+var session = uuidv4();
+var custom = false;
+
 for (var i = 0; i < categories.length; i++) {
     categories[i] = categories[i].trim().toLowerCase();
 }
@@ -115,18 +125,32 @@ var layer_value = null;
 var streamTime = null;
 
 function setLayer(lys){
-  layer_country = lys.getSubLayer(0);
-  layer_value = lys.getSubLayer(1);
+  // layer_country = lys[1].getSubLayer(0);
+  layer_value = lys[1].getSubLayer(0);
 
-  layer_country.hide();
-  layer_value.hide();
+  // layer_country.show();
+  layer_value.show();
 }
 
 function refreshValueLayer(){
 
-    layer_value.setSQL("SELECT countries_geo.*, trend_value.value FROM trend_value inner JOIN countries_geo on lower(countries_geo.name) = lower(trend_value.country)");
-    layer_country.show();
-    layer_value.show();
+    if (custom){
+        layer_value.setSQL("SELECT countries_geo.*, trend_value.value FROM trend_value inner JOIN countries_geo on lower(countries_geo.name) = lower(trend_value.country) WHERE trend_value.session = '" + session + "'");
+        // layer_country.show();
+        // layer_value.show();
+    }
+    else {
+        alert('refresh layer');
+        var category = $('#sel_category').val();
+        var analysis_type = $('#sel_analysis_type').val();
+
+        layer_value.setSQL("SELECT countries_geo.*, trend_value.value FROM trend_value inner JOIN countries_geo on lower(countries_geo.name) = lower(trend_value.country) " +
+            "WHERE trend_value.category = '" + category + "' and analysis_type = '" + analysis_type + "'");
+        // layer_country.show();
+        layer_value.show();
+    }
+
+
 
     // Run a query to get new Max / Min of layer
     // var sql = cartodb.SQL({ user: 'vinicezarml' });
@@ -138,13 +162,47 @@ function refreshValueLayer(){
 }
 
 
+function loadCategories_Selection(){
+    $.each(categories, function (i, item) {
+        $('#sel_category').append($('<option>', {
+            value: item,
+            text : item
+        }));
+    });
+}
+
+
+function sync_carto() {
+    // url_link = 'http://localhost:5001/cartodbview';
+    url_link = 'http://test.tripbuilder.isti.cnr.it:5001/cartodbview';
+
+    category = $('#sel_category').val();
+    analysis_type = $('#sel_analysis_type').val();
+    $('#img_loading').fadeIn();
+    streamTime = setInterval(refreshValueLayer, 6.5 * 1000);
+
+    $.ajax({
+      type: "POST",
+      url: url_link,
+      async: true,
+      data: { category: category, dateBegin: '20170101', dateEnd: '20170601', analysis_type: analysis_type, session: session },
+      success: function (result) {
+          clearInterval(streamTime);
+          refreshValueLayer();
+          $('#img_loading').fadeOut();
+
+      }
+    });
+
+}
+
 var layerN = {};
 function main() {
-  map = L.map('map', {
-    zoomControl: true,
-    center: [10, -10],
-    zoom: 3
-  });
+  // map = L.map('map', {
+  //   zoomControl: true,
+  //   center: [10, -10],
+  //   zoom: 3
+  // });
 
   // var hash = new L.Hash(map);
 
@@ -153,13 +211,13 @@ function main() {
   //   attribution: 'CartoDB base map, data from <a href="http://openstreetmap.org">OpenStreetMap</a>'
   // }).addTo(map);
 
-  L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-    maxZoom: 9,
-    attribution: 'CartoDB base map, data from <a href="http://openstreetmap.org">OpenStreetMap</a>'
-  }).addTo(map);
-
-  var cmAttr = 'CartoDB base map, data from <a href="http://openstreetmap.org">OpenStreetMap</a>',
-               cmUrl = 'http://{s}.api.cartocdn.com/{styleId}/{z}/{x}/{y}.png';
+  // L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+  //   maxZoom: 9,
+  //   attribution: 'CartoDB base map, data from <a href="http://openstreetmap.org">OpenStreetMap</a>'
+  // }).addTo(map);
+  //
+  // var cmAttr = 'CartoDB base map, data from <a href="http://openstreetmap.org">OpenStreetMap</a>',
+  //              cmUrl = 'http://{s}.api.cartocdn.com/{styleId}/{z}/{x}/{y}.png';
 
   // var base_antique = L.tileLayer(cmUrl, {styleId: "base-antique", attribution: cmAttr});
   // var base_midnight = L.tileLayer(cmUrl, {styleId: "base-midnight", attribution: cmAttr});
@@ -183,58 +241,59 @@ function main() {
   // get the currently selected style
   // selectedStyle = $('li.selected').attr('id');
 
-  cartodb.createLayer(map, 'https://hpclab.carto.com/api/v2/viz/d4e7c73f-d4d9-42ef-bad7-f18afafacd66/viz.json')
-  .addTo(map)
-  .done(function(lys) {
-      var height_screen = $(window).height();
-      $('#map').height(height_screen - 80);
-      setLayer(lys);
-  })
-  .error(function(err) {
-    console.log(err);
-  });
+  // cartodb.createLayer(map, 'https://hpclab.carto.com/api/v2/viz/d4e7c73f-d4d9-42ef-bad7-f18afafacd66/viz.json')
+  // .addTo(map)
+  // .done(function(lys) {
+  //     var height_screen = $(window).height();
+  //     $('#map').height(height_screen - 80);
+  //     setLayer(lys);
+  // })
+  // .error(function(err) {
+  //   console.log(err);
+  // });
+
+    var options = {
+        shareable: false,
+        title: true,
+        description: false,
+        search: true,
+        tiles_loader: false,
+        center_lat: 10,
+        center_lon: 8.5,
+        zoom: 3,
+        cartodb_logo: true
+    };
+    var vizjson = 'https://hpclab.carto.com/api/v2/viz/d4e7c73f-d4d9-42ef-bad7-f18afafacd66/viz.json'
+    cartodb.createVis('map',vizjson,options).done(function(vis, layers) {
+        var height_screen = $(window).height();
+        $('#map').height(height_screen - 80);
+        setLayer(layers);
+    });
+
 }
 
-function loadCategories_Selection(){
-    $.each(categories, function (i, item) {
-        $('#sel_category').append($('<option>', {
-            value: item,
-            text : item
-        }));
-    });
-}
 
 $(document).ready(function(){
     main();
     loadCategories_Selection();
 
     $('#sel_category').change(function(){
-        sync_carto();
+        if (custom){
+            sync_carto();
+        }
+        else {
+            refreshValueLayer();
+        }
+    });
+
+    $('#sel_analysis_type').change(function(){
+        if ($('#sel_category').val() != 0){
+            if (custom){
+                sync_carto();
+            }
+            else {
+                refreshValueLayer()
+            }
+        }
     });
 });
-
-
-function sync_carto() {
-    // url_link = 'http://localhost:5001/cartodbview';
-    url_link = 'http://test.tripbuilder.isti.cnr.it:5001/cartodbview';
-
-    category = $('#sel_category').val();
-    analysis_type = $('#sel_analysis_type').val();
-    $('#img_loading').fadeIn();
-    streamTime = setInterval(refreshValueLayer, 6.5 * 1000);
-
-    $.ajax({
-      type: "POST",
-      url: url_link,
-      async: true,
-      data: { category: category, dateBegin: '20170101', dateEnd: '20170601', analysis_type: analysis_type },
-      success: function (result) {
-          clearInterval(streamTime);
-          refreshValueLayer();
-          $('#img_loading').fadeOut();
-
-      }
-    });
-
-}
-
