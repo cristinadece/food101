@@ -75,7 +75,12 @@ def get_location(tweet):
         #### TODO Vinicius
         ## Use coord and BB to detect country
         city = None
-        country = inferCountryByGeolocation(tweet, countries_geojson)
+        country = None
+        try:
+            country = inferCountryByGeolocation(tweet, countries_geojson)
+        except:
+            print "Couldn't infer country for ", tweet
+
 
     return city, country, tweet_coords
 
