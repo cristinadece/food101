@@ -46,56 +46,48 @@
 <div class="wrapper">
     <div class="sidebar" data-color="light-blue" data-image="assets/img/sidebar-6.jpg">
 
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="http://www.creative-tim.com" class="simple-text">
+                        Food Map
+                    </a>
+                </div>
 
-    <!--
+                <ul class="nav">
+                    <li>
+                        <a href="index.html">
+                            <i class="pe-7s-world"></i>
+                            <p>Global Trending</p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="streaming.html">
+                            <i class="pe-7s-map-marker"></i>
+                            <p>Streaming</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="table.html">
+                            <i class="pe-7s-note2"></i>
+                            <p>Trending Reports</p>
 
-        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
-        Tip 2: you can also add an image using data-image tag
-
-    -->
-
-    	<div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
-                    Food Map
-                </a>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="pe-7s-bell"></i>
+                            <p>Notifications</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="pe-7s-user"></i>
+                            <p>User Profile</p>
+                        </a>
+                    </li>
+                </ul>
             </div>
-
-            <ul class="nav">
-                <li class="active">
-                    <a href="dashboard.html">
-                        <i class="pe-7s-world"></i>
-                        <p>Global Trending</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="streaming.html">
-                        <i class="pe-7s-map-marker"></i>
-                        <p>Streaming</p>
-                    </a>
-                </li>                
-                <li>
-                    <a href="table.html">
-                        <i class="pe-7s-note2"></i>
-                        <p>Trending Reports</p>
-
-                    </a>
-                </li>                          
-                <li>
-                    <a href="#">
-                        <i class="pe-7s-bell"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="pe-7s-user"></i>
-                        <p>User Profile</p>
-                    </a>
-                </li>				
-            </ul>
-    	</div>
-    </div>
+        </div>
 
     <div class="main-panel">
         <nav class="navbar navbar-default navbar-fixed">
@@ -173,11 +165,14 @@
                 <!--</div>                -->
             <!--</div>-->
         <!--</div>-->
+
         <div id="img_loading" style="display: none">
             Refreshing map...  <img src="assets/img/loader_gezo.gif" height="25px">
         </div>
-        <div id="map" style="height: 100%; margin-top: -20px" >
+
+        <div id="map" style="height: 100%; margin-top: -20px; margin-right: 20px" >
         </div>
+
 
     </div>
 </div>
@@ -186,23 +181,23 @@
 </body>
 
     <!--   Core JS Files   -->
-    <!--<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>-->
-	<!--<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>-->
+    <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
 	<!--  Checkbox, Radio & Switch Plugins -->
-	<!--<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>-->
+	<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
 
 	<!--  Charts Plugin -->
-	<!--<script src="assets/js/chartist.min.js"></script>-->
+	<script src="assets/js/chartist.min.js"></script>
 
     <!--  Notifications Plugin    -->
-    <!--<script src="assets/js/bootstrap-notify.js"></script>-->
+    <script src="assets/js/bootstrap-notify.js"></script>
 
     <!--  Google Maps Plugin    -->
     <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<!--<script src="assets/js/light-bootstrap-dashboard.js"></script>-->
+	<script src="assets/js/light-bootstrap-dashboard.js"></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
     <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
@@ -214,6 +209,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="assets/js/index.js"></script>
+    <script src="assets/js/demo.js"></script>
 
 	<!--<script type="text/javascript">-->
     	<!--$(document).ready(function(){-->
