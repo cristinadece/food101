@@ -12,7 +12,7 @@
 
 
     <!-- Bootstrap core CSS     -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!--<link href="assets/css/bootstrap.min.css" rel="stylesheet" />-->
 
     <!-- Animation library for notifications   -->
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
@@ -37,7 +37,7 @@
 
     <!--<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />-->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="leaflet.css" />
 
 </head>
@@ -54,13 +54,13 @@
                 </div>
 
                 <ul class="nav">
-                    <li>
+                    <li class="active">
                         <a href="index.html">
                             <i class="pe-7s-world"></i>
                             <p>Global Trending</p>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="streaming.html">
                             <i class="pe-7s-map-marker"></i>
                             <p>Streaming</p>
@@ -74,13 +74,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="dashboard.html">
+                        <a href="index.html">
                             <i class="pe-7s-bell"></i>
                             <p>Notifications</p>
                         </a>
                     </li>
                     <li>
-                        <a href="dashboard.html">
+                        <a href="index.html">
                             <i class="pe-7s-user"></i>
                             <p>User Profile</p>
                         </a>
@@ -124,7 +124,20 @@
                 <div class="row">
           <div class="col-lg-6">
             <div class="input-group">
-                Analysis Type:
+                <span style="font-size: 16px"> Analysis Type: </span>
+                <!--<div class="btn-group" data-toggle="buttons">-->
+                  <!--<label class="btn btn-primary active small">-->
+                    <!--<input type="radio" name="sel_analysis_type" id="option1" autocomplete="off" checked> Frequency-->
+                  <!--</label>-->
+                  <!--<label class="btn btn-primary small">-->
+                    <!--<input type="radio" name="sel_analysis_type" id="option2" autocomplete="off"> Popularity-->
+                  <!--</label>-->
+                  <!--<label class="btn btn-primary small">-->
+                    <!--<input type="radio" name="sel_analysis_type" id="option3" autocomplete="off"> Trend-->
+                  <!--</label>-->
+                <!--</div>-->
+
+
                 <select id="sel_analysis_type" class="custom-select" style="margin-left: 15px">
                     <option selected value="frequency"> Frequency </option>
                     <option value="popularity"> Popularity </option>
@@ -134,7 +147,7 @@
           </div><!-- /.col-lg-6 -->
           <div class="col-lg-6">
             <div class="input-group">
-                Category:
+                <span style="font-size: 16px"> Category: </span>
                 <select id="sel_category" class="custom-select" style="margin-left: 45px">
                   <option value="0" selected>Select a category </option>
                 </select>
