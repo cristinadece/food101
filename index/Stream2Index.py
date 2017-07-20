@@ -38,6 +38,7 @@ class Stream2Index(TwythonStreamer):
 
     def on_success(self, data):
         if "#foodsigir2017" in data["text"]:
+            print "is sigir tweet", data["id"]
             new_tweet = process_tweet_special(data)
         else:
             new_tweet = process_tweet(data, forStream=True)
