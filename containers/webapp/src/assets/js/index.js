@@ -2,109 +2,107 @@
  * Created by vinicius on 18/07/17.
  */
 
-var categories = [
-'	Apple pie	'
-,'	Baby back ribs	'
-,'	Baklava	'
-,'	Beef carpaccio	'
-,'	Beef tartare	'
-,'	Beet salad	'
-,'	Beignets	'
-,'	Bibimbap	'
-,'	Bread pudding	'
-,'	Breakfast burrito	'
-,'	Bruschetta	'
-,'	Caesar salad	'
-,'	Cannoli	'
-,'	Caprese salad	'
-,'	Carrot cake	'
-,'	Ceviche	'
-,'	Cheesecake	'
-,'	Cheese plate	'
-,'	Chicken curry	'
-,'	Chicken quesadilla	'
-,'	Chicken wings	'
-,'	Chocolate cake	'
-,'	Chocolate mousse	'
-,'	Churros	'
-,'	Clam chowder	'
-,'	Club sandwich	'
-,'	Crab cakes	'
-,'	Creme brulee	'
-,'	Croque madame	'
-,'	Cup cakes	'
-,'	Deviled eggs	'
-,'	Donuts	'
-,'	Dumplings	'
-,'	Edamame	'
-,'	Eggs benedict	'
-,'	Escargots	'
-,'	Falafel	'
-,'	Filet mignon	'
-,'	Fish and chips	'
-,'	Foie gras	'
-,'	French fries	'
-,'	French onion soup	'
-,'	French toast	'
-,'	Fried calamari	'
-,'	Fried rice	'
-,'	Frozen yogurt	'
-,'	Garlic bread	'
-,'	Gnocchi	'
-,'	Greek salad	'
-,'	Grilled cheese sandwich	'
-,'	Grilled salmon	'
-,'	Guacamole	'
-,'	Gyoza	'
-,'	Hamburger	'
-,'	Hot and sour soup	'
-,'	Hot dog	'
-,'	Huevos rancheros	'
-,'	Hummus	'
-,'	Ice_cream	'
-,'	Lasagna	'
-,'	Lobster bisque	'
-,'	Lobster roll sandwich	'
-,'	Macaroni and cheese	'
-,'	Macarons	'
-,'	Miso soup	'
-,'	Mussels	'
-,'	Nachos	'
-,'	Omelette	'
-,'	Onion rings	'
-,'	Oysters	'
-,'	Pad thai	'
-,'	Paella	'
-,'	Pancakes	'
-,'	Panna cotta	'
-,'	Peking duck	'
-,'	Pho	'
-,'	Pizza	'
-,'	Pork chop	'
-,'	Poutine	'
-,'	Prime rib	'
-,'	Pulled pork sandwich	'
-,'	Ramen	'
-,'	Ravioli	'
-,'	Red velvet cake	'
-,'	Risotto	'
-,'	Samosa	'
-,'	Sashimi	'
-,'	Scallops	'
-,'	Seaweed salad	'
-,'	Shrimp and grits	'
-,'	Spaghetti bolognese	'
-,'	Spaghetti carbonara	'
-,'	Spring rolls	'
-,'	Steak	'
-,'	Strawberry shortcake	'
-,'	Sushi	'
-,'	Tacos	'
-,'	Takoyaki	'
-,'	Tiramisu	'
-,'	Tuna tartare	'
-,'	Waffles	'
-];
+var categories = ['apple_pie',
+ 'baby_back_ribs',
+ 'baklava',
+ 'beef_carpaccio',
+ 'beef_tartare',
+ 'beet_salad',
+ 'beignets',
+ 'bibimbap',
+ 'bread_pudding',
+ 'breakfast_burrito',
+ 'bruschetta',
+ 'caesar_salad',
+ 'cannoli',
+ 'caprese_salad',
+ 'carrot_cake',
+ 'ceviche',
+ 'cheesecake',
+ 'cheese_plate',
+ 'chicken_curry',
+ 'chicken_quesadilla',
+ 'chicken_wings',
+ 'chocolate_cake',
+ 'chocolate_mousse',
+ 'churros',
+ 'clam_chowder',
+ 'club_sandwich',
+ 'crab_cakes',
+ 'creme_brulee',
+ 'croque_madame',
+ 'cup_cakes',
+ 'deviled_eggs',
+ 'donuts',
+ 'dumplings',
+ 'edamame',
+ 'eggs_benedict',
+ 'escargots',
+ 'falafel',
+ 'filet_mignon',
+ 'fish_and_chips',
+ 'foie_gras',
+ 'french_fries',
+ 'french_onion_soup',
+ 'french_toast',
+ 'fried_calamari',
+ 'fried_rice',
+ 'frozen_yogurt',
+ 'garlic_bread',
+ 'gnocchi',
+ 'greek_salad',
+ 'grilled_cheese_sandwich',
+ 'grilled_salmon',
+ 'guacamole',
+ 'gyoza',
+ 'hamburger',
+ 'hot_and_sour_soup',
+ 'hot_dog',
+ 'huevos_rancheros',
+ 'hummus',
+ 'ice_cream',
+ 'lasagna',
+ 'lobster_bisque',
+ 'lobster_roll_sandwich',
+ 'macaroni_and_cheese',
+ 'macarons',
+ 'miso_soup',
+ 'mussels',
+ 'nachos',
+ 'omelette',
+ 'onion_rings',
+ 'oysters',
+ 'pad_thai',
+ 'paella',
+ 'pancakes',
+ 'panna_cotta',
+ 'peking_duck',
+ 'pho',
+ 'pizza',
+ 'pork_chop',
+ 'poutine',
+ 'prime_rib',
+ 'pulled_pork_sandwich',
+ 'ramen',
+ 'ravioli',
+ 'red_velvet_cake',
+ 'risotto',
+ 'samosa',
+ 'sashimi',
+ 'scallops',
+ 'seaweed_salad',
+ 'shrimp_and_grits',
+ 'spaghetti_bolognese',
+ 'spaghetti_carbonara',
+ 'spring_rolls',
+ 'steak',
+ 'strawberry_shortcake',
+ 'sushi',
+ 'tacos',
+ 'takoyaki',
+ 'tiramisu',
+ 'tuna_tartare',
+ 'waffles'];
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -116,9 +114,9 @@ function uuidv4() {
 var session = uuidv4();
 var custom = false;
 
-for (var i = 0; i < categories.length; i++) {
-    categories[i] = categories[i].trim().toLowerCase();
-}
+// for (var i = 0; i < categories.length; i++) {
+//     categories[i] = categories[i].trim().toLowerCase();
+// }
 
 var layer_country = null;
 var layer_value = null;
@@ -140,7 +138,7 @@ function refreshValueLayer(){
         // layer_value.show();
     }
     else {
-        alert('refresh layer');
+        // alert('refresh layer');
         var category = $('#sel_category').val();
         var analysis_type = $('#sel_analysis_type').val();
 

@@ -101,7 +101,9 @@ def get_categories_trends_filtered_by_country(country, dateBegin, dateEnd, analy
         # sort list by date ascending
         sorted_counts = sorted(values, key=lambda x: x[0])
         # we refer to the current day in the interval
-        if analysis_type == "popularity":
+        if analysis_type == "frequency":
+            category_trend[category] = sum([y for x, y in sorted_counts])
+        elif analysis_type == "popularity":
             category_trend[category] = stats.zscore([y for x, y in sorted_counts])[-1]
         elif analysis_type == "trend":
             y = [y for x, y in sorted_counts]
