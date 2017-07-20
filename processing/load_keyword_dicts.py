@@ -29,7 +29,7 @@ def getStreamFilterKeywords():
         for line in f:
             ht = line.replace("\n", "")
             htList.append(ht)
-
+    htList.append("#foodsigir2017")
 
     htCategoryList = list()
     with open("./resources/categories.txt") as g:

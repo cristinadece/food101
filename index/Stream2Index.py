@@ -16,7 +16,7 @@ sys.path.append(os.getcwd())
 print os.getcwd()
 from twython import TwythonStreamer
 from elasticsearch import Elasticsearch, RequestError
-from processing.preprocess_tweet import process_tweet
+from processing.preprocess_tweet import process_tweet, process_tweet_special
 
 
 class Stream2Index(TwythonStreamer):
@@ -37,7 +37,10 @@ class Stream2Index(TwythonStreamer):
         print self.es.indices.create("stream", ignore=400) #, body=mapping)
 
     def on_success(self, data):
-        new_tweet = process_tweet(data, forStream=True)
+        if "#foodsigir2017" in data["text"]:
+            new_tweet = process_tweet_special(data)
+        else:
+            new_tweet = process_tweet(data, forStream=True)
         if new_tweet is not None:
             try:
                 self.es.index(index='stream', doc_type='tweet', id=new_tweet["id"], body=new_tweet)
