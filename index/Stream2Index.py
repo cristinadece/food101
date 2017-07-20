@@ -48,6 +48,7 @@ class Stream2Index(TwythonStreamer):
                 print "Indexed tweet: ", new_tweet["id"]
             except RequestError as e:
                 print "Couldn't index tweet id: ", new_tweet["id"]
+                print new_tweet
                 print e.status_code, e.message
                 # todo check error when not parsing bounding box geo-shape
                 time.sleep(60)
