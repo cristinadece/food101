@@ -315,10 +315,11 @@ def process_tweet_special(tweet):
 
     hasNoImgCateg = (new_tweet["img_categories"] is None) or (len(new_tweet["img_categories"]) == 0)
     if hasNoImgCateg and len(new_tweet["text_categories"]) == 0:
+        new_tweet["img_categories"] = list()
         catDict = dict()
         catDict["score"] = 0.0
         catDict["label"] = "unknown"
-        new_tweet["img_categories"] = list(catDict)
+        new_tweet["img_categories"].append(catDict)
         new_tweet["img_flag"] = True
 
     # DAY, DATE
