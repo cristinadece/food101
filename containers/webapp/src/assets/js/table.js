@@ -237,7 +237,7 @@ function get_bycategory(){
 
               $('#tb_bycategory > tbody:last-child').append('<tr>' +
               '<td>' + idx + ' </td>' +
-              '<td>' + country['country'] + '</td>' +
+              '<td>' + ucFirstAllWords(country['country']) + '</td>' +
               '<td>' + value_exhibition + '</td>' +
               '</tr>');
               idx = idx + 1
@@ -280,7 +280,7 @@ function get_bycountry(){
 
               $('#tb_bycountry > tbody:last-child').append('<tr>' +
               '<td>' + idx + ' </td>' +
-              '<td>' + category['category'] + '</td>' +
+              '<td>' + ucFirstAllWords(category['category']) + '</td>' +
               '<td>' + value_exhibition + '</td>' +
               '</tr>');
               idx = idx + 1
