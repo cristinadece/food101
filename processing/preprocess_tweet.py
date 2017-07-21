@@ -51,7 +51,10 @@ def get_image_categories(img_url):
     except:
         print "Error! Couldn't parse json ", res.text
         return None
-    return candidates
+    if candidates[0]["score"] >= 7.0:
+        return candidates
+    else:
+        return []
 
 
 def get_location(tweet):
