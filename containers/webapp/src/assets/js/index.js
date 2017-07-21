@@ -123,17 +123,18 @@ var layer_value = null;
 var streamTime = null;
 
 function setLayer(lys){
-  // layer_country = lys[1].getSubLayer(0);
-  layer_value = lys[1].getSubLayer(0);
+      // layer_country = lys[1].getSubLayer(0);
+      layer_value = lys[1].getSubLayer(0);
 
-  // layer_country.show();
-  layer_value.show();
+      // layer_country.show();
+      layer_value.hide();
+
 }
 
 function refreshValueLayer(){
 
     if (custom){
-        layer_value.setSQL("SELECT countries_geo.*, trend_value.value FROM trend_value inner JOIN countries_geo on lower(countries_geo.name) = lower(trend_value.country) WHERE trend_value.session = '" + session + "'");
+        layer_value.setSQL("SELECT countries_geo.*, trend_value.value, trend_value.country, trend_value.category, trend_value.analysis_type	FROM trend_value inner JOIN countries_geo on lower(countries_geo.name) = lower(trend_value.country) WHERE trend_value.session = '" + session + "'");
         // layer_country.show();
         // layer_value.show();
     }
@@ -142,7 +143,7 @@ function refreshValueLayer(){
         var category = $('#sel_category').val();
         var analysis_type = $('#sel_analysis_type').val();
 
-        layer_value.setSQL("SELECT countries_geo.*, trend_value.value FROM trend_value inner JOIN countries_geo on lower(countries_geo.name) = lower(trend_value.country) " +
+        layer_value.setSQL("SELECT countries_geo.*, trend_value.value, trend_value.country, trend_value.category, trend_value.analysis_type	FROM trend_value inner JOIN countries_geo on lower(countries_geo.name) = lower(trend_value.country) " +
             "WHERE trend_value.category = '" + category + "' and analysis_type = '" + analysis_type + "'");
         // layer_country.show();
         layer_value.show();
@@ -159,12 +160,23 @@ function refreshValueLayer(){
     // layer_value.set(sublayerOptions);
 }
 
+function ucFirstAllWords( str )
+{
+    var pieces = str.split(" ");
+    for ( var i = 0; i < pieces.length; i++ )
+    {
+        var j = pieces[i].charAt(0).toUpperCase();
+        pieces[i] = j + pieces[i].substr(1);
+    }
+    return pieces.join(" ");
+}
+
 
 function loadCategories_Selection(){
     $.each(categories, function (i, item) {
         $('#sel_category').append($('<option>', {
             value: item,
-            text : item
+            text : ucFirstAllWords(item.replace(/_/g,' '))
         }));
     });
 }
@@ -262,9 +274,12 @@ function main() {
         cartodb_logo: true
     };
     var vizjson = 'https://hpclab.carto.com/api/v2/viz/d4e7c73f-d4d9-42ef-bad7-f18afafacd66/viz.json'
+    // var vizjson = 'https://vinicezarml.carto.com/api/v2/viz/de0aa1d3-4fcd-44e9-b824-b89e7cb48744/viz.json'
+    var height_screen = $(window).height();
+    $('#map').height(height_screen - 120);
+
     cartodb.createVis('map',vizjson,options).done(function(vis, layers) {
-        var height_screen = $(window).height();
-        $('#map').height(height_screen - 80);
+        // $('#map').height(height_screen - 80);
         setLayer(layers);
     });
 

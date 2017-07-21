@@ -128,16 +128,28 @@ function loadCountries_Selection(){
     $.each(countries, function (i, item) {
         $('#sel_country').append($('<option>', {
             value: item,
-            text : item
+            text : ucFirstAllWords(item)
         }));
     });
 }
+
+function ucFirstAllWords( str )
+{
+    var pieces = str.split(" ");
+    for ( var i = 0; i < pieces.length; i++ )
+    {
+        var j = pieces[i].charAt(0).toUpperCase();
+        pieces[i] = j + pieces[i].substr(1);
+    }
+    return pieces.join(" ");
+}
+
 
 function loadCategories_Selection(){
     $.each(categories, function (i, item) {
         $('#sel_category').append($('<option>', {
             value: item,
-            text : item
+            text : ucFirstAllWords(item.replace(/_/g,' '))
         }));
     });
 }
@@ -225,7 +237,7 @@ function get_bycategory(){
 
               $('#tb_bycategory > tbody:last-child').append('<tr>' +
               '<td>' + idx + ' </td>' +
-              '<td>' + country['country'] + '</td>' +
+              '<td>' + ucFirstAllWords(country['country']) + '</td>' +
               '<td>' + value_exhibition + '</td>' +
               '</tr>');
               idx = idx + 1
@@ -268,7 +280,7 @@ function get_bycountry(){
 
               $('#tb_bycountry > tbody:last-child').append('<tr>' +
               '<td>' + idx + ' </td>' +
-              '<td>' + category['category'] + '</td>' +
+              '<td>' + ucFirstAllWords(category['category']) + '</td>' +
               '<td>' + value_exhibition + '</td>' +
               '</tr>');
               idx = idx + 1
