@@ -49,7 +49,7 @@ def get_image_categories(img_url):
     try:
         candidates = json.loads(res.text)["guessed"]
     except:
-        print "Error! Couldn't parse json ", res.text
+        print "Error! Couldn't parse json ", str((res.text).encode('utf-8'))
         return None
     return candidates
 
