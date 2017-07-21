@@ -198,11 +198,11 @@ def process_tweet(tweet, forStream=True):
             img_categories = get_image_categories(media_url)
             new_tweet["img_categories"] = img_categories
             new_tweet["img_flag"] = True
-        # THIS IS THE TREND INDEX, we do batch img classif
+        # THIS IS THE TREND INDEX, we do batch img classif at a next step
         else:
-            img_categories = []
+            img_categories = get_image_categories(media_url)
             new_tweet["img_categories"] = img_categories
-            new_tweet["img_flag"] = False  # todo when we use the classifier we must change this to True
+            new_tweet["img_flag"] = True  # todo when we use the classifier we must change this to True
     else:
         new_tweet["img_categories"] = None
         new_tweet["img_flag"] = True
