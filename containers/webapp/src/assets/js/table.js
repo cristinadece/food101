@@ -2,6 +2,9 @@
  * Created by vinicius on 17/07/17.
  */
 
+var topN = 25;
+
+
 var countries = ['afghanistan', 'aland islands', 'albania', 'algeria', 'american samoa', 'andorra', 'angola', 'anguilla', 'antarctica', 'antigua and barbuda', 'argentina', 'armenia', 'aruba', 'australia', 'austria', 'azerbaijan', 'bahamas'
     , 'bahrain', 'bangladesh', 'barbados', 'belarus', 'belgium', 'belize', 'benin', 'bermuda', 'bhutan', 'bolivia', 'bonaire, saint eustatius and saba ', 'bosnia and herzegovina', 'botswana', 'bouvet island', 'brazil', 'british indian ocean territory'
     , 'british virgin islands', 'brunei', 'bulgaria', 'burkina faso', 'burundi', 'cambodia', 'cameroon', 'canada', 'cape verde', 'cayman islands', 'central african republic', 'chad', 'chile', 'china', 'christmas island', 'cocos islands', 'colombia', 'comoros'
@@ -242,7 +245,7 @@ function get_bycategory(){
               '</tr>');
               idx = idx + 1
 
-              if (idx > 20){
+              if (idx > topN){
                   break
               }
           }
@@ -285,7 +288,7 @@ function get_bycountry(){
               '</tr>');
               idx = idx + 1
 
-              if (idx > 20){
+              if (idx > topN){
                   break
               }
           }

@@ -1,24 +1,25 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>World Food Map</title>
+    <title>Food Map</title>
 
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
 
     <!-- Bootstrap core CSS     -->
-    <!--<link href="assets/css/bootstrap.min.css" rel="stylesheet" />-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Animation library for notifications   -->
-    <link href="assets/css/animate.min.css" rel="stylesheet"/>
+    <link href="assets/css/animate.min.css" rel="stylesheet" />
 
     <!--  Light Bootstrap Table core CSS    -->
-    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet" />
 
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
@@ -29,22 +30,30 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
 
-    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
-    <!--<link rel="stylesheet" href="dist/themes/css/deep-insights.css" />-->
-    <!--<link rel="stylesheet" type="text/css" href="css/style.css">-->
-
-
-    <!--<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />-->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="leaflet.css" />
+    <style>
+      html, body, #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      div.cartodb-tooltip {
+      position: absolute;
+      width: 350px;
+      max-width: none; 
+      overflow-y: hidden;
+      z-index: 50;
+      }
+    </style>
 
 </head>
+
 <body>
 
-<div class="wrapper">
-    <div class="sidebar" data-color="light-blue" data-image="assets/img/sidebar-6.jpg">
+    <div class="wrapper">
+        <div class="sidebar" data-color="light-blue" data-image="assets/img/sidebar-6.jpg">
 
             <div class="sidebar-wrapper">
                 <div class="logo">
@@ -54,14 +63,14 @@
                 </div>
 
                 <ul class="nav">
-                    <li>
-                        <a href="streaming.html">
+                    <li class="active">
+                        <a href="index.html">
                             <i class="pe-7s-map-marker"></i>
                             <p>Streaming</p>
                         </a>
                     </li>
-                    <li class="active">
-                        <a href="index.html">
+                    <li>
+                        <a href="trend.html">
                             <i class="pe-7s-world"></i>
                             <p>Global Trending</p>
                         </a>
@@ -70,16 +79,17 @@
                         <a href="table.html">
                             <i class="pe-7s-note2"></i>
                             <p>Trending Reports</p>
+
                         </a>
                     </li>
                     <!--<li>-->
-                        <!--<a href="index.html">-->
+                        <!--<a href="dashboard.html">-->
                             <!--<i class="pe-7s-bell"></i>-->
                             <!--<p>Notifications</p>-->
                         <!--</a>-->
                     <!--</li>-->
                     <!--<li>-->
-                        <!--<a href="index.html">-->
+                        <!--<a href="dashboard.html">-->
                             <!--<i class="pe-7s-user"></i>-->
                             <!--<p>User Profile</p>-->
                         <!--</a>-->
@@ -88,155 +98,156 @@
             </div>
         </div>
 
-    <div class="main-panel">
-        <nav class="navbar navbar-default navbar-fixed">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Global Trending</a>
+        <div class="main-panel">
+            <nav class="navbar navbar-default navbar-fixed">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Global Food Streaming</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse">
+                    </div>
+
+                    <!--<div class="collapse navbar-collapse">-->
+                        <!--<ul class="nav navbar-nav navbar-left">-->
+                            <!--<li class="dropdown">-->
+                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                                    <!--<i class="fa fa-globe"></i>-->
+                                    <!--<b class="caret hidden-sm hidden-xs"></b>-->
+                                    <!--<span class="notification hidden-sm hidden-xs">5</span>-->
+                                    <!--<p class="hidden-lg hidden-md">-->
+                                        <!--5 Notifications-->
+                                        <!--<b class="caret"></b>-->
+                                    <!--</p>-->
+                                <!--</a>-->
+                                <!--<ul class="dropdown-menu">-->
+                                    <!--<li><a href="#">Notification 1</a></li>-->
+                                    <!--<li><a href="#">Notification 2</a></li>-->
+                                    <!--<li><a href="#">Notification 3</a></li>-->
+                                    <!--<li><a href="#">Notification 4</a></li>-->
+                                    <!--<li><a href="#">Another notification</a></li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="">-->
+                                    <!--<i class="fa fa-search"></i>-->
+                                    <!--<p class="hidden-lg hidden-md">Search</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+
+                        <!--<ul class="nav navbar-nav navbar-right">-->
+                            <!--<li>-->
+                                <!--<a href="">-->
+                                    <!--<p>Account</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="dropdown">-->
+                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
+                                    <!--<p>-->
+                                        <!--Dropdown-->
+                                        <!--<b class="caret"></b>-->
+                                    <!--</p>-->
+                                <!--</a>-->
+                                <!--<ul class="dropdown-menu">-->
+                                    <!--<li><a href="#">Action</a></li>-->
+                                    <!--<li><a href="#">Another action</a></li>-->
+                                    <!--<li><a href="#">Something</a></li>-->
+                                    <!--<li><a href="#">Another action</a></li>-->
+                                    <!--<li><a href="#">Something</a></li>-->
+                                    <!--<li class="divider"></li>-->
+                                    <!--<li><a href="#">Separated link</a></li>-->
+                                <!--</ul>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#">-->
+                                    <!--<p>Log out</p>-->
+                                <!--</a>-->
+                            <!--</li>-->
+                            <!--<li class="separator hidden-lg hidden-md"></li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
                 </div>
+            </nav>
+            <!--<div class="content">-->
+                <!--<div class="container-fluid">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--<div class="card">-->
+                                <!--&lt;!&ndash;<div class="header">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<h4 class="title"> Real-Time Twitter Streaming </h4>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<p class="category">Followed hashtags: <b> #food, #foodmap </b> <a href="#"> (change)</a> </p>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--<div class="content">-->
 
-                <!--<div style="margin-top: 5px">-->
-                    <!--Analysis Type:-->
-                    <!--<select id="sel_analysis_type" class="custom-select" style="margin-left: 15px">-->
-                        <!--<option selected value="frequency"> Frequency </option>-->
-                        <!--<option value="popularity"> Popularity </option>-->
-                        <!--<option value="trend">Trend </option>-->
-                    <!--</select>-->
-                <!--</div>-->
-                <!--<div>-->
-                    <!--Category:-->
-                    <!--<select id="sel_category" class="custom-select" style="margin-left: 45px">-->
-                      <!--<option value="0" selected>Select a category </option>-->
-                    <!--</select>-->
-                <!--</div>-->
-            </div>
-        </nav>
-
-        <div class="panel panel-default" style="background-color: whitesmoke">
-            <div class="panel-body">
-                <div class="row">
-          <div class="col-lg-6">
-            <div class="input-group">
-                <span style="font-size: 16px"> Analysis Type: </span>
-                <!--<div class="btn-group" data-toggle="buttons">-->
-                  <!--<label class="btn btn-primary active small">-->
-                    <!--<input type="radio" name="sel_analysis_type" id="option1" autocomplete="off" checked> Frequency-->
-                  <!--</label>-->
-                  <!--<label class="btn btn-primary small">-->
-                    <!--<input type="radio" name="sel_analysis_type" id="option2" autocomplete="off"> Popularity-->
-                  <!--</label>-->
-                  <!--<label class="btn btn-primary small">-->
-                    <!--<input type="radio" name="sel_analysis_type" id="option3" autocomplete="off"> Trend-->
-                  <!--</label>-->
-                <!--</div>-->
-
-
-                <select id="sel_analysis_type" class="custom-select" style="margin-left: 15px">
-                    <option selected value="frequency"> Frequency </option>
-                    <option value="popularity"> Popularity </option>
-                    <option value="trend">Trend </option>
-                </select>
-            </div><!-- /input-group -->
-          </div><!-- /.col-lg-6 -->
-          <div class="col-lg-6">
-            <div class="input-group">
-                <span style="font-size: 16px"> Category: </span>
-                <select id="sel_category" class="custom-select" style="margin-left: 45px">
-                  <option value="0" selected>Select a category </option>
-                </select>
-            </div><!-- /input-group -->
-          </div><!-- /.col-lg-6 -->
-        </div>
-            </div>
-        </div>
-
-        <!--<div class="content">-->
-            <!--<div class="container-fluid">-->
-                <!--<div class="row">-->
-                    <!--<div class="col-md-12">-->
-                        <!--<div class="card">-->
-                            <!--<div class="header">-->
-                                <!--<h4 class="title">  </h4>-->
-                                <!--<div>-->
-
-                                <!--</div>-->
-
-
+                                   <!--&lt;!&ndash;<iframe width="100%" height="850" frameborder="0" src="https://hpclab.carto.com/builder/85c6dd73-18f0-4f26-b4ea-edfd3c5d9982/embed" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>&ndash;&gt;-->
+                                     <!---->
+                                <!--</div>                                    -->
                             <!--</div>-->
-                            <!--&lt;!&ndash;<div class="content">&ndash;&gt;-->
-                                <!--&lt;!&ndash;&ndash;&gt;-->
-                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
                         <!--</div>-->
-                    <!--</div>                    -->
-                <!--</div>                -->
+                    <!--</div>-->
+                <!--</div>-->
             <!--</div>-->
-        <!--</div>-->
+            <div id="div_refresh" style="display: none; z-index: 15; position: absolute; right: 0; margin-top: 25px; margin-right: 25px">
+                <div>
+                    <a href="#"> <img id="btn_refresh" src="assets/img/refresh.png" height="25"></a>
+                </div>
+            </div>
+            <div id="map" style="height: 820px">
+                    <!--<iframe width="100%" height="100%" frameborder="0" src="https://hpclab.carto.com/builder/0c64c066-609e-44ce-af6b-27edd1915df6/embed" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>-->
+                    <!--<iframe width="100%" height="820" frameborder="0" src="https://hpclab.carto.com/builder/6e368ac0-36e2-4bb0-aca0-36daae5a2eea/embed" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>-->
+            </div>
 
-        <div id="img_loading" style="display: none">
-            Refreshing map...  <img src="assets/img/loader_gezo.gif" height="25px">
         </div>
-
-        <div id="map" style="height: 100%; margin-top: -20px; margin-right: 20px" >
-        </div>
-
-
     </div>
-</div>
 
 
 </body>
 
-    <!--   Core JS Files   -->
-    <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+<!--   Core JS Files   -->
+<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
-	<!--  Checkbox, Radio & Switch Plugins -->
-	<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
+<!--  Checkbox, Radio & Switch Plugins -->
+<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
 
-	<!--  Charts Plugin -->
-	<script src="assets/js/chartist.min.js"></script>
+<!--  Charts Plugin -->
+<script src="assets/js/chartist.min.js"></script>
 
-    <!--  Notifications Plugin    -->
-    <script src="assets/js/bootstrap-notify.js"></script>
+<!--  Notifications Plugin    -->
+<script src="assets/js/bootstrap-notify.js"></script>
 
-    <!--  Google Maps Plugin    -->
-    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="assets/js/light-bootstrap-dashboard.js"></script>
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script src="assets/js/light-bootstrap-dashboard.js"></script>
 
-	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="  crossorigin="anonymous"></script>
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+<script src="assets/js/demo.js"></script>
+<script src="assets/js/streaming.js"></script>
 
-
-    <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="assets/js/index.js"></script>
-    <script src="assets/js/demo.js"></script>
-
-	<!--<script type="text/javascript">-->
-    	<!--$(document).ready(function(){-->
-
-<!--//        	demo.initChartist();-->
-<!--//        	$.notify({-->
-<!--//            	icon: 'pe-7s-gift',-->
-<!--//            	message: "Welcome to <b>Food Map</b>."-->
-<!--//-->
-<!--//            },{-->
-<!--//                type: 'info',-->
-<!--//                timer: 4000-->
-<!--//            });-->
-
-    	<!--});-->
-	<!--</script>-->
+<script type="text/javascript">
+//            $(document).ready(function () {
+//
+//                demo.initChartist();
+//
+//                $.notify({
+//                    icon: 'pe-7s-gift',
+//                    message: "Welcome to <b>Food Map</b>."
+//
+//                }, {
+//                        type: 'info',
+//                        timer: 4000
+//                    });
+//
+//            });
+</script>
 
 </html>
