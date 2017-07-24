@@ -2,7 +2,7 @@
  * Created by vinicius on 17/07/17.
  */
 
-var topN = 25;
+var topN = 30;
 
 
 var countries = ['afghanistan', 'aland islands', 'albania', 'algeria', 'american samoa', 'andorra', 'angola', 'anguilla', 'antarctica', 'antigua and barbuda', 'argentina', 'armenia', 'aruba', 'australia', 'austria', 'azerbaijan', 'bahamas'
