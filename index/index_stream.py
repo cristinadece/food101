@@ -14,6 +14,7 @@ Consider changing method from GET to POST, as explained here: https://dev.twitte
 
 import os
 import sys
+
 os.chdir("/home/foodmap/food101/")
 sys.path.append(os.getcwd())
 import logging
