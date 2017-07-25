@@ -122,7 +122,8 @@ def get_trend_per_country(query_result, analysis_type="trend", interval=None):
 
     country_dict = defaultdict(list)
     for x in query_result['hits']['hits']:
-        country_dict[x["_source"]['country']].append(tuple((x["_source"]['date'], x["_source"]['count'])))
+        country_dict[x["_source"]['country']].append(tuple((x["_source"]['date'],
+                                                            x["_source"]['count'])))
 
     country_trend = defaultdict(float)
     for country, values in country_dict.iteritems():
@@ -133,7 +134,8 @@ def get_trend_per_country(query_result, analysis_type="trend", interval=None):
             country_trend[country] = sum([y for x, y in sorted_counts])
         elif analysis_type == "relative_frequency":
             total_sum = get_total_freq_country(country)
-            country_trend[country] = sum([y for x, y in sorted_counts]) / (1.0 * total_sum)
+            country_trend[country] = sum([y for x, y in sorted_counts]) / \
+                                     (1.0 * total_sum)
         elif analysis_type == "popularity":
             if interval is None:
                 y = [y for x, y in sorted_counts]
@@ -154,7 +156,8 @@ def get_trend_per_country(query_result, analysis_type="trend", interval=None):
                 regression = np.polyfit(x, y, 1)
                 country_trend[country] = regression[0]
             except:
-                # the for doesn't work for this example: np.polyfit(np.array([0]), np.array([1]), 1)
+                # the for doesn't work for this example:
+                # np.polyfit(np.array([0]), np.array([1]), 1)
                 # some versions of numpy return nan, as should we
                 country_trend[country] = np.nan
 
@@ -209,7 +212,8 @@ def get_trend_per_category(query_result, analysis_type="trend", interval=None):
 
     category_dict = defaultdict(list)
     for x in query_result['hits']['hits']:
-        category_dict[x["_source"]['category']].append(tuple((x["_source"]['date'], x["_source"]['count'])))
+        category_dict[x["_source"]['category']].append(tuple((x["_source"]['date'],
+                                                              x["_source"]['count'])))
 
     category_trend = defaultdict(float)
     for category, values in category_dict.iteritems():
@@ -220,7 +224,8 @@ def get_trend_per_category(query_result, analysis_type="trend", interval=None):
             category_trend[category] = sum([y for x, y in sorted_counts])
         elif analysis_type == "relative_frequency":
             total_sum = get_total_freq_category(category)
-            category_trend[category] = sum([y for x, y in sorted_counts]) / (1.0 * total_sum)
+            category_trend[category] = sum([y for x, y in sorted_counts]) /\
+                                       (1.0 * total_sum)
         elif analysis_type == "popularity":
             if interval is None:
                 y = [y for x, y in sorted_counts]
@@ -241,7 +246,8 @@ def get_trend_per_category(query_result, analysis_type="trend", interval=None):
                 regression = np.polyfit(x, y, 1)
                 category_trend[category] = regression[0]
             except:
-                # the for doesn't work for this example: np.polyfit(np.array([0]), np.array([1]), 1)
+                # the for doesn't work for this example:
+                # np.polyfit(np.array([0]), np.array([1]), 1)
                 # some versions of numpy return nan, as should we
                 category_trend[category] = np.nan
 
@@ -253,9 +259,6 @@ def datetimetotimestamp(dt):
 
 
 def split_intervat_in_buckets(interval, daily_frequencies):
-    first_ts = datetimetotimestamp(
-        datetime.strptime(str(min(tpl[0] for tpl in daily_frequencies)),
-                          '%Y%m%d'))
     last_ts = datetimetotimestamp(
         datetime.strptime(str(max(tpl[0] for tpl in daily_frequencies)),
                           '%Y%m%d'))
@@ -264,10 +267,8 @@ def split_intervat_in_buckets(interval, daily_frequencies):
     interval_dict = Counter()
     for x, freq in daily_frequencies:
         ts = datetimetotimestamp(datetime.strptime(str(x), '%Y%m%d'))
-
         tsid = int((ts - last_ts) / tsinterval)
         interval_dict[tsid] += freq
 
     minkey = min(interval_dict.keys())
-    return sorted(
-        [(tsid - minkey, freq) for tsid, freq in interval_dict.iteritems()])
+    return sorted([(tsid - minkey, freq) for tsid, freq in interval_dict.iteritems()])
