@@ -40,7 +40,6 @@ def query_by_category(category, dateBegin, dateEnd):
     })
     return result
 
-
 # Query by food category - Fig. 2a Report of Trends/Popularity
 def query_by_country(country, dateBegin, dateEnd):
     """
@@ -72,13 +71,26 @@ def query_by_country(country, dateBegin, dateEnd):
     })
     return result
 
+def get_total_freq_country(country):
+    """
+    Given a country, it sums up all frequencies for all food categories in a
+    time interval.
+    :param country:
+    :return:
+    """
+    result_country = query_by_country(country)
+    total = 0
+    for x in result_country['hits']['hits']:
+        total += x["_source"]['count']
+    return total
 
 def get_trend_per_country(query_result, analysis_type="trend"):
     """
-    Given the result of the query_by_category, we get all the countries and the daily counts in order to compute
-    trend and popularity.
+    Given the result of the query_by_category, we get all the countries and
+    the daily counts in order to compute trend and popularity.
 
-    Given a food category we compute trends/popularity for all countries in a given time interval.
+    Given a food category we compute trends/popularity for all countries
+    in a given time interval.
 
     :param query_result: dict
         An ES result dictionary from the agg index
@@ -87,13 +99,19 @@ def get_trend_per_country(query_result, analysis_type="trend"):
         - The trend method computes the derivative of a simple linear
         regression bet fitting the distribution of counts per day.
         https://docs.scipy.org/doc/numpy-1.3.x/reference/generated/numpy.polyfit.html
-        - The popularity score computes the zscore for the last day in the interval (dateEnd). Calculates the z score
-        of each value in the sample, relative to the sample mean and standard deviation.
+        - The popularity score computes the zscore for the last day in the
+        interval (dateEnd). Calculates the z score of each value in the sample,
+        relative to the sample mean and standard deviation.
         https://docs.scipy.org/doc/scipy-0.19.0/reference/generated/scipy.stats.zscore.html
-        - The frequency sums up all the daily values in the time interval
+        - The frequency sums up all the daily values of countries,
+        for a specific food category, in the time interval.
+        - The relative frequency sums up all the daily values of each country,
+        in a given time interval, for a specific food category, and it is
+        normalized by the total frequency of food categories in that country.
     :return:
         : dict
-        A dictionary of <country, derivative/zscore > give as input a certain food category
+        A dictionary of <country, derivative/zscore > give as input a certain
+        food category
     """
     # result = query_by_category(category)
 
@@ -108,6 +126,9 @@ def get_trend_per_country(query_result, analysis_type="trend"):
         # we refer to the current day in the interval
         if analysis_type == "frequency":
             country_trend[country] = sum([y for x, y in sorted_counts])
+        elif analysis_type == "relative_frequency":
+            total_sum = get_total_freq_country(country)
+            country_trend[country] = sum([y for x, y in sorted_counts]) / (1.0 * total_sum)
         elif analysis_type == "popularity":
             country_trend[country] = stats.zscore([y for x, y in sorted_counts])[-1]
         elif analysis_type == "trend":
@@ -123,25 +144,43 @@ def get_trend_per_country(query_result, analysis_type="trend"):
 
     return country_trend
 
+def get_total_freq_category(category):
+    """
+    Given a category, it sums up all frequencies for all the countries in a time
+    interval
+    :param category:
+    :return:
+    """
+    result_categ = query_by_category(category)
+    total = 0
+    for x in result_categ['hits']['hits']:
+        total += x["_source"]['count']
+    return total
 
 def get_trend_per_category(query_result, analysis_type="trend"):
     """
-    Given the result of the query_by_country, we get all the categories and the daily counts in order to compute
-    trend and popularity.
+    Given the result of the query_by_country, we get all the categories and
+    the daily counts in order to compute trend and popularity.
 
-    Given a country we compute trends/popularity for all food categories in a given time interval.
+    Given a country we compute trends/popularity for all food categories in
+    a given time interval.
 
     :param query_result: dict
         An ES result dictionary from the agg index.
     :param analysis_type: string
-        Either "trend" or "popularity" or "frequency".
+        Either "trend" or "popularity" or "frequency" or "relative_frequency".
         - The trend method computes the derivative of a simple linear
         regression bet fitting the distribution of counts per day.
         https://docs.scipy.org/doc/numpy-1.3.x/reference/generated/numpy.polyfit.html
-        - The popularity score computes the zscore for the last day in the interval (dateEnd). Calculates the z score
-        of each value in the sample, relative to the sample mean and standard deviation.
+        - The popularity score computes the zscore for the last day in
+        the interval (dateEnd). Calculates the z score of each value in
+        the sample, relative to the sample mean and standard deviation.
         https://docs.scipy.org/doc/scipy-0.19.0/reference/generated/scipy.stats.zscore.html
-        - The frequency sums up all the daily values in the time interval
+        - The frequency sums up all the daily values of categories,
+        for a specific country, in the time interval.
+        - The relative frequency sums up all the daily values of each category,
+        in a given time interval, for a specific country, and it is normalized
+        by the total frequency of that category in all countries.
     :return:
         : dict
         A dictionary of <category, derivative/zscore > give as input a certain country
@@ -160,6 +199,9 @@ def get_trend_per_category(query_result, analysis_type="trend"):
         # we refer to the current day in the interval
         if analysis_type == "frequency":
             category_trend[category] = sum([y for x, y in sorted_counts])
+        elif analysis_type == "relative_frequency":
+            total_sum = get_total_freq_category(category)
+            category_trend[category] = sum([y for x, y in sorted_counts]) / (1.0 * total_sum)
         elif analysis_type == "popularity":
             category_trend[category] = stats.zscore([y for x, y in sorted_counts])[-1]
         elif analysis_type == "trend":
