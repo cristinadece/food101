@@ -6,6 +6,8 @@ from collections import defaultdict
 import numpy as np
 from elasticsearch import Elasticsearch
 from scipy import stats
+from datetime import datetime
+from collections import Counter
 
 es = Elasticsearch(['foodmap.isti.cnr.it'], http_auth=('elastic', 'changeme'), port=9200)
 
@@ -84,7 +86,7 @@ def get_total_freq_country(country):
         total += x["_source"]['count']
     return total
 
-def get_trend_per_country(query_result, analysis_type="trend"):
+def get_trend_per_country(query_result, analysis_type="trend", interval=None):
     """
     Given the result of the query_by_category, we get all the countries and
     the daily counts in order to compute trend and popularity.
@@ -108,6 +110,9 @@ def get_trend_per_country(query_result, analysis_type="trend"):
         - The relative frequency sums up all the daily values of each country,
         in a given time interval, for a specific food category, and it is
         normalized by the total frequency of food categories in that country.
+    :param interval: None or int; it is the value that indicates how to split the period
+        7 means it's weekly
+        30 means it's monthly
     :return:
         : dict
         A dictionary of <country, derivative/zscore > give as input a certain
@@ -130,9 +135,20 @@ def get_trend_per_country(query_result, analysis_type="trend"):
             total_sum = get_total_freq_country(country)
             country_trend[country] = sum([y for x, y in sorted_counts]) / (1.0 * total_sum)
         elif analysis_type == "popularity":
-            country_trend[country] = stats.zscore([y for x, y in sorted_counts])[-1]
+            if interval is None:
+                y = [y for x, y in sorted_counts]
+            else:
+                new_intervals = split_intervat_in_buckets(interval,
+                                                          sorted_counts)
+                y = [y for x, y in new_intervals]
+            country_trend[country] = stats.zscore(y)[-1]
         elif analysis_type == "trend":
-            y = [y for x, y in sorted_counts]
+            if interval is None:
+                y = [y for x, y in sorted_counts]
+            else:
+                new_intervals = split_intervat_in_buckets(interval,
+                                                          sorted_counts)
+                y = [y for x, y in new_intervals]
             x = np.arange(len(y))
             try:
                 regression = np.polyfit(x, y, 1)
@@ -157,7 +173,7 @@ def get_total_freq_category(category):
         total += x["_source"]['count']
     return total
 
-def get_trend_per_category(query_result, analysis_type="trend"):
+def get_trend_per_category(query_result, analysis_type="trend", interval=None):
     """
     Given the result of the query_by_country, we get all the categories and
     the daily counts in order to compute trend and popularity.
@@ -181,6 +197,9 @@ def get_trend_per_category(query_result, analysis_type="trend"):
         - The relative frequency sums up all the daily values of each category,
         in a given time interval, for a specific country, and it is normalized
         by the total frequency of that category in all countries.
+    :param interval: None or int; it is the value that indicates how to split the period
+        7 means it's weekly
+        30 means it's monthly
     :return:
         : dict
         A dictionary of <category, derivative/zscore > give as input a certain country
@@ -203,9 +222,20 @@ def get_trend_per_category(query_result, analysis_type="trend"):
             total_sum = get_total_freq_category(category)
             category_trend[category] = sum([y for x, y in sorted_counts]) / (1.0 * total_sum)
         elif analysis_type == "popularity":
-            category_trend[category] = stats.zscore([y for x, y in sorted_counts])[-1]
+            if interval is None:
+                y = [y for x, y in sorted_counts]
+            else:
+                new_intervals = split_intervat_in_buckets(interval,
+                                                          sorted_counts)
+                y = [y for x, y in new_intervals]
+            category_trend[category] = stats.zscore(y)[-1]
         elif analysis_type == "trend":
-            y = [y for x, y in sorted_counts]
+            if interval is None:
+                y = [y for x, y in sorted_counts]
+            else:
+                new_intervals = split_intervat_in_buckets(interval,
+                                                          sorted_counts)
+                y = [y for x, y in new_intervals]
             x = np.arange(len(y))
             try:
                 regression = np.polyfit(x, y, 1)
@@ -216,3 +246,28 @@ def get_trend_per_category(query_result, analysis_type="trend"):
                 category_trend[category] = np.nan
 
     return category_trend
+
+
+def datetimetotimestamp(dt):
+    return (dt - datetime(1970, 1, 1)).total_seconds()
+
+
+def split_intervat_in_buckets(interval, daily_frequencies):
+    first_ts = datetimetotimestamp(
+        datetime.strptime(str(min(tpl[0] for tpl in daily_frequencies)),
+                          '%Y%m%d'))
+    last_ts = datetimetotimestamp(
+        datetime.strptime(str(max(tpl[0] for tpl in daily_frequencies)),
+                          '%Y%m%d'))
+
+    tsinterval = interval * 3600 * 24
+    interval_dict = Counter()
+    for x, freq in daily_frequencies:
+        ts = datetimetotimestamp(datetime.strptime(str(x), '%Y%m%d'))
+
+        tsid = int((ts - last_ts) / tsinterval)
+        interval_dict[tsid] += freq
+
+    minkey = min(interval_dict.keys())
+    return sorted(
+        [(tsid - minkey, freq) for tsid, freq in interval_dict.iteritems()])
