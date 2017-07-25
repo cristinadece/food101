@@ -40,6 +40,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="leaflet.css" />
 
+
+    <style type="text/css">
+        .bs-callout {
+            padding: 5px;
+            margin: 0px 0;
+            border: 0px solid #1181FB;
+            border-left-width: 10px;
+            border-radius: 3px;
+            background-color: white;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -119,12 +131,12 @@
             </div>
         </nav>
 
-        <div class="panel panel-default" style="background-color: whitesmoke">
+        <div class="panel panel-default bs-callout" style="background-color: white">
             <div class="panel-body">
                 <div class="row">
           <div class="col-lg-6">
-            <div class="input-group">
-                <span style="font-size: 16px"> Analysis Type: </span>
+            <div class="input-group small">
+                <label for="sel_analysis_type" style="font-size: 14px"> <b> Analysis Type:</b> </label>
                 <!--<div class="btn-group" data-toggle="buttons">-->
                   <!--<label class="btn btn-primary active small">-->
                     <!--<input type="radio" name="sel_analysis_type" id="option1" autocomplete="off" checked> Frequency-->
@@ -138,7 +150,7 @@
                 <!--</div>-->
 
 
-                <select id="sel_analysis_type" class="custom-select" style="margin-left: 15px">
+                <select id="sel_analysis_type" class="custom-select form-control" style="border-left: 1px !important">
                     <option selected value="frequency"> Frequency </option>
                     <option value="popularity"> Popularity </option>
                     <option value="trend">Trend </option>
@@ -147,8 +159,8 @@
           </div><!-- /.col-lg-6 -->
           <div class="col-lg-6">
             <div class="input-group">
-                <span style="font-size: 16px"> Category: </span>
-                <select id="sel_category" class="custom-select" style="margin-left: 45px">
+                <label for="sel_category" style="font-size: 14px "> <b> Category:</b> </label>
+                <select id="sel_category" class="custom-select form-control">
                   <option value="0" selected>Select a category </option>
                 </select>
             </div><!-- /input-group -->
@@ -183,7 +195,7 @@
             Refreshing map...  <img src="assets/img/loader_gezo.gif" height="25px">
         </div>
 
-        <div id="map" style="height: 100%; margin-top: -20px; margin-right: 20px" >
+        <div id="map" style="height: 100%; margin-top: -10px; margin-right: 20px" >
         </div>
 
 

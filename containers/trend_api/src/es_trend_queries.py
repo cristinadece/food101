@@ -51,6 +51,32 @@ def query_filter_by_country(country, dateBegin, dateEnd):
     return result
 
 
+def get_total_freq_country(country, dateBegin, dateEnd):
+    """
+    Given a country, it sums up all frequencies for all food categories in a
+    time interval.
+    :param country:
+    :return:
+    """
+    result_country = query_filter_by_country(country, dateBegin, dateEnd)
+    total = 0
+    for x in result_country['hits']['hits']:
+        total += x["_source"]['count']
+    return total
+
+def get_total_freq_category(category, dateBegin, dateEnd):
+    """
+    Given a category, it sums up all frequencies for all the countries in a time
+    interval
+    :param category:
+    :return:
+    """
+    result_categ = query_filter_by_category(category, dateBegin, dateEnd)
+    total = 0
+    for x in result_categ['hits']['hits']:
+        total += x["_source"]['count']
+    return total
+
 def get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, analysis_type="trend"):
     # tweets of that category
     query_result = query_filter_by_category(category, dateBegin, dateEnd)
@@ -66,6 +92,9 @@ def get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, anal
         # we refer to the current day in the interval
         if analysis_type == "frequency":
             country_trend[country] = sum([y for x, y in sorted_counts])
+        elif analysis_type == "relative_frequency":
+            total_sum = get_total_freq_country(country, dateBegin, dateEnd)
+            country_trend[country] = sum([y for x, y in sorted_counts]) / (1.0 * total_sum)
         elif analysis_type == "popularity":
             country_trend[country] = stats.zscore([y for x, y in sorted_counts])[-1]
         elif analysis_type == "trend":
@@ -103,6 +132,9 @@ def get_categories_trends_filtered_by_country(country, dateBegin, dateEnd, analy
         # we refer to the current day in the interval
         if analysis_type == "frequency":
             category_trend[category] = sum([y for x, y in sorted_counts])
+        elif analysis_type == "relative_frequency":
+            total_sum = get_total_freq_category(category, dateBegin, dateEnd)
+            category_trend[category] = sum([y for x, y in sorted_counts]) / (1.0 * total_sum)
         elif analysis_type == "popularity":
             category_trend[category] = stats.zscore([y for x, y in sorted_counts])[-1]
         elif analysis_type == "trend":

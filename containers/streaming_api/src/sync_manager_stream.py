@@ -4,6 +4,7 @@ from carto.sql import SQLClient
 from carto.exceptions import CartoException
 from elasticsearch import Elasticsearch
 import time
+import datetime
 import random
 import json
 
@@ -67,36 +68,40 @@ def sync_carto_stream(first_sync, last_datetime):
 
     # cleaning the tweet
     for i in range(0, len(tweets)):
-        cur_tweet = tweets[i]
-        cur_tweet['text'] = cur_tweet['text'].encode('utf-8')
-        cur_tweet['text'] = cur_tweet['text'].replace('\'', ' ')
-        cur_tweet['has_img'] = True if cur_tweet['media_url'] is not None else False
-        cur_tweet['media_url'] = cur_tweet['media_url'] if cur_tweet['media_url'] is not None else 'http://cofunction.com/fp-images/NoImage/img_not_available.png'
-        txt_cat = cur_tweet['text_categories']
-        img_cat = cur_tweet['img_categories']
+        try:
+            cur_tweet = tweets[i]
+            cur_tweet['text'] = cur_tweet['text'].encode('utf-8')
+            cur_tweet['text'] = cur_tweet['text'].replace('\'', ' ')
+            cur_tweet['has_img'] = True if cur_tweet['media_url'] is not None else False
+            cur_tweet['media_url'] = cur_tweet['media_url'] if cur_tweet['media_url'] is not None else 'http://cofunction.com/fp-images/NoImage/img_not_available.png'
+            txt_cat = cur_tweet['text_categories']
+            img_cat = cur_tweet['img_categories']
 
-        cur_tweet['text_categories'] = ','.join(
-            map(lambda x: x.encode('utf-8'), txt_cat)) if txt_cat is not None else ''
+            cur_tweet['text_categories'] = ','.join(
+                map(lambda x: x.encode('utf-8'), txt_cat)) if txt_cat is not None else ''
 
-        # concating the results
-        # cur_tweet['img_categories'] = ' - '.join(
-        #     map(lambda x: 'label: {0}, score: {1}'.format(x['label'].encode('utf-8'), x['score']),
-        #         img_cat)) if img_cat is not None and len(img_cat) > 0 else ''
+            # concating the results
+            # cur_tweet['img_categories'] = ' - '.join(
+            #     map(lambda x: 'label: {0}, score: {1}'.format(x['label'].encode('utf-8'), x['score']),
+            #         img_cat)) if img_cat is not None and len(img_cat) > 0 else ''
 
-        # taking only the first result
-        if img_cat is not None and len(img_cat) > 0:
-            if img_cat[0]['score'] < 7.0:
-                cur_tweet['result_classification'] = 'low confidence'
-            elif img_cat[0]['score'] >= 10.0:
-                cur_tweet['result_classification'] = 'high confidence'
+            # taking only the first result
+            if img_cat is not None and len(img_cat) > 0:
+                if img_cat[0]['score'] < 7.0:
+                    cur_tweet['result_classification'] = 'low confidence'
+                elif img_cat[0]['score'] >= 10.0:
+                    cur_tweet['result_classification'] = 'high confidence'
+                else:
+                    cur_tweet['result_classification'] = 'medium confidence'
+                cur_tweet['img_categories'] = 'label: {0}, score: {1}'.format(img_cat[0]['label'], img_cat[0]['score'])
+                # print img_cat[0]['label'], img_cat[0]['score'], cur_tweet['result_classification']
             else:
-                cur_tweet['result_classification'] = 'medium confidence'
-            cur_tweet['img_categories'] = 'label: {0}, score: {1}'.format(img_cat[0]['label'], img_cat[0]['score'])
-            # print img_cat[0]['label'], img_cat[0]['score'], cur_tweet['result_classification']
-        else:
-            cur_tweet['result_classification'] = 'text'
+                cur_tweet['result_classification'] = 'text'
 
-        cur_tweet['categories'] = cur_tweet['img_categories'] if img_cat is not None and len(img_cat) > 0 else cur_tweet['text_categories']
+            cur_tweet['categories'] = cur_tweet['img_categories'] if img_cat is not None and len(img_cat) > 0 else cur_tweet['text_categories']
+        except Exception as e:
+            tweets.pop(i)
+            print "error sync", e
 
     # sql client instance
     sql = SQLClient(auth_client)
@@ -143,6 +148,8 @@ def sync_carto_stream(first_sync, last_datetime):
 
         except CartoException as e:
             print "some error ocurred", e, sql_insert
+        except Exception as eg:
+            print "some error ocurred", eg
 
     print 'finished sync. inserted: ', insert_count
     first_sync = False
@@ -165,6 +172,10 @@ if __name__ == '__main__':
 
     # the main thread in loop
     while True:
-        first_sync, last_datetime = sync_carto_stream(first_sync, last_datetime)
-        print 'sleep', time_sync, "seconds"
-        time.sleep(time_sync)
+        try:
+            first_sync, last_datetime = sync_carto_stream(first_sync, last_datetime)
+            print 'sleep', time_sync, "seconds", datetime.datetime.now()
+        except Exception as e:
+            print 'error', e
+        finally:
+            time.sleep(time_sync)

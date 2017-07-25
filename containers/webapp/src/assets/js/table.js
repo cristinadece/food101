@@ -3,8 +3,6 @@
  */
 
 var topN = 30;
-
-
 var countries = ['afghanistan', 'aland islands', 'albania', 'algeria', 'american samoa', 'andorra', 'angola', 'anguilla', 'antarctica', 'antigua and barbuda', 'argentina', 'armenia', 'aruba', 'australia', 'austria', 'azerbaijan', 'bahamas'
     , 'bahrain', 'bangladesh', 'barbados', 'belarus', 'belgium', 'belize', 'benin', 'bermuda', 'bhutan', 'bolivia', 'bonaire, saint eustatius and saba ', 'bosnia and herzegovina', 'botswana', 'bouvet island', 'brazil', 'british indian ocean territory'
     , 'british virgin islands', 'brunei', 'bulgaria', 'burkina faso', 'burundi', 'cambodia', 'cameroon', 'canada', 'cape verde', 'cayman islands', 'central african republic', 'chad', 'chile', 'china', 'christmas island', 'cocos islands', 'colombia', 'comoros'
@@ -163,10 +161,10 @@ function set_viewmode(sel_value){
     if (sel_value == 'bycategory'){
         $('#div_bycountry').hide();
         $('#div_chart').hide();
-        $('#div_bycategory').show();
+        $('#div_bycategory').fadeIn();
     }
     else if (sel_value == 'bycountry') {
-        $('#div_bycountry').show();
+        $('#div_bycountry').fadeIn();
         $('#div_chart').hide();
         $('#div_bycategory').hide();
     }
@@ -197,7 +195,6 @@ $(document).ready(function(){
     });
 
     $('#sel_analysis_type').change(function(e) {
-
         if($('#sel_category').val() != 0){
             get_bycategory();
         }
@@ -210,13 +207,16 @@ $(document).ready(function(){
 });
 
 function get_bycategory(){
-    // url_link = 'http://localhost:5001/countriestrends'
-    url_link = 'http://test.tripbuilder.isti.cnr.it:5001/countriestrends'
-
+    url_link = 'http://localhost:5001/countriestrends'
+    // url_link = 'http://test.tripbuilder.isti.cnr.it:5001/countriestrends'
 
     category = $('#sel_category').val();
     analysis_type = $('#sel_analysis_type').val();
-    $('#lbl_value_bycategory').html(analysis_type);
+    $('#lbl_value').html(analysis_type);
+    $('#lbl_by').html('Category');
+    $('#div_results').show();
+    $("#img_loading").show();
+    $("#div_table").hide();
 
     $.ajax({
       type: "POST",
@@ -226,7 +226,7 @@ function get_bycategory(){
           result = JSON.parse(result);
           results = result['results'];
           idx = 1;
-          $("#tb_bycategory > tbody").empty();
+          $("#tb_result > tbody").empty();
 
           for (idx_country in results){
 
@@ -238,7 +238,7 @@ function get_bycategory(){
                   value_exhibition = parseFloat(value_exhibition).toFixed(4)
               }
 
-              $('#tb_bycategory > tbody:last-child').append('<tr>' +
+              $('#tb_result > tbody:last-child').append('<tr>' +
               '<td>' + idx + ' </td>' +
               '<td>' + ucFirstAllWords(country['country']) + '</td>' +
               '<td>' + value_exhibition + '</td>' +
@@ -249,6 +249,9 @@ function get_bycategory(){
                   break
               }
           }
+
+          $("#div_table").show();
+          $("#img_loading").hide();
       }
     });
 }
@@ -260,6 +263,11 @@ function get_bycountry(){
 
     country = $('#sel_country').val();
     analysis_type = $('#sel_analysis_type').val();
+    $('#lbl_by').html('Country');
+    $('#div_results').show();
+    $("#img_loading").show();
+    $("#div_table").hide();
+
 
     $.ajax({
       type: "POST",
@@ -269,7 +277,7 @@ function get_bycountry(){
           result = JSON.parse(result);
           results = result['results'];
           idx = 1;
-          $("#tb_bycountry > tbody").empty();
+          $("#tb_result > tbody").empty();
           $('#lbl_value_bycountry').html(analysis_type);
 
           for (idx_category in results){
@@ -281,7 +289,7 @@ function get_bycountry(){
                   value_exhibition = parseFloat(value_exhibition).toFixed(4)
               }
 
-              $('#tb_bycountry > tbody:last-child').append('<tr>' +
+              $('#tb_result > tbody:last-child').append('<tr>' +
               '<td>' + idx + ' </td>' +
               '<td>' + ucFirstAllWords(category['category']) + '</td>' +
               '<td>' + value_exhibition + '</td>' +
@@ -292,6 +300,9 @@ function get_bycountry(){
                   break
               }
           }
+
+          $("#div_table").show();
+          $("#img_loading").hide();
       }
     });
 }
