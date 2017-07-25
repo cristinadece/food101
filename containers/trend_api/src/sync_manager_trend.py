@@ -14,14 +14,13 @@ def getCategories():
 
     return htCategoryList
 
-
 if __name__ == '__main__':
     print "Sync Trend Manager Started", datetime.datetime.now()
     time_sync = 60 * 60 * 12  # in seconds
     dateBegin = 0
     dateEnd = 20201231
 
-    analysis_types = ['frequency', 'trend', 'popularity']
+    analysis_types = ['frequency', 'relative_frequency', 'trend', 'popularity']
     categories = getCategories()
 
     # the main thread in loop

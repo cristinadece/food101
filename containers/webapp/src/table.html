@@ -25,13 +25,22 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
 
-
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css" />
 
+    <style type="text/css">
+        .bs-callout {
+            padding: 5px;
+            margin: 0px 0;
+            border: 0px solid #1181FB;
+            border-left-width: 10px;
+            border-radius: 3px;
+            background-color: white;
+        }
+    </style>
 
 </head>
 
@@ -42,8 +51,8 @@
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text">
-                     World Food Map
-                </a>
+                        World Food Map
+                    </a>
                 </div>
 
                 <ul class="nav">
@@ -156,113 +165,182 @@
                 </div>
             </nav>
 
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                 <div class="header">
-                                    <h4 class="title"> Report's Settings </h4>
-                                    <div style="margin-top: 10px">
-                                        Vizualization mode:
-                                        <select id="sel_view_mode" class="custom-select">
-                                            <option selected value="bycategory"> Ranking By Category </option>
-                                            <option value="bycountry"> Ranking By Country </option>
-                                            <!--<option value="chart"> Line Chart </option>-->
-                                        </select>
-                                    </div>
-                                    <div style="margin-top: 10px">
-                                        Analysis Type:
-                                        <select id="sel_analysis_type" class="custom-select" style="margin-left: 35px">
-                                            <option selected value="frequency"> Frequency </option>
-                                            <option value="popularity"> Popularity </option>
-                                            <option value="trend">Trend </option>
-                                        </select>
-                                    </h5>
-                                    </div>
-                                    <h5 class="category">Based on the last: <b> 6 months </b> <a href="#"> (change) </a> Trending Measure: <b> Daily </b> <a href="#"> (change) </a> </h5>
 
-                                </div>
-                                <div class="content table-responsive table-full-width">
-                                </div>
+            <div class="content" >
+                <div class="content-fluid">
+
+                    <div class="panel panel-default bs-callout">
+                      <!--<div class="panel-heading" style="background-color: #1181FB">-->
+                          <!--<span for="sel_category" style="font-size: 14px; color: white; "> <b> Report's Settings:</b> </span>-->
+                      <!--</div>-->
+                      <div class="panel-body">
+                            <div style="text-align: left; margin-top: -10px">
+                                <h4>Report's Settings</h4>
+                                <!--<span> Based on the last: <b> 6 months </b> Trending Measure: <b> Daily </b></span>-->
                             </div>
-                        </div>
+                            <div>
+                                <label for="sel_analysis_type"> Analysis Type:</label>
+                                <select id="sel_analysis_type" class="custom-select form-control">
+                                    <option selected value="frequency"> Absolute Frequency </option>
+                                    <option value="relative_frequency"> Relative Frequency </option>
+                                    <option value="popularity"> Popularity </option>
+                                    <option value="trend">Trend </option>
+                                </select>
+                            </div>
+                            <div style="margin-top: 10px">
+                                <label for="sel_view_mode"> Vizualization mode: </label>
+                                <select id="sel_view_mode" class="custom-select form-control">
+                                    <option selected value="bycategory"> Ranking By Category </option>
+                                    <option value="bycountry"> Ranking By Country </option>
+                                    <!--<option value="chart"> Line Chart </option>-->
+                                </select>
+                            </div>
+                            <div id="div_bycountry" style="margin-top: 10px;">
+                                <label for="sel_country"> Country:</label>
+                                <select id="sel_country" class="custom-select form-control">
+                                  <option selected value="0">Select a country </option>
+                                </select>
+                            </div>
+                            <div id="div_bycategory" style="margin-top: 10px; display: none">
+                                <label for="sel_category"> Category:</label>
+                                <select id="sel_category" class="custom-select form-control">
+                                  <option selected value="0">Select a category </option>
+                                </select>
+                            </div>
+                      </div>
+                </div>
+            </div>
+            <div id="div_results" class="content" style="background-color: white; display: none">
+                <hr>
+                <div class="panel">
+                    <div id="img_loading" style="text-align: center; display: none">
+                        <label for="img_loading_demo" >Loading... </label>
+                        <img id="img_loading_demo" src="assets/img/loader_gezo.gif" height="25px">
                     </div>
-                    <div id="div_bycountry" class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                 <div class="header">
-                                    <h4 class="title">Food Trends by Country</h4>
-                                    <!--<h5 class="category">Country: <b> Japan </b> <a href="#"> (change) </a> </h5>-->
-                                    Country:
-                                     <select id="sel_country" class="custom-select">
-                                      <option selected value="0">Select a country </option>
-                                    </select>
-                                </div>
-                                <!--<div>-->
-                                    <!--<div class="container">-->
-                                    <!--</div>-->
-                                <!--</div>-->
-
-                                <div class="content table-responsive table-full-width">
-                                    <table id="tb_bycountry" class="table table-hover table-striped">
-                                        <thead>
-                                            <th>Rank</th>
-                                            <th>Dish Category</th>
-                                            <th> <span id="lbl_value_bycountry"></span> </th>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
+                    <div id="div_table" style="padding: 5px 10% 5px 10%">
+                        <div style="margin-top: 10px; text-align: center">
+                            <h4>Results</h4>
+                            <span> Based on the last: <b> 6 months </b> Trending Measure: <b> Daily </b></span>
                         </div>
-                    </div>
-                    <div id="div_bycategory" class="row" style="display: none">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="header">                                    
-                                    <h4 class="title">Food Trends by Dish Category</h4>
-                                    <!--<h5 class="category">Dish Category: <b> Sashimi </b> <a href="#"> (change) </a> </h5>-->
-                                    Category:
-                                    <select id="sel_category" class="custom-select">
-                                      <option selected>Select a category </option>
-                                    </select>
-                                    <!--<h5 class="category">Based on the last: <b> 12 months </b> <a href="#"> (change) </a> Trending Measure: <b> Monthly </b> <a href="#"> (change) </a> </h5>-->
-                                </div>
-                                <div class="content table-responsive table-full-width">
-                                    <table id="tb_bycategory" class="table table-hover table-striped">
-                                        <thead>
-                                            <th>Rank</th>
-                                            <th>Dish Category</th>
-                                            <th> <span id="lbl_value_bycategory"></span> </th>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="div_chart" class="row" style="display: none">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="header">                                    
-                                    <h4 class="title">Food Trends by Country</h4>
-                                    <h5 class="category">Country: <b> Japan </b> <a href="#"> (change) </a> </h5>
-                                    <h5 class="category">Dish Categories: <b> Sashimi, Shrimp and grits, Risotto, Sushi, Spring rolls </b> <a href="#"> (change) </a> </h5>
-                                    <!--<h5 class="category">Based on the last: <b> 12 months </b> <a href="#"> (change) </a> Trending Measure: <b> Monthly </b> <a href="#"> (change) </a> </h5>-->
-                                </div>
-                                <div class="content">
-                                  <img src="chart.png" width="100%">
-                                </div>
-                            </div>
-                        </div>
+                        <table id="tb_result" class="table">
+                            <thead>
+                                <th>#</th>
+                                <th> <span id="lbl_by"></span></th>
+                                <th> <span id="lbl_value"></span> </th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+
+            <!--<div class="content">-->
+                <!--<div class="container-fluid">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--<div class="card">-->
+                                 <!--<div class="header form-group">-->
+                                    <!--&lt;!&ndash;<div style="margin-top: 10px">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<label for="sel_view_mode"> Vizualization mode: </label>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<select id="sel_view_mode" class="custom-select form-control">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<option selected value="bycategory"> Ranking By Category </option>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<option value="bycountry"> Ranking By Country </option>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;&lt;!&ndash;<option value="chart"> Line Chart </option>&ndash;&gt;&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div style="margin-top: 10px">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;Analysis Type:&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<select id="sel_analysis_type" class="custom-select" style="margin-left: 35px">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<option selected value="frequency"> Frequency </option>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<option value="popularity"> Popularity </option>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<option value="trend">Trend </option>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div id="div_bycountry" style="margin-top: 10px;">&ndash;&gt;-->
+                                         <!--&lt;!&ndash;Country:&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<select id="sel_country" class="custom-select" style="float: right">&ndash;&gt;-->
+                                          <!--&lt;!&ndash;<option selected value="0">Select a country </option>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div id="div_bycategory" style="margin-top: 10px; display: none">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;Category:&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<select id="sel_category" class="custom-select">&ndash;&gt;-->
+                                          <!--&lt;!&ndash;<option selected>Select a category </option>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--</div>-->
+                                <!--&lt;!&ndash;<div class="content table-responsive table-full-width">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div style="margin-top: 10px; text-align: center">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<h6> Based on the last: <b> 6 months </b> <a href="#"> (change) </a> Trending Measure: <b> Daily </b></h6>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                                    <!--&lt;!&ndash;<div class="content table-responsive table-full-width">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<table id="tb_result" class="table table-hover table-striped">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<thead>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<th>Rank</th>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<th> <span id="lbl_by"></span></th>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<th> <span id="lbl_value"></span> </th>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;</thead>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<tbody>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</table>&ndash;&gt;-->
+
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;<div id="div_bycountry">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="col-md-12">&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div id="div_bycategory" style="display: none">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="col-md-12">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="card">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class="header">                                    &ndash;&gt;-->
+                                    <!--&lt;!&ndash;<h4 class="title">Food Trends by Dish Category</h4>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;&lt;!&ndash;<h5 class="category">Dish Category: <b> Sashimi </b> <a href="#"> (change) </a> </h5>&ndash;&gt;&ndash;&gt;-->
+                                    <!--&lt;!&ndash;Category:&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<select id="sel_category" class="custom-select">&ndash;&gt;-->
+                                      <!--&lt;!&ndash;<option selected>Select a category </option>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;&lt;!&ndash;<h5 class="category">Based on the last: <b> 12 months </b> <a href="#"> (change) </a> Trending Measure: <b> Monthly </b> <a href="#"> (change) </a> </h5>&ndash;&gt;&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class="content table-responsive table-full-width">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<table id="tb_bycategory" class="table table-hover table-striped">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<thead>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<th>Rank</th>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<th>Dish Category</th>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<th> <span id="lbl_value_bycategory"></span> </th>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</thead>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<tbody>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</table>&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--<div id="div_chart" class="row" style="display: none">-->
+                        <!--<div class="col-md-12">-->
+                            <!--<div class="card">-->
+                                <!--<div class="header">-->
+                                    <!--<h4 class="title">Food Trends by Country</h4>-->
+                                    <!--<h5 class="category">Country: <b> Japan </b> <a href="#"> (change) </a> </h5>-->
+                                    <!--<h5 class="category">Dish Categories: <b> Sashimi, Shrimp and grits, Risotto, Sushi, Spring rolls </b> <a href="#"> (change) </a> </h5>-->
+                                    <!--&lt;!&ndash;<h5 class="category">Based on the last: <b> 12 months </b> <a href="#"> (change) </a> Trending Measure: <b> Monthly </b> <a href="#"> (change) </a> </h5>&ndash;&gt;-->
+                                <!--</div>-->
+                                <!--<div class="content">-->
+                                  <!--<img src="chart.png" width="100%">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
     </div>
@@ -293,8 +371,12 @@
 <script src="assets/js/demo.js"></script>
 <script src="assets/js/table.js"></script>
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
 
 <!--<script type="text/javascript">-->
     <!--$(document).ready(function () {-->
