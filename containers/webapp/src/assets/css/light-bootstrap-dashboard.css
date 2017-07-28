@@ -323,7 +323,7 @@ body > .navbar-collapse {
       line-height: 30px; }
     .sidebar .logo .simple-logo,
     body > .navbar-collapse .logo .simple-logo {
-      background: url("/img/logoNeg.tiff");
+      background: url("../img/logoNeg.tif");
       padding: 5px 0px;
       display: block;
       font-size: 18px;
