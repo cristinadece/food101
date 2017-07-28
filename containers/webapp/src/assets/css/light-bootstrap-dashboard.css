@@ -301,6 +301,7 @@ body > .navbar-collapse {
       right: 30px; }
   .sidebar .logo,
   body > .navbar-collapse .logo {
+    background: url("../../logoNeg.tif.png");
     padding: 10px 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
     .sidebar .logo p,
