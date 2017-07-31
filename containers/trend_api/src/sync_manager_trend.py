@@ -4,7 +4,6 @@ import time
 import datetime
 
 
-
 def getCategories():
     htCategoryList = list()
     with open("../../../resources/categories.txt") as g:
@@ -20,16 +19,23 @@ if __name__ == '__main__':
     dateBegin = 0
     dateEnd = 20201231
 
+    intervals = [1, 7, 30];
     analysis_types = ['frequency', 'relative_frequency', 'trend', 'popularity']
     categories = getCategories()
 
     # the main thread in loop
     while True:
         session = None
-        for category in categories:
-            print 'sync category:', category
-            for analysis_type in analysis_types:
-                lst_country = get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, analysis_type)
-                sync_db_view(session, category, analysis_type, lst_country)
+
+        for interval in intervals:
+            for category in categories:
+                print 'sync category:', category
+                for analysis_type in analysis_types:
+                    if interval > 1 and analysis_type in ['frequency', 'relative_frequency']:
+                        # skip for frequency and relative frequency the computation
+                        pass
+                    else:
+                        lst_country = get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, analysis_type, interval)
+                        sync_db_view(session, category, analysis_type, interval, lst_country)
         print 'finished syncing going to sleep', datetime.datetime.now()
         time.sleep(time_sync)
