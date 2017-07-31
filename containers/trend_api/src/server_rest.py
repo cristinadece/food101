@@ -23,7 +23,8 @@ class CountriesTrends(Resource):
         dateBegin = request.form['dateBegin']
         dateEnd = request.form['dateEnd']
         analysis_type = request.form['analysis_type']
-        result = {"results": get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, analysis_type)}
+        interval = int(request.form['interval'])
+        result = {"results": get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, analysis_type, interval)}
         result = json.dumps(result)
         return result
 
@@ -34,7 +35,8 @@ class CategoriesCountry(Resource):
         dateBegin = request.form['dateBegin']
         dateEnd = request.form['dateEnd']
         analysis_type = request.form['analysis_type']
-        result = {"results": get_categories_trends_filtered_by_country(country, dateBegin, dateEnd, analysis_type)}
+        interval = int(request.form['interval'])
+        result = {"results": get_categories_trends_filtered_by_country(country, dateBegin, dateEnd, analysis_type, interval)}
         result = json.dumps(result)
         return result
 
@@ -47,8 +49,9 @@ class CartoDBTrends(Resource):
         dateEnd = request.form['dateEnd']
         analysis_type = request.form['analysis_type']
         session = request.form['session']
+        interval = int(request.form['interval'])
         lst_country = get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, analysis_type)
-        sync_db_view(session, category, lst_country)
+        sync_db_view(session, category, analysis_type, interval, lst_country)
         return { "message": "ok" }
 
 
