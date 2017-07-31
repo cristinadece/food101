@@ -150,9 +150,6 @@ function refreshValueLayer(){
         layer_value.show();
     }
 
-    alert("SELECT countries_geo.*, trend_value.value, trend_value.country, trend_value.category, trend_value.analysis_type	FROM trend_value inner JOIN countries_geo on lower(countries_geo.name) = lower(trend_value.country) " +
-            "WHERE trend_value.category = '" + category + "' and analysis_type = '" + analysis_type + "' and interval = " + interval + "")
-
     // Run a query to get new Max / Min of layer
     // var sql = cartodb.SQL({ user: 'vinicezarml' });
 
