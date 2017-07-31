@@ -135,8 +135,8 @@
         <div class="panel panel-default bs-callout" style="background-color: white">
             <div class="panel-body">
                 <div class="row">
-          <div class="col-lg-6">
-            <div class="input-group small">
+          <div class="col-lg-4">
+            <div>
                 <label for="sel_analysis_type" style="font-size: 14px"> <b> Analysis Type:</b> </label>
                 <!--<div class="btn-group" data-toggle="buttons">-->
                   <!--<label class="btn btn-primary active small">-->
@@ -149,23 +149,40 @@
                     <!--<input type="radio" name="sel_analysis_type" id="option3" autocomplete="off"> Trend-->
                   <!--</label>-->
                 <!--</div>-->
-
-
-                <select id="sel_analysis_type" class="custom-select form-control" style="border-left: 1px !important">
-                    <option selected value="frequency"> Frequency </option>
+                <select id="sel_analysis_type" class="custom-select form-control">
+                    <option selected value="frequency"> Absolute Frequency </option>
+                    <option value="relative_frequency"> Relative Frequency </option>
                     <option value="popularity"> Popularity </option>
                     <option value="trend">Trend </option>
                 </select>
             </div><!-- /input-group -->
           </div><!-- /.col-lg-6 -->
-          <div class="col-lg-6">
-            <div class="input-group">
+
+          <div class="col-lg-4">
+            <!--<div class="input-group">-->
+            <div>
+                <label for="sel_interval" > Analysis Interval:</label>
+                <select id="sel_interval" class="custom-select form-control">
+                    <option selected value="1"> Day </option>
+                    <option value="7"> Week </option>
+                    <option value="30"> Month </option>
+                </select>
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+
+
+          <div class="col-lg-4">
+            <!--<div class="input-group">-->
+             <div>
                 <label for="sel_category" style="font-size: 14px "> <b> Category:</b> </label>
                 <select id="sel_category" class="custom-select form-control">
                   <option value="0" selected>Select a category </option>
                 </select>
             </div><!-- /input-group -->
           </div><!-- /.col-lg-6 -->
+
+
+
         </div>
             </div>
         </div>

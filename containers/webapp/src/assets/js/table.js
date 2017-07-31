@@ -180,6 +180,7 @@ $(document).ready(function(){
     set_viewmode($('#sel_view_mode').val());
     loadCategories_Selection();
     loadCountries_Selection();
+    set_interval();
 
     $('#sel_category').change(function(){
         get_bycategory();
@@ -195,6 +196,9 @@ $(document).ready(function(){
     });
 
     $('#sel_analysis_type').change(function(e) {
+
+        set_interval();
+
         if($('#sel_category').val() != 0){
             get_bycategory();
         }
@@ -205,6 +209,16 @@ $(document).ready(function(){
     });
 
 });
+
+function set_interval(){
+    var selected_analysis_type =$('#sel_analysis_type').val();
+    if(selected_analysis_type == 'popularity' || selected_analysis_type == 'trend'){
+        $('#sel_interval').removeAttr("disabled");
+    }
+    else {
+        $('#sel_interval').attr("disabled", "disabled");
+    }
+}
 
 function get_bycategory(){
     // url_link = 'http://localhost:5001/countriestrends'
