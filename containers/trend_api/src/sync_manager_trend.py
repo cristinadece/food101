@@ -27,9 +27,9 @@ if __name__ == '__main__':
     while True:
         session = None
 
-        for interval in intervals:
-            for category in categories:
-                print 'sync category:', category
+        for category in categories:
+            for interval in intervals:
+                print 'sync category:', interval, category, datetime.datetime.now()
                 for analysis_type in analysis_types:
                     if interval > 1 and analysis_type in ['frequency', 'relative_frequency']:
                         # skip for frequency and relative frequency the computation
