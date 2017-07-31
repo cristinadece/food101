@@ -2,7 +2,7 @@ from elasticsearch import Elasticsearch
 from collections import defaultdict
 import numpy as np
 from scipy import stats
-import datetime
+from datetime import datetime
 from collections import Counter
 
 def get_es():
