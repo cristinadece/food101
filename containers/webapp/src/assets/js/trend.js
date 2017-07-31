@@ -142,14 +142,13 @@ function refreshValueLayer(){
         // alert('refresh layer');
         var category = $('#sel_category').val();
         var analysis_type = $('#sel_analysis_type').val();
+        var interval = $('#sel_interval').val();
 
         layer_value.setSQL("SELECT countries_geo.*, trend_value.value, trend_value.country, trend_value.category, trend_value.analysis_type	FROM trend_value inner JOIN countries_geo on lower(countries_geo.name) = lower(trend_value.country) " +
-            "WHERE trend_value.category = '" + category + "' and analysis_type = '" + analysis_type + "'");
+            "WHERE trend_value.category = '" + category + "' and analysis_type = '" + analysis_type + "' and interval = " + interval + "" );
         // layer_country.show();
         layer_value.show();
     }
-
-
 
     // Run a query to get new Max / Min of layer
     // var sql = cartodb.SQL({ user: 'vinicezarml' });
@@ -285,10 +284,32 @@ function main() {
 
 }
 
+function set_interval(){
+    var selected_analysis_type =$('#sel_analysis_type').val();
+    if(selected_analysis_type == 'popularity' || selected_analysis_type == 'trend'){
+        $('#sel_interval').removeAttr("disabled");
+    }
+    else {
+        $('#sel_interval').attr("disabled", "disabled");
+    }
+}
+
 
 $(document).ready(function(){
     main();
     loadCategories_Selection();
+    set_interval();
+
+
+    $('#sel_interval').change(function(){
+        if (custom){
+            sync_carto();
+        }
+        else {
+            refreshValueLayer();
+        }
+    });
+
 
     $('#sel_category').change(function(){
         if (custom){
@@ -300,6 +321,7 @@ $(document).ready(function(){
     });
 
     $('#sel_analysis_type').change(function(){
+        set_interval();
         if ($('#sel_category').val() != 0){
             if (custom){
                 sync_carto();
@@ -309,4 +331,6 @@ $(document).ready(function(){
             }
         }
     });
+
+
 });
