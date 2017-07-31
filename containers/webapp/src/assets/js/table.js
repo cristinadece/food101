@@ -195,6 +195,18 @@ $(document).ready(function(){
         set_viewmode(sel_value);
     });
 
+
+    $('#sel_interval').change(function(){
+        if($('#sel_category').val() != 0){
+            get_bycategory();
+        }
+
+        if($('#sel_country').val() != 0){
+            get_bycountry();
+        }
+    });
+
+
     $('#sel_analysis_type').change(function(e) {
 
         set_interval();
@@ -224,8 +236,9 @@ function get_bycategory(){
     // url_link = 'http://localhost:5001/countriestrends'
     url_link = 'http://test.tripbuilder.isti.cnr.it:5001/countriestrends'
 
-    category = $('#sel_category').val();
-    analysis_type = $('#sel_analysis_type').val();
+    var category = $('#sel_category').val();
+    var analysis_type = $('#sel_analysis_type').val();
+    var interval = $('#sel_interval').val();
     $('#lbl_value').html(analysis_type);
     $('#lbl_by').html('Category');
     $('#div_results').show();
@@ -235,7 +248,7 @@ function get_bycategory(){
     $.ajax({
       type: "POST",
       url: url_link,
-      data: { category: category, dateBegin: '20170101', dateEnd: '20170601', analysis_type: analysis_type },
+      data: { category: category, dateBegin: '20170101', dateEnd: '20170601', analysis_type: analysis_type, interval: interval },
       success: function (result) {
           result = JSON.parse(result);
           results = result['results'];
@@ -275,18 +288,18 @@ function get_bycountry(){
     // url_link = 'http://localhost:5001/categoriestrends'
     url_link = 'http://test.tripbuilder.isti.cnr.it:5001/categoriestrends'
 
-    country = $('#sel_country').val();
-    analysis_type = $('#sel_analysis_type').val();
+    var country = $('#sel_country').val();
+    var analysis_type = $('#sel_analysis_type').val();
+    var interval = $('#sel_interval').val();
     $('#lbl_by').html('Country');
     $('#div_results').show();
     $("#img_loading").show();
     $("#div_table").hide();
 
-
     $.ajax({
       type: "POST",
       url: url_link,
-      data: { country: country, dateBegin: '20170101', dateEnd: '20170601', analysis_type: analysis_type },
+      data: { country: country, dateBegin: '20170101', dateEnd: '20170601', analysis_type: analysis_type, interval:interval },
       success: function (result) {
           result = JSON.parse(result);
           results = result['results'];
