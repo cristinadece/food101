@@ -22,6 +22,11 @@ class CountriesTrends(Resource):
         category = request.form['category']
         dateBegin = request.form['dateBegin']
         dateEnd = request.form['dateEnd']
+
+        # there is no customization for period
+        dateBegin = 0
+        dateEnd = 20201231
+
         analysis_type = request.form['analysis_type']
         interval = int(request.form['interval'])
         result = {"results": get_countries_trends_filtered_by_category(category, dateBegin, dateEnd, analysis_type, interval)}
@@ -34,6 +39,11 @@ class CategoriesCountry(Resource):
         country = request.form['country']
         dateBegin = request.form['dateBegin']
         dateEnd = request.form['dateEnd']
+
+        # there is no customization for period
+        dateBegin = 0
+        dateEnd = 20201231
+
         analysis_type = request.form['analysis_type']
         interval = int(request.form['interval'])
         result = {"results": get_categories_trends_filtered_by_country(country, dateBegin, dateEnd, analysis_type, interval)}
