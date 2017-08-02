@@ -17,7 +17,7 @@ services:
       - /home/foodmap/data/esdata:/usr/share/elasticsearch/data
 #      - /home/vinicius/data/esdata:/usr/share/elasticsearch/data
     ports:
-      - 9200:9200
+      - 8055:9200
 #    networks:
 #      - esnet
 

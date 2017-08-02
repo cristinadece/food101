@@ -30,8 +30,9 @@ class Stream2Index(TwythonStreamer):
                                            oauth_token_secret=ACCESS_TOKEN_SECRET, retry_in=3600)
 
         self.es = Elasticsearch(['localhost'],  #146.48.82.85
-                                http_auth=('elastic', 'changeme'),
-                                port=9200
+                                #http_auth=('elastic', 'changeme'),
+                                #port=9200
+				port=8055
                                 )
         # mapping = json.load(open("./containers/index/mapping.json"))
         print self.es.indices.create("stream", ignore=400) #, body=mapping)
