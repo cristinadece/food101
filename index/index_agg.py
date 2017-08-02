@@ -22,7 +22,7 @@ def get_datetime_month(date_int):
 
 
 def get_es():
-    es = Elasticsearch(['foodmap.isti.cnr.it'], http_auth=('elastic', 'changeme'), port=9200)
+    es = Elasticsearch(['localhost'], http_auth=('elastic', 'changeme'), port=8055)
     return es
 
 

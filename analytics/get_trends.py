@@ -9,7 +9,7 @@ from scipy import stats
 from datetime import datetime
 from collections import Counter
 
-es = Elasticsearch(['foodmap.isti.cnr.it'], http_auth=('elastic', 'changeme'), port=9200)
+es = Elasticsearch(['localhost'], http_auth=('elastic', 'changeme'), port=8055)
 
 # Query by food category - Fig. 2b,c Map/Report of Trends/Popularity
 def query_by_category(category, dateBegin, dateEnd):

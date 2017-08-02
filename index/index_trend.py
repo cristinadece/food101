@@ -33,7 +33,7 @@ def setup(indexName):
     """
     es = Elasticsearch(['localhost'],  # 146.48.82.85
                             http_auth=('elastic', 'changeme'),
-                            port=9200,
+                            port=8055,
                             timeout=30
                             )
     # mapping = json.load(open("./containers/index/mapping.json"))

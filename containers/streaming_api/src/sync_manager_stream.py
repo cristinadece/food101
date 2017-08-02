@@ -17,8 +17,8 @@ def get_auth_carto():
 
 
 def get_es():
-    es_url = 'test.tripbuilder.isti.cnr.it'
-    es_port = 9200
+    es_url = 'localhost'
+    es_port = 8055
     return Elasticsearch([es_url], http_auth=('elastic', 'changeme'), port=es_port)
 
 
