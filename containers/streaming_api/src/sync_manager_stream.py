@@ -107,12 +107,12 @@ def sync_carto_stream(first_sync, last_datetime):
     sql = SQLClient(auth_client)
 
     # delete the old tweets
-    # if first_sync:
-    #     sql_str = sql_str = "delete from tweets_stream"
-    # else:
-    #     sql_str = sql_str = "delete from tweets_stream where datetime < now() - interval '24 hour'"
-    # sql.send(sql_str)
-    # sql_str = ''
+    if first_sync:
+        sql_str = sql_str = "delete from tweets_stream"
+    else:
+        sql_str = sql_str = "delete from tweets_stream where datetime < now() - interval '24 hour'"
+    sql.send(sql_str)
+    sql_str = ''
 
     # insert the last new data
     insert_count = 0
