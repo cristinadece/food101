@@ -44,7 +44,7 @@ def get_image_categories(img_url):
     :param img_url:
     :return: list of dicts!!!!
     """
-    request_string = 'http://test.tripbuilder.isti.cnr.it:8080/FoodRecognition/services/IRServices/recognizeByURL?imgURL='
+    request_string = 'http://localhost:8080/FoodRecognition/services/IRServices/recognizeByURL?imgURL='
     res = requests.get(request_string + img_url)
     try:
         candidates = json.loads(res.text)["guessed"]
