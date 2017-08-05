@@ -124,7 +124,7 @@ def sync_carto_stream(first_sync, last_datetime):
             datetime_created_at = tweet['created_at_datetime'].replace('T', ' ')
             format_datetime = "%Y %m %d %H:%M:%S"
             datetime_object = datetime.strptime(datetime_created_at, format_datetime)
-            datetime_object = datetime_object + datetime_object + datetime.timedelta(hours=8)
+            datetime_object = datetime_object + datetime_object + datetime.timedelta(hours=7)
 
             coordinates = tweet['coords'] if tweet['coords'] is not None else point_close_to_center(
                 tweet['bounding_box']['coordinates'][0])
