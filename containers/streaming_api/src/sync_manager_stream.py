@@ -130,7 +130,7 @@ def sync_carto_stream(first_sync, last_datetime):
             insert_value = "{the_geom}, '{username}', '{img_category}', '{text_categories}', '{categories}', '{text}', {id}, '{media_url}', '{datetime}', '{datetime_formated}', {has_img}, '{result_classification}'".format(
                 the_geom=the_geom, username=tweet['username'], img_category=str(tweet['img_categories']),
                 text_categories=str(tweet['text_categories']), categories=str(tweet['categories']), text=tweet['text'], id=tweet['id'],
-                media_url=tweet['media_url'], datetime=tweet['created_at_datetime'], datetime_datetime_formated=tweet['created_at_datetime'].replace("T", ' '), has_img=tweet['has_img'], result_classification=tweet['result_classification'].strftime(format_datetime))
+                media_url=tweet['media_url'], datetime=tweet['created_at_datetime'], datetime_datetime_formated=tweet['created_at_datetime'].strftime(format_datetime), has_img=tweet['has_img'], result_classification=tweet['result_classification'])
 
             sql_insert = "insert into tweets_stream (the_geom, username, img_category, text_categories, categories, text, id, media_url, datetime, has_img, result_classification) values ({insert_value});".format(
                 insert_value=insert_value)
