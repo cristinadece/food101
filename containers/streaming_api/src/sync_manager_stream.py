@@ -5,6 +5,7 @@ from carto.exceptions import CartoException
 from elasticsearch import Elasticsearch
 import time
 import datetime
+# from datetime import strptime
 import random
 import json
 
@@ -122,9 +123,9 @@ def sync_carto_stream(first_sync, last_datetime):
         try:
 
             datetime_created_at = tweet['created_at_datetime'].replace('T', ' ')
-            format_datetime = "%Y %m %d %H:%M:%S"
-            datetime_object = datetime.strptime(datetime_created_at, format_datetime)
-            datetime_object = datetime_object + datetime_object + datetime.timedelta(hours=7)
+            format_datetime = "%Y-%m-%d %H:%M:%S"
+            datetime_object = datetime.datetime.strptime(datetime_created_at, format_datetime)
+            datetime_object = datetime_object + datetime.timedelta(hours=9)
 
             coordinates = tweet['coords'] if tweet['coords'] is not None else point_close_to_center(
                 tweet['bounding_box']['coordinates'][0])
