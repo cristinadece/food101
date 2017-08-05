@@ -121,7 +121,10 @@ def sync_carto_stream(first_sync, last_datetime):
     for tweet in tweets:
         try:
 
-            format_datetime = "%b %d %Y %H:%M:%S"
+            datetime_created_at = tweet['created_at_datetime'].replace('T', ' ')
+            format_datetime = "%Y %m %d %H:%M:%S"
+            datetime_object = datetime.strptime(datetime_created_at, format_datetime)
+            datetime_object = datetime_object + datetime_object + datetime.timedelta(hours=8)
 
             coordinates = tweet['coords'] if tweet['coords'] is not None else point_close_to_center(
                 tweet['bounding_box']['coordinates'][0])
@@ -130,7 +133,7 @@ def sync_carto_stream(first_sync, last_datetime):
             insert_value = "{the_geom}, '{username}', '{img_category}', '{text_categories}', '{categories}', '{text}', {id}, '{media_url}', '{datetime}', '{datetime_formated}', {has_img}, '{result_classification}'".format(
                 the_geom=the_geom, username=tweet['username'], img_category=str(tweet['img_categories']),
                 text_categories=str(tweet['text_categories']), categories=str(tweet['categories']), text=tweet['text'], id=tweet['id'],
-                media_url=tweet['media_url'], datetime=tweet['created_at_datetime'], datetime_formated=tweet['created_at_datetime'].replace('T', ' '), has_img=tweet['has_img'], result_classification=tweet['result_classification'])
+                media_url=tweet['media_url'], datetime=tweet['created_at_datetime'], datetime_formated=datetime_object, has_img=tweet['has_img'], result_classification=tweet['result_classification'])
 
             sql_insert = "insert into tweets_stream (the_geom, username, img_category, text_categories, categories, text, id, media_url, datetime, datetime_formated, has_img, result_classification) values ({insert_value});".format(
                 insert_value=insert_value)
