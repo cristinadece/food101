@@ -240,7 +240,7 @@ function get_bycategory(){
     var analysis_type = $('#sel_analysis_type').val();
     var interval = $('#sel_interval').val();
     $('#lbl_value').html(analysis_type);
-    $('#lbl_by').html('Category');
+    $('#lbl_by').html('Country');
     $('#div_results').show();
     $("#img_loading").show();
     $("#div_table").hide();
@@ -291,7 +291,7 @@ function get_bycountry(){
     var country = $('#sel_country').val();
     var analysis_type = $('#sel_analysis_type').val();
     var interval = $('#sel_interval').val();
-    $('#lbl_by').html('Country');
+    $('#lbl_by').html('Category');
     $('#div_results').show();
     $("#img_loading").show();
     $("#div_table").hide();
