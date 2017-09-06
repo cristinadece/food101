@@ -1,0 +1,76 @@
+#TMUX
+
+##tmux -S /tmp/shareds attach -t foodmap
+
+###elastic :  muntean@test:/home/foodmap/food101/containers/index$ bash run.sh
+- esdata is with: sudo chown -R 1000:1000
+- change path to index dir in docker-compose.yml
+- install docker, docker-compose
+- install tmux
+
+###notebooks : foodmap@test:~$ jupyter notebook
+- install miniconda
+- install jupyter
+- jupyter notebook --generate-config
+
+c.NotebookApp.allow_origin = '*'
+c.NotebookApp.ip = '*'
+c.NotebookApp.open_browser = False
+c.NotebookApp.password = 'sha1:4c8ee5f3cda0:d231a5382c8263aa4d9a34f9da3282519bdfe68f'
+c.NotebookApp.port = 8881
+
+###webapp : foodmap@test:~/food101/containers/webapp$ bash build.sh
+			foodmap@test:~/food101/containers/webapp$ bash run.sh
+
+###img_classifier :
+
+cat foodRecognition.tar | sudo docker import - cnn
+
+vinicius@test:/home/foodmap/food101/containers$ sudo docker run -it -p 8080:8080 cnn /bin/bash                                                 │······························································································
+[sudo] password for vinicius:                                                                                                                  │······························································································
+root@bde6889c4a83:/# cd /usr/local/tomcat/bin                                                                                                  │······························································································
+root@bde6889c4a83:/usr/local/tomcat/bin# sh startup.sh                                                                                         │······························································································
+Using CATALINA_BASE:   /usr/local/tomcat                                                                                                       │······························································································
+Using CATALINA_HOME:   /usr/local/tomcat                                                                                                       │······························································································
+Using CATALINA_TMPDIR: /usr/local/tomcat/temp                                                                                                  │······························································································
+Using JRE_HOME:        /usr                                                                                                                    │······························································································
+Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar                                               │······························································································
+Tomcat started.                                                                                                                                │······························································································
+root@bde6889c4a83:/usr/local/tomcat/bin# pico startup.sh                                                                                       │······························································································
+bash: pico: command not found                                                                                                                  │······························································································
+root@bde6889c4a83:/usr/local/tomcat/bin# ls                                                                                                    │······························································································
+bootstrap.jar       catalina.sh                   commons-daemon.jar  daemon.sh  logs             shutdown.sh  tomcat-juli.jar  version.sh     │······························································································
+catalina-tasks.xml  commons-daemon-native.tar.gz  configtest.sh       digest.sh  setclasspath.sh  startup.sh   tool-wrapper.sh                 │······························································································
+root@bde6889c4a83:/usr/local/tomcat/bin# ls                                                                                                    │······························································································
+bootstrap.jar       catalina.sh                   commons-daemon.jar  daemon.sh  logs             shutdown.sh  tomcat-juli.jar  version.sh     │······························································································
+catalina-tasks.xml  commons-daemon-native.tar.gz  configtest.sh       digest.sh  setclasspath.sh  startup.sh   tool-wrapper.sh                 │······························································································
+root@bde6889c4a83:/usr/local/tomcat/bin# sh startup.sh                                                                                         │······························································································
+Using CATALINA_BASE:   /usr/local/tomcat                                                                                                       │······························································································
+Using CATALINA_HOME:   /usr/local/tomcat                                                                                                       │······························································································
+Using CATALINA_TMPDIR: /usr/local/tomcat/temp                                                                                                  │······························································································
+Using JRE_HOME:        /usr                                                                                                                    │······························································································
+Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar                                               │······························································································
+Tomcat started.                                                                                                                                │······························································································
+root@bde6889c4a83:/usr/local/tomcat/bin# sh startup.sh                                                                                         │······························································································
+Using CATALINA_BASE:   /usr/local/tomcat                                                                                                       │······························································································
+Using CATALINA_HOME:   /usr/local/tomcat                                                                                                       │······························································································
+Using CATALINA_TMPDIR: /usr/local/tomcat/temp                                                                                                  │······························································································
+Using JRE_HOME:        /usr                                                                                                                    │······························································································
+Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar                                               │······························································································
+Tomcat started.
+
+
+###indexStream : 
+foodmap@test:~/food101$ bash runStreamIndex.sh
+
+###indexTrend : 
+foodmap@test:~/food101$ time bash index/indexTrendsSingleFile1.sh > indexTrendsSingleFile2-07-3star.txt
+
+###sync_cartodb_stream : 
+foodmap@test:~/food101/containers/streaming_api/src$ python sync_manager_stream.py
+
+###sync_cartodb_trend : 
+foodmap@test:~/food101/containers/trend_api/src$ python sync_manager_trend.py
+
+###api_trend : 
+foodmap@test:~/food101/containers/trend_api/src$ python server_rest.py

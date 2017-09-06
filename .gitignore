@@ -3,3 +3,4 @@
 *.pyc
 notebooks/.ipynb_checkpoints/
 containers/cnn/
+*DS_Store*
